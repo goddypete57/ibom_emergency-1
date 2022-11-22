@@ -17,11 +17,11 @@ export default Login = ({ navigation }) => {
 
     return (
         <>
-            <View style={styles.topWrapper}>
+            {/* <View style={styles.topWrapper}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <NavIcon />
                 </TouchableOpacity>
-            </View>
+            </View> */}
             <ScrollView
                 vertical
                 showsHorizontalScrollIndicator={false}
