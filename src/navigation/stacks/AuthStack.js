@@ -3,9 +3,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import authRouts from "../route/authRoute";
 import Login from "../../../src/screens/auth/Login";
 
-
-
-
 const Stack = createNativeStackNavigator();
 
 export default AuthStack = () => {
