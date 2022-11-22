@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useContext, useState } from "react";
 import { StatusBar, Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
@@ -22,11 +23,26 @@ const RootNavigator = () => {
           token ? <MainStack /> :
             <AuthStack />}
     </NavigationContainer>
+=======
+import React, { useState, useEffect, useContext } from "react";
+import { View, Text, StyleSheet, Image, StatusBar, Platform } from "react-native";
+import MainStacks from "./src/navigation/stacks/GneralStack"
+import { NavigationContainer } from '@react-navigation/native';
+import { AuthContext, AuthContextProvider } from "./context/AuthContext.js";
+import SOSStack from "./src/navigation/stacks/SOSStack";
+const RootNavigator = () => {  
+  return (
+    <NavigationContainer>
+ 
+    </NavigationContainer>
+
+>>>>>>> 47b1063d9da8b49b0438f6a425285b6ba7d93ea7
   )
 }
 export default function App() {
   if (Platform.OS == 'ios') {
     StatusBar.setBarStyle('light-content', true);	//<<--- add this
+<<<<<<< HEAD
   }
   return (
     <>
@@ -35,6 +51,16 @@ export default function App() {
         <RootNavigator />
       </AuthContextProvider>
       <Toast />
+=======
+}
+  return (
+    <>
+     <AuthContextProvider>
+     <StatusBar backgroundColor={"#000"} />
+      <RootNavigator />
+    </AuthContextProvider>
+
+>>>>>>> 47b1063d9da8b49b0438f6a425285b6ba7d93ea7
     </>
   );
 }
