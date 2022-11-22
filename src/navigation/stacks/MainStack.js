@@ -14,7 +14,7 @@ const NavStack = createNativeStackNavigator();
 export default function MainStack() {
     return (
         <NavStack.Navigator>
-            <NavStack.Screen name="Home" component={Sos} />
+            <NavStack.Screen name={mainRoute.sos} component={Sos} />
         </NavStack.Navigator>
     );
 }
