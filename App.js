@@ -3,16 +3,13 @@ import { View, Text, StyleSheet, Image, StatusBar, Platform } from "react-native
 import MainStacks from "./src/navigation/stacks/GneralStack"
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthContext, AuthContextProvider } from "./context/AuthContext.js";
-const RootNavigator = () => {
-
-
-  
+import SOSStack from "./src/navigation/stacks/SOSStack";
+const RootNavigator = () => {  
   return (
     <NavigationContainer>
-      {
-<MainStacks/>
-      }
+ 
     </NavigationContainer>
+
   )
 }
 export default function App() {
