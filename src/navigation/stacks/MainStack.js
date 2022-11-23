@@ -11,8 +11,9 @@ import police from '../../screens/police/police';
 
 import PoliceIcon from '../../../assets/icons/Police.svg';
 import Setting from '../../../assets/icons/Setting.svg';
-import shop from '../../../assets/icons/Shop.svg'
+import shop from '../../../assets/icons/Shop.svg';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Stack = createNativeStackNavigator();
 const NavStack = createNativeStackNavigator();
@@ -63,19 +64,18 @@ const Nav = ({route, navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            
-          <Text>
-            man
-          </Text>
-
+           <PoliceIcon fill={ routeName === mainRoute.police
+                    ? colors.black
+                    : colors.black}/>
 
             <Text
               style={{
                 color:
                   routeName === mainRoute.police
-                    ? colors.primaryColor
-                    : colors.inacticeGradient1,
-                marginTop: 5,
+                    ? colors.black
+                    : colors.black,
+                    fontFamily: 'Outfit-Medium',
+                    fontSize: 16,
               }}>
               police
             </Text>
@@ -86,28 +86,46 @@ const Nav = ({route, navigation}) => {
           onPress={() => {
             navigation.navigate(mainRoute.sos);
           }}>
-          <View
+          {/* <LinearGradient
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    colors={[colors.blue1, colors.blue2, colors.blue3]}
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 60,
+              width: 60,
+           
+              borderRadius: 70,
+              marginBottom: 25,
+            }}> */}
+
+          <LinearGradient
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 0}}
+            colors={['rgba(252, 155, 92, 1)', 'rgba(255, 24, 24, 1)']}
             style={{
               alignItems: 'center',
               justifyContent: 'center',
               height: 60,
               width: 60,
               borderRadius: 70,
-              backgroundColor: colors.inactiveColor,
               marginBottom: 25,
             }}>
-            <Text
-              style={{
-                color:
-                  routeName === mainRoute.sos
-                    ? colors.primaryColor
-                    : colors.inacticeGradient1,
-                fontFamily: 'Outfit-Medium',
-                fontSize: 20,
-              }}>
-              SOS
-            </Text>
-          </View>
+            <View>
+              <Text
+                style={{
+                  color:
+                    routeName === mainRoute.sos
+                      ? colors.white
+                      : colors.white,
+                  fontFamily: 'Outfit-Medium',
+                  fontSize: 20,
+                }}>
+                SOS
+              </Text>
+            </View>
+          </LinearGradient>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -119,13 +137,15 @@ const Nav = ({route, navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
+              <Setting/>
             <Text
               style={{
                 color:
                   routeName === mainRoute.police
-                    ? colors.primaryColor
-                    : colors.inacticeGradient1,
-                marginTop: 5,
+                  ? colors.black
+                  : colors.black,
+                  fontFamily: 'Outfit-Medium',
+                  fontSize: 16,
               }}>
               Setting
             </Text>

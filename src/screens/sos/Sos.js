@@ -8,9 +8,7 @@ import shop from '../../../assets/icons/Shop.svg'
 export default Sos = () => {
     return (
         <View style={styles.container}>
-       
-
-          
+     <Text>Sos</Text>
         </View>
     );
 }
