@@ -6,9 +6,8 @@ import colors from '../../../assets/colors/colors';
 import authRoute from '../route/authRoute';
 import mainRoute from '../route/mainRoute';
 import Sos from '../../screens/sos/Sos';
-import setting from '../../screens/setting/Setting';
 import police from '../../screens/police/police';
-
+import SettingScreen from '../../../src/screens/setting/Setting';
 import PoliceIcon from '../../../assets/icons/Police.svg';
 import Setting from '../../../assets/icons/Setting.svg';
 import shop from '../../../assets/icons/Shop.svg';
@@ -37,7 +36,7 @@ const Nav = ({route, navigation}) => {
         />
         <NavStack.Screen
           name={mainRoute.setting}
-          component={setting}
+          component={SettingScreen}
           options={{headerShown: false}}
         />
       </NavStack.Navigator>
@@ -77,7 +76,7 @@ const Nav = ({route, navigation}) => {
                 fontFamily: 'Outfit-Medium',
                 fontSize: 16,
               }}>
-              police
+              Police
             </Text>
           </View>
         </TouchableOpacity>
@@ -139,7 +138,7 @@ const Nav = ({route, navigation}) => {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(mainRoute.police);
+            navigation.navigate(mainRoute.setting);
           }}>
           <View
             style={{
@@ -150,7 +149,7 @@ const Nav = ({route, navigation}) => {
             <Text
               style={{
                 color:
-                  routeName === mainRoute.police ? colors.black : colors.black,
+                  routeName === mainRoute.setting ? colors.black : colors.black,
                 fontFamily: 'Outfit-Medium',
                 fontSize: 16,
               }}>
