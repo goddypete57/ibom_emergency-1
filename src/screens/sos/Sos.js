@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import Lottie from 'lottie-react-native';
+
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
@@ -50,24 +52,19 @@ export default Sos = ({ navigation }) => {
           the nearest Security
         </Text>
       </View>
-     
+      <Lottie source={require('../../../assets/ripple.json')} autoPlay />
+
       <TouchableOpacity
         onPress={() => navigation.navigate(mainRoute.getHelp)}
         style={styles.circleWrapper}>
 
-        <View style={[styles.SecondText, styles.center]}>
-
-          <View
-            style={{
-              width: 208.66,
-              height: 208.66,
-              backgroundColor: colors.red,
-              borderRadius: 100,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-            <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
-          </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            // backgroundColor: colors.white,
+          }}>
+          <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
         </View>
 
       </TouchableOpacity>
