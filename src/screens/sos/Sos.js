@@ -21,10 +21,12 @@ export default Sos = ({ navigation }) => {
           position: 'absolute',
         }}
       />
+      <Lottie source={require('../../../assets/ripple.json')} autoPlay />
       <View style={styles.header}>
         <TouchableOpacity>
           <Menu />
         </TouchableOpacity>
+        
         <View style={styles.textandImageWrapper}>
           <View style={styles.textWrapper}>
             <Text style={styles.welcomeText}>
@@ -45,6 +47,7 @@ export default Sos = ({ navigation }) => {
           />
         </View>
       </View>
+      
       <View style={styles.keepCalmWrapper}>
         <Text style={styles.keepCalmText}>KEEP CALM!</Text>
         <Text style={styles.SecondText}>
@@ -52,7 +55,7 @@ export default Sos = ({ navigation }) => {
           the nearest Security
         </Text>
       </View>
-      <Lottie source={require('../../../assets/ripple.json')} autoPlay />
+      
 
       <TouchableOpacity
         onPress={() => navigation.navigate(mainRoute.getHelp)}
@@ -62,7 +65,11 @@ export default Sos = ({ navigation }) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            // backgroundColor: colors.white,
+            marginTop: 25,
+            backgroundColor: colors.red,
+            width: 200,
+            height: 200,
+            borderRadius: 200,
           }}>
           <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
         </View>
