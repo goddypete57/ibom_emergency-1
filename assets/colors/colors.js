@@ -13,6 +13,7 @@ linearGradientRed1: '#FF0202',
 linearGradientRed2: '#E41717',
 linearGradientOrange1: '#FC9B5C',
 linearGradientOrange2: '#FF1818',
+white:'#ffffff'
 };
 
 export default colors;
