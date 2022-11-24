@@ -12,6 +12,9 @@ linearGradientOrange1: '#FC9B5C',
 linearGradientOrange2: '#FF1818',
 white:'#ffffff',
 black:'#1B1919',
+lightOrange:'#FFECDF',
+brown:'#543623',
+red:"#FF1818"
 };
 
 export default colors;

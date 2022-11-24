@@ -64,18 +64,18 @@ const Nav = ({route, navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-           <PoliceIcon fill={ routeName === mainRoute.police
-                    ? colors.black
-                    : colors.black}/>
+            <PoliceIcon
+              fill={
+                routeName === mainRoute.police ? colors.black : colors.black
+              }
+            />
 
             <Text
               style={{
                 color:
-                  routeName === mainRoute.police
-                    ? colors.black
-                    : colors.black,
-                    fontFamily: 'Outfit-Medium',
-                    fontSize: 16,
+                  routeName === mainRoute.police ? colors.black : colors.black,
+                fontFamily: 'Outfit-Medium',
+                fontSize: 16,
               }}>
               police
             </Text>
@@ -111,14 +111,23 @@ const Nav = ({route, navigation}) => {
               width: 60,
               borderRadius: 70,
               marginBottom: 25,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 3,
+              },
+             
+              elevation: 10,
+              shadowOpacity: 0.9,
+             
+
+
             }}>
             <View>
               <Text
                 style={{
                   color:
-                    routeName === mainRoute.sos
-                      ? colors.white
-                      : colors.white,
+                    routeName === mainRoute.sos ? colors.white : colors.white,
                   fontFamily: 'Outfit-Medium',
                   fontSize: 20,
                 }}>
@@ -137,15 +146,13 @@ const Nav = ({route, navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-              <Setting/>
+            <Setting />
             <Text
               style={{
                 color:
-                  routeName === mainRoute.police
-                  ? colors.black
-                  : colors.black,
-                  fontFamily: 'Outfit-Medium',
-                  fontSize: 16,
+                  routeName === mainRoute.police ? colors.black : colors.black,
+                fontFamily: 'Outfit-Medium',
+                fontSize: 16,
               }}>
               Setting
             </Text>
