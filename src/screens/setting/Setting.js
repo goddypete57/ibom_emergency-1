@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, } from "react-native";
-
 import colors from '../../../assets/colors/colors';
 
 
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: colors.black,
+        backgroundColor: colors.white,
     },
     text: {
         color: colors.white,
