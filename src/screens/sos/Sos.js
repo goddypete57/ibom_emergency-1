@@ -3,9 +3,10 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
+import mainRoute from '../../navigation/route/mainRoute';
 
 
-export default Sos = () => {
+export default Sos = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Image
@@ -51,7 +52,9 @@ export default Sos = () => {
         </Text>
       </View>
 
-      <View style={styles.circleWrapper}>
+      <TouchableOpacity 
+      onPress={() => navigation.navigate(mainRoute.getHelp)}
+      style={styles.circleWrapper}>
 
         <View style={[styles.SecondText,styles.center]}>
 
@@ -68,7 +71,7 @@ export default Sos = () => {
         </View>
         </View>
       
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
