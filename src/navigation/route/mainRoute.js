@@ -1,7 +1,8 @@
 const mainRoute = {
     sos: 'Sos',
     police:'Police',
-    setting:'Setting'
+    setting:'Setting',
+    getHelp: 'GetHelp',
 };
 
 export default mainRoute;

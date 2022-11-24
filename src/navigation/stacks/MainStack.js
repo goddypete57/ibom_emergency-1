@@ -8,12 +8,12 @@ import mainRoute from '../route/mainRoute';
 import Sos from '../../screens/sos/Sos';
 import setting from '../../screens/setting/Setting';
 import police from '../../screens/police/police';
-
 import PoliceIcon from '../../../assets/icons/Police.svg';
 import Setting from '../../../assets/icons/Setting.svg';
 import shop from '../../../assets/icons/Shop.svg';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import GetHelp from '../../screens/sos/GetHelp';
 
 const Stack = createNativeStackNavigator();
 const NavStack = createNativeStackNavigator();
@@ -167,6 +167,7 @@ export default MainStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Nav" component={Nav} options={{headerShown: false}} />
+      <Stack.Screen name={mainRoute.getHelp} component={GetHelp} options={{headerShown: false}} />
     </Stack.Navigator>
   );
 };
