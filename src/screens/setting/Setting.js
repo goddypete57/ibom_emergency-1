@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import colors from '../../../assets/colors/colors';
 
-export default Sos = () => {
+export default Setting = () => {
     return (
         <View style={styles.container}>
 

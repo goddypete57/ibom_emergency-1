@@ -139,7 +139,7 @@ const Nav = ({route, navigation}) => {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(mainRoute.police);
+            navigation.navigate(mainRoute.setting);
           }}>
           <View
             style={{
