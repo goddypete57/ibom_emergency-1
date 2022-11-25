@@ -1,14 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import Lottie from 'lottie-react-native';
-
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
-import mainRoute from '../../navigation/route/mainRoute';
 
 
-export default Sos = ({ navigation }) => {
+export default GetHelp = () => {
   return (
     <View style={styles.container}>
       <Image
@@ -21,12 +18,9 @@ export default Sos = ({ navigation }) => {
           position: 'absolute',
         }}
       />
-      <Lottie source={require('../../../assets/ripple.json')} autoPlay />
       <View style={styles.header}>
         <TouchableOpacity>
-          <Menu />
         </TouchableOpacity>
-        
         <View style={styles.textandImageWrapper}>
           <View style={styles.textWrapper}>
             <Text style={styles.welcomeText}>
@@ -47,7 +41,7 @@ export default Sos = ({ navigation }) => {
           />
         </View>
       </View>
-      
+
       <View style={styles.keepCalmWrapper}>
         <Text style={styles.keepCalmText}>KEEP CALM!</Text>
         <Text style={styles.SecondText}>
@@ -55,26 +49,25 @@ export default Sos = ({ navigation }) => {
           the nearest Security
         </Text>
       </View>
-      
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate(mainRoute.getHelp)}
-        style={styles.circleWrapper}>
+      <View style={styles.circleWrapper}>
+
+        <View style={[styles.SecondText,styles.center]}>
 
         <View
           style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 25,
+            width: 208.66,
+            height: 208.66,
             backgroundColor: colors.red,
-            width: 200,
-            height: 200,
-            borderRadius: 200,
+            borderRadius: 100,
+            justifyContent:'center',
+            alignItems:'center'
           }}>
           <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
         </View>
-
-      </TouchableOpacity>
+        </View>
+      
+      </View>
     </View>
   );
 };
@@ -137,24 +130,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
   },
-  callhelpText: {
+  callhelpText:{
     color: colors.white,
     fontSize: 32,
     fontFamily: 'Outfit-Medium',
     textAlign: 'center',
   },
 
-  circleWrapper: {
-    alignSelf: 'center',
-    marginTop: 35
-  },
-  glowContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 8,
-    bottom: 0,
-    left: 0,
-    right: 4,
-  },
+  circleWrapper:{
+    alignSelf:'center',
+    marginTop:35
+  }
 });

@@ -6,13 +6,14 @@ import colors from '../../../assets/colors/colors';
 import authRoute from '../route/authRoute';
 import mainRoute from '../route/mainRoute';
 import Sos from '../../screens/sos/Sos';
+import setting from '../../screens/setting/Setting';
 import police from '../../screens/police/police';
-import SettingScreen from '../../../src/screens/setting/Setting';
 import PoliceIcon from '../../../assets/icons/Police.svg';
 import Setting from '../../../assets/icons/Setting.svg';
 import shop from '../../../assets/icons/Shop.svg';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import GetHelp from '../../screens/sos/GetHelp';
 
 const Stack = createNativeStackNavigator();
 const NavStack = createNativeStackNavigator();
@@ -36,7 +37,7 @@ const Nav = ({route, navigation}) => {
         />
         <NavStack.Screen
           name={mainRoute.setting}
-          component={SettingScreen}
+          component={setting}
           options={{headerShown: false}}
         />
       </NavStack.Navigator>
@@ -76,7 +77,7 @@ const Nav = ({route, navigation}) => {
                 fontFamily: 'Outfit-Medium',
                 fontSize: 16,
               }}>
-              Police
+              police
             </Text>
           </View>
         </TouchableOpacity>
@@ -138,7 +139,7 @@ const Nav = ({route, navigation}) => {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(mainRoute.setting);
+            navigation.navigate(mainRoute.police);
           }}>
           <View
             style={{
@@ -149,7 +150,7 @@ const Nav = ({route, navigation}) => {
             <Text
               style={{
                 color:
-                  routeName === mainRoute.setting ? colors.black : colors.black,
+                  routeName === mainRoute.police ? colors.black : colors.black,
                 fontFamily: 'Outfit-Medium',
                 fontSize: 16,
               }}>
@@ -166,6 +167,7 @@ export default MainStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Nav" component={Nav} options={{headerShown: false}} />
+      <Stack.Screen name={mainRoute.getHelp} component={GetHelp} options={{headerShown: false}} />
     </Stack.Navigator>
   );
 };
