@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import Lottie from 'lottie-react-native';
+
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
@@ -7,7 +9,7 @@ import mainRoute from '../../navigation/route/mainRoute';
 import {MotiView} from 'moti';
 import {color, Easing} from 'react-native-reanimated';
 
-export default Sos = ({navigation}) => {
+export default Sos = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image
@@ -20,6 +22,7 @@ export default Sos = ({navigation}) => {
           position: 'absolute',
         }}
       />
+      <Lottie source={require('../../../assets/ripple.json')} autoPlay />
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => {
@@ -27,6 +30,7 @@ export default Sos = ({navigation}) => {
           }}>
           <Menu />
         </TouchableOpacity>
+        
         <View style={styles.textandImageWrapper}>
           <View style={styles.textWrapper}>
             <Text style={styles.welcomeText}>
@@ -47,7 +51,7 @@ export default Sos = ({navigation}) => {
           />
         </View>
       </View>
-
+      
       <View style={styles.keepCalmWrapper}>
         <Text style={styles.keepCalmText}>KEEP CALM!</Text>
         <Text style={styles.SecondText}>
@@ -56,41 +60,25 @@ export default Sos = ({navigation}) => {
         </Text>
       </View>
 
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate(mainRoute.getHelp)}
-        style={styles.circleWrapper}>
-        <View style={[styles.dot, styles.center]}>
-          {[...Array(3).keys()].map(index => {
-            return (
-              <MotiView
-                from={{opacity: 0.7, scale: 1}}
-                animate={{opacity: 0, scale: 2.1}}
-                transition={{
-                  type: 'timing',
-                  duration: 3000,
-                  easing: Easing.out(Easing.ease),
-                  loop: true,
-                  delay: index * 400,
-                  repeatReverse: false,
-                }}
-                key={index}
-                style={[StyleSheet.absoluteFillObject, styles.dot]}
-              />
-            );
-          })}
-          <View
-            style={{
-              width: 208.66,
-              height: 208.66,
-              backgroundColor: colors.red,
-              borderRadius: 100,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
-          </View>
+      <TouchableOpacity 
+      onPress={() => navigation.navigate(mainRoute.getHelp)}
+      style={styles.circleWrapper}>
+
+        <View style={[styles.SecondText,styles.center]}>
+
+        <View
+          style={{
+            width: 208.66,
+            height: 208.66,
+            backgroundColor: colors.red,
+            borderRadius: 100,
+            justifyContent:'center',
+            alignItems:'center'
+          }}>
+          <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
         </View>
+        </View>
+      
       </TouchableOpacity>
     </View>
   );
@@ -154,25 +142,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
   },
-  callhelpText: {
+  callhelpText:{
     color: colors.white,
     fontSize: 32,
     fontFamily: 'Outfit-Medium',
     textAlign: 'center',
   },
 
-  circleWrapper: {
-    alignSelf: 'center',
-    marginTop: 80,
-  },
-  dot: {
-    width: 150.66,
-    height: 150.66,
-    borderRadius: 250.66,
-    backgroundColor: colors.alpha_orange,
-  },
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  circleWrapper:{
+    alignSelf:'center',
+    marginTop:35
+  }
 });
