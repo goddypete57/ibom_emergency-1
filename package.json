@@ -14,11 +14,11 @@
     "@react-navigation/drawer": "^6.5.1",
     "@react-navigation/native": "^6.0.14",
     "@react-navigation/native-stack": "^6.9.2",
-<<<<<<< HEAD
+
     "hermes-engine": "^0.11.0",
-=======
+
     "lottie-react-native": "^5.1.4",
->>>>>>> dce7e1faef9ea13520af8098f3c3b09ef33eb68d
+
     "moti": "^0.21.0",
     "react": "18.1.0",
     "react-native": "0.70.6",

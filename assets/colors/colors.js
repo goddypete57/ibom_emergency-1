@@ -14,12 +14,12 @@ black:'#1B1919',
 lightOrange:'#FFECDF',
 brown:'#543623',
 red:"#FF1818",
-<<<<<<< HEAD
-alpha_orange:'#FC965A'
-=======
+
+alpha_orange:'#FC965A',
+
 white:'#ffffff',
 appTopBar: '#FFECDF'
->>>>>>> dce7e1faef9ea13520af8098f3c3b09ef33eb68d
+
 };
 
 export default colors;
