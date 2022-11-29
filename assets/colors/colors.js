@@ -14,7 +14,8 @@ white:'#ffffff',
 black:'#1B1919',
 lightOrange:'#FFECDF',
 brown:'#543623',
-red:"#FF1818"
+red:"#FF1818",
+alpha_orange:'#FC965A'
 };
 
 export default colors;
