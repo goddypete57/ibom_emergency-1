@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
@@ -43,30 +43,29 @@ export default GetHelp = () => {
       </View>
 
       <View style={styles.keepCalmWrapper}>
-        <Text style={styles.keepCalmText}>KEEP CALM!</Text>
+        <Text style={styles.keepCalmText}>Do not panic</Text>
         <Text style={styles.SecondText}>
-          Double Tap the button below to scan for{'\n'}
-          the nearest Security
+          Help is on the way
         </Text>
       </View>
 
       <View style={styles.circleWrapper}>
 
-        <View style={[styles.SecondText,styles.center]}>
+        <View style={[styles.SecondText, styles.center]}>
 
-        <View
-          style={{
-            width: 208.66,
-            height: 208.66,
-            backgroundColor: colors.red,
-            borderRadius: 100,
-            justifyContent:'center',
-            alignItems:'center'
-          }}>
-          <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
+          <View
+            style={{
+              width: 208.66,
+              height: 208.66,
+              backgroundColor: colors.red,
+              borderRadius: 100,
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+            <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
+          </View>
         </View>
-        </View>
-      
+
       </View>
     </View>
   );
@@ -130,15 +129,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
   },
-  callhelpText:{
+  callhelpText: {
     color: colors.white,
     fontSize: 32,
     fontFamily: 'Outfit-Medium',
     textAlign: 'center',
   },
 
-  circleWrapper:{
-    alignSelf:'center',
-    marginTop:35
+  circleWrapper: {
+    alignSelf: 'center',
+    marginTop: 35
   }
 });
