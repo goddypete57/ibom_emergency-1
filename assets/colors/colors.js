@@ -18,8 +18,11 @@ red:"#FF1818",
 alpha_orange:'#FC965A',
 
 white:'#ffffff',
-appTopBar: '#FFECDF'
-
+appTopBar: '#FFECDF',
+deepGreen:'#02382E',
+Green:'#056755',
+lightGreen:'#2A534C',
+orange:'#FF6244'
 };
 
 export default colors;

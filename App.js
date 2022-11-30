@@ -19,8 +19,8 @@ const RootNavigator = () => {
     <NavigationContainer>
       {
         isLoading ? <Splash /> :
-          !token ? <MainStack /> :
-            <AuthStack />}
+          !token ? <AuthStack /> :
+            <MainStack />}
     </NavigationContainer>
   )
 }
