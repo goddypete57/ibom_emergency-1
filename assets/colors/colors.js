@@ -19,10 +19,16 @@ alpha_orange:'#FC965A',
 
 white:'#ffffff',
 appTopBar: '#FFECDF',
+
 deepGreen:'#02382E',
 Green:'#056755',
 lightGreen:'#2A534C',
-orange:'#FF6244'
+orange:'#FF6244',
+
+inactive2: '#D1D1D6',
+greenGradient1: '#02381E',
+greenGradient2: '#086136',
+
 };
 
 export default colors;
