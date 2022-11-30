@@ -14,6 +14,9 @@ black:'#1B1919',
 lightOrange:'#FFECDF',
 brown:'#543623',
 red:"#FF1818",
+
+alpha_orange:'#FC965A',
+
 white:'#ffffff',
 appTopBar: '#FFECDF',
 inactive2: '#D1D1D6',
