@@ -51,18 +51,7 @@ export default GetHelp = () => {
 
       <View style={styles.circleWrapper}>
 
-        //display multiple lines using for loop
-        {
-          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
-            return (
-              <View style={{
-                height: 1,
-                // width: "100%",
-              }} key={index} />
-            );
-          }
-          )
-        }
+
 
       </View>
     </View>
