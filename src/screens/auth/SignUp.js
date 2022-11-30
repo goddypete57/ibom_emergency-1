@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, TextInput, ScrollView, TouchableHighlight } from "react-native";
 
-import MaskInput from 'react-native-mask-input';
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+
 
 import colors from "../../../assets/colors/colors";
 import authRouts from "../../navigation/routs/authRouts";

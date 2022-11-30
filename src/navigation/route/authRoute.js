@@ -1,5 +1,8 @@
 const authRoute = {
-    login: 'Login'
+    onbordingScreen:'OnbordingScreen',
+    login:'Login',
+    singUp:'SignUP',
+
 };
 
 export default authRoute;
