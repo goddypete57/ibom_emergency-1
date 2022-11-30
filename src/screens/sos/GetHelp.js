@@ -51,20 +51,18 @@ export default GetHelp = () => {
 
       <View style={styles.circleWrapper}>
 
-        <View style={[styles.SecondText, styles.center]}>
-
-          <View
-            style={{
-              width: 208.66,
-              height: 208.66,
-              backgroundColor: colors.red,
-              borderRadius: 100,
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-            <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
-          </View>
-        </View>
+        //display multiple lines using for loop
+        {
+          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+            return (
+              <View style={{
+                height: 1,
+                // width: "100%",
+              }} key={index} />
+            );
+          }
+          )
+        }
 
       </View>
     </View>
