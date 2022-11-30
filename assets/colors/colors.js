@@ -15,7 +15,10 @@ lightOrange:'#FFECDF',
 brown:'#543623',
 red:"#FF1818",
 white:'#ffffff',
-appTopBar: '#FFECDF'
+appTopBar: '#FFECDF',
+inactive2: '#D1D1D6',
+greenGradient1: '#02381E',
+greenGradient2: '#086136',
 };
 
 export default colors;

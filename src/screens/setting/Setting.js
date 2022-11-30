@@ -1,18 +1,23 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import colors from '../../../assets/colors/colors';
 
 export default Setting = () => {
     return (
         <View style={styles.container}>
 
-            <View style={{
-                height: 70,
-                backgroundColor: colors.appTopBar,
-                flexDirection: 'row',
-            }}>
-
-            </View>
+            <SafeAreaView>
+                <View style={styles.headerWrapper}>
+                    <TouchableOpacity onPress={() => { }}>
+                        <Image
+                            source={require('../../../assets/images/back.png')}
+                            style={styles.headerLeft}
+                        />
+                    </TouchableOpacity>
+                    <Text style={styles.headerText}>Settings</Text>
+                </View>
+            </SafeAreaView>
 
             <View style={styles.profileWrapper}>
                 <Image
@@ -43,7 +48,7 @@ export default Setting = () => {
                     />
                 </View>
                 <View style={styles.privacyWrapper}>
-                <Image
+                    <Image
                         source={require('../../../assets/images/privacy.png')}
                         style={styles.privacyImage}
                     />
@@ -55,7 +60,7 @@ export default Setting = () => {
                     />
                 </View>
                 <View style={styles.logoutWrapper}>
-                <Image
+                    <Image
                         source={require('../../../assets/images/logout.png')}
                         style={styles.logoutImage}
                     />
@@ -73,16 +78,24 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         flexDirection: 'column'
     },
-    backIcon: {
+    headerWrapper: {
+        flexDirection: 'row',
+        backgroundColor: '#FFECDF',
+        alignItems: 'center',
+        paddingTop: 10,
+    },
+    headerLeft: {
+        marginStart: 16,
+        marginBottom: 22,
         width: 24,
         height: 21,
-        marginBottom: 20,
+        marginTop: 15,
     },
     headerText: {
         fontFamily: 'Outfit-Medium',
-        fontStyle: 24,
-        color: colors.textColor1,
+        fontSize: 20,
         marginStart: 33,
+        colors: colors.textColor1,
     },
     profileWrapper: {
         flexDirection: 'row',
