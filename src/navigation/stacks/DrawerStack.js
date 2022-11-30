@@ -22,6 +22,7 @@ import MainStack from './MainStack';
 
 import {AuthContext} from '../../../context/AuthContext';
 import Sos from '../../screens/sos/Sos';
+import mainRoute from '../route/mainRoute';
 
 const Drawer = createDrawerNavigator();
 
@@ -52,7 +53,7 @@ function DrawerContent(props) {
             paddingHorizontal: 20,
             paddingVertical: 30,
           }}>
-          <TouchableOpacity onPress={() => props.navigation.navigate()}>
+          <TouchableOpacity onPress={() => props.navigation.navigate(mainRoute.sos)}>
             <View style={styles.itemWrapper}>
               <SOSIcon />
               <Text style={styles.items}>Home</Text>
