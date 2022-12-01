@@ -4,8 +4,8 @@ import colors from '../../../assets/colors/colors';
 import GradientText from '../../Component/GradientText';
 import authRoute from '../../navigation/route/authRoute';
 import Button from '../../Component/Button';
-import {color} from 'react-native-reanimated';
-export default OnboardingScreen = (navigation) => {
+
+export default OnboardingScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
@@ -23,12 +23,14 @@ export default OnboardingScreen = (navigation) => {
         <Button
           title={'Set up your account'}
           textColor={colors.white}
-          onPress={ navigation.navigate(authRoute.setUpAccount)}
+          enabled={true}
+          onPress={()=> {navigation.navigate(authRoute.setUpAccount)}}
           buttonStyle={styles.Button}
         />
         <Button
           title={'Login'}
-          onPress={ navigation.navigate(authRoute.login)}
+          enabled={true}
+          onPress={()=> {navigation.navigate(authRoute.login)}}
           textColor={colors.textColor1}
           buttonStyle={styles.Button2}
           color={colors.gray2}

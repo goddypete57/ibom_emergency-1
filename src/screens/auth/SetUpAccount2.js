@@ -11,8 +11,10 @@ import {
 import colors from '../../../assets/colors/colors';
 import {AuthContext} from '../../../context/AuthContext';
 import Button from '../../Component/Button';
+import mainRoute from '../../navigation/route/mainRoute';
 
-export default SetUpAccount2 = () => {
+
+export default SetUpAccount2 = ({navigation}) => {
   const {login} = useContext(AuthContext);
   const [NextofKin, setNextOfKin] = useState('');
   const [NextofKinPhone, setNextOfKinPhone] = useState('');
@@ -72,7 +74,8 @@ export default SetUpAccount2 = () => {
         <View style={styles.ButtonWrapper}>
           <Button
             title={'Confirm'}
-            onPress={{}}
+            enabled={true}
+            onPress={()=>{navigation.navigate(mainRoute.sos)}}
             buttonStyle={styles.Button}
             textColor={colors.white}
           />

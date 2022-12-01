@@ -58,33 +58,33 @@ function DrawerContent(props) {
               <Text style={styles.items}>Home</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.navigation.navigate()}>
+          <TouchableOpacity >
             <View style={styles.itemWrapper}>
               <Persons />
               <Text style={styles.items}>My Profile</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.navigation.navigate()}>
+          <TouchableOpacity >
             <View style={styles.itemWrapper}>
               <Notfication />
               <Text style={styles.items}>Notfication</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.navigation.navigate()}>
+          <TouchableOpacity >
             <View style={styles.itemWrapper}>
               <Refresh />
               <Text style={styles.items}>Feedback</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => props.navigation.navigate()}>
+          <TouchableOpacity >
             <View style={styles.itemWrapper}>
               <Help />
               <Text style={styles.items}>Help & Support</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => props.navigation.navigate()}>
+          <TouchableOpacity >
             <View style={styles.itemWrapper}>
               <Info />
               <Text style={styles.items}>About App</Text>

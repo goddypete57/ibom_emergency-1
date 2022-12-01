@@ -11,8 +11,17 @@ const Stack = createNativeStackNavigator();
 export default AuthStack = () => {
   return (
     <Stack.Navigator>
-
-<Stack.Screen
+      <Stack.Screen
+        name={authRouts.onbordingScreen}
+        component={OnboardingScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={authRouts.setUpAccount}
+        component={SetUpAccount}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name={authRouts.setUpAccount2}
         component={SetUpAccount2}
         options={{headerShown: false}}
@@ -21,18 +30,6 @@ export default AuthStack = () => {
       <Stack.Screen
         name={authRouts.login}
         component={Login}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
-        name={authRouts.setUpAccount}
-        component={SetUpAccount}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
-        name={authRouts.onbordingScreen}
-        component={OnboardingScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

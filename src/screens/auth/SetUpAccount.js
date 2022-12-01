@@ -11,8 +11,8 @@ import {
 import colors from '../../../assets/colors/colors';
 import {AuthContext} from '../../../context/AuthContext';
 import Button from '../../Component/Button';
-
-export default SetUpAccount = () => {
+import authRoute from '../../navigation/route/authRoute';
+export default SetUpAccount = ({navigation}) => {
   const {login} = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -79,7 +79,8 @@ export default SetUpAccount = () => {
         <View style={styles.ButtonWrapper}>
           <Button
             title={'Go ahead...'}
-            onPress={{}}
+            enabled={true}
+            onPress={()=>{navigation.navigate(authRoute.setUpAccount2)}}
             buttonStyle={styles.Button}
             textColor={colors.white}
           />
