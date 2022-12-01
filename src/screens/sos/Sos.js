@@ -29,7 +29,8 @@ export default Sos = ({navigation}) => {
           <Menu />
         </TouchableOpacity>
 
-        <View style={styles.textandImageWrapper}>
+        <TouchableOpacity onPress={() => navigation.navigate(mainRoute.profile)}
+        style={styles.textandImageWrapper}>
           <View style={styles.textWrapper}>
             <Text style={styles.welcomeText}>
               Welcome <Text style={styles.userNmae}>Samuel</Text>
@@ -47,7 +48,7 @@ export default Sos = ({navigation}) => {
               borderRadius: 20,
             }}
           />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.keepCalmWrapper}>
