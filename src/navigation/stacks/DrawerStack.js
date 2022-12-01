@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import 'react-native-gesture-handler';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import colors from '../../../assets/colors/colors';
 import Help from '../../../assets/icons/helps.svg';
 import Persons from '../../../assets/icons/person.svg';
@@ -19,10 +19,9 @@ import SOSIcon from '../../../assets/icons/sos.svg';
 
 import MainStack from './MainStack';
 
-import { AuthContext } from '../../../context/AuthContext';
+import {AuthContext} from '../../../context/AuthContext';
 import Sos from '../../screens/sos/Sos';
-import mainRoute from '../route/mainRoute';
-import Profile from '../../screens/setting/profile/Profile';
+import mainRoute from '../route/mainRoute';zz
 
 const Drawer = createDrawerNavigator();
 
@@ -32,21 +31,16 @@ export default DrawerStack = () => {
       <Drawer.Screen
         name="Main"
         component={MainStack}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name={mainRoute.profile}
-        component={Profile}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
     </Drawer.Navigator>
   );
 };
 
 function DrawerContent(props) {
-  const { logout } = useContext(AuthContext);
+  const {logout} = useContext(AuthContext);
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <View style={styles.content}>
         <ScrollView
           vertical
@@ -109,8 +103,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit-Bold',
   },
 
-  content: {
-    marginTop: 25
+  content:{
+    marginTop:25
   },
   items: {
     flexDirection: 'row',
@@ -122,6 +116,6 @@ const styles = StyleSheet.create({
   itemWrapper: {
     flexDirection: 'row',
     marginTop: 40,
-    alignItems: 'center'
+    alignItems:'center'
   },
 });
