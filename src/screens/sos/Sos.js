@@ -87,7 +87,7 @@ export default Sos = ({navigation}) => {
               width: 208.66,
               height: 208.66,
               backgroundColor: colors.red,
-              borderRadius: 100,
+              borderRadius: 200,
               justifyContent: 'center',
               alignItems: 'center',
             }}>
