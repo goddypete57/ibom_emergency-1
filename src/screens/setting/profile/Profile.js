@@ -1,6 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, KeyboardAvoidingView, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, Image, KeyboardAvoidingView, TouchableOpacity, TextInput, Modal } from 'react-native';
 import colors from '../../../assets/colors/colors';
 
 
@@ -9,10 +9,35 @@ export default Profile = () => {
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
     const [dob, setDob] = useState("");
+    const [showModal, setShowModal] = useState(false)
 
     return (
         <View style={styles.container}>
             <SafeAreaView>
+                <Modal
+                    transparent
+                    visible={showModal}
+                    animationType={'fade'}
+                    onRequestClose={() => setShowModal(false)}
+                >
+                    <TouchableOpacity
+                        onPress={() => setShowModal(false)}
+                        style={{
+                            flex: 1
+                        }}>
+                        <View style={{
+                            width: 118,
+                            height: 35,
+                            elevation: 5,
+                            borderRadius: 5,
+                            backgroundColor: colors.textColor1
+                        }}>
+                            <Text>Edit profile</Text>
+                        </View>
+
+                    </TouchableOpacity>
+
+                </Modal>
                 <View style={styles.headerWrapper}>
                     <TouchableOpacity onPress={() => { }}>
                         <Image
@@ -247,8 +272,8 @@ const styles = StyleSheet.create({
         colors: colors.inactiveColor,
     },
     kycTick: {
-    width: 18,
-    height: 18,
-},
+        width: 18,
+        height: 18,
+    },
 
 });

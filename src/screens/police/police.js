@@ -28,37 +28,53 @@ export default Sos = () => {
             <Text style={styles.textDo}>What do you want to do?  (this copy can be
                 {'\n'} changed)</Text>
             <View style={styles.crimeWrapper}>
-                <View>
-                    <LinearGradient
-                        colors={[colors.linearGradientRed1, colors.linearGradientRed2]}
-                        start={{ x: 0.0, y: 1.0 }}
-                        end={{ x: 1.0, y: 1.0 }}
-                        style={styles.crimeTab}>
-                        <Image
-                            source={require('../../../assets/images/crime_icon.png')}
-                            style={styles.crimeImage}
-                        />
-                        <Text style={styles.crimeText}>Report a
-                            {'\n'}crime</Text>
-                    </LinearGradient>
-                </View>
+                <TouchableOpacity onPress={() => { }}>
+                    <View>
+                        <LinearGradient
+                            colors={[colors.linearGradientRed1, colors.linearGradientRed2]}
+                            start={{ x: 0.0, y: 1.0 }}
+                            end={{ x: 1.0, y: 1.0 }}
+                            style={styles.crimeTab}>
+                            <Image
+                                source={require('../../../assets/images/crime_icon.png')}
+                                style={styles.crimeImage}
+                            />
+                            <Text style={styles.crimeText}>Report a
+                                {'\n'}crime</Text>
+                        </LinearGradient>
+                    </View>
+                </TouchableOpacity>
+
                 <View style={styles.policeCheckpointWrapper}>
-                    <View style={styles.checkpointTab}>
-                        <Image
-                            source={require('../../../assets/images/checkpoint_icon.png')}
-                            style={styles.checkpointImage}
-                        />
-                        <Text style={styles.checkpointText}>Nearest Checkpoint</Text>
-                    </View>
-                    <View style={styles.policeTab}>
-                    <Image
-                            source={require('../../../assets/images/police_icon.png')}
-                            style={styles.policeImage}
-                        />
-                        <Text style={styles.policeText}>Nearest Police Station</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => { }}>
+                        <View style={styles.checkpointTab}>
+                            <Image
+                                source={require('../../../assets/images/checkpoint_icon.png')}
+                                style={styles.checkpointImage}
+                            />
+                            <Text style={styles.checkpointText}>Nearest Checkpoint</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { }}>
+                        <View style={styles.policeTab}>
+                            <Image
+                                source={require('../../../assets/images/police_icon.png')}
+                                style={styles.policeImage}
+                            />
+                            <Text style={styles.policeText}>Nearest Police Station</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
+            <TouchableOpacity onPress={() => { }}>
+                <View style={styles.officerTab}>
+                    <Image
+                        source={require('../../../assets/images/officer_icon.png')}
+                        style={styles.officerImage}
+                    />
+                    <Text style={styles.officerText}>Report a Police Officer</Text>
+                </View>
+            </TouchableOpacity>
 
         </View>
     );
@@ -200,6 +216,40 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginStart: 43,
         marginTop: 58,
+        colors: colors.textColor1,
+        marginBottom: 13,
+        marginEnd: 15,
+    },
+    officerTab: {
+        marginTop: 6,
+        marginStart: 16,
+        marginEnd: 16,
+        borderRadius: 10,
+        backgroundColor: colors.white,
+        width: 347,
+        height: 94,
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        shadowColor: colors.black,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.05,
+        shadowRadius: 10,
+        elevation: 3,
+    },
+    officerImage: {
+        marginTop: 13,
+        marginStart: 16,
+        width: 30,
+        height: 30,
+    },
+    officerText: {
+        fontFamily: 'Outfit-Regular',
+        fontSize: 16,
+        marginStart: 156,
+        marginTop: 19,
         colors: colors.textColor1,
         marginBottom: 13,
         marginEnd: 15,

@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import 'react-native-gesture-handler';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-
 import colors from '../../../assets/colors/colors';
 import Help from '../../../assets/icons/helps.svg';
 import Persons from '../../../assets/icons/person.svg';

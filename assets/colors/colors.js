@@ -19,7 +19,6 @@ alpha_orange:'#FC965A',
 gray2:'#E9E9E9',
 white:'#ffffff',
 appTopBar: '#FFECDF',
-
 deepGreen:'#02382E',
 Green:'#056755',
 lightGreen:'#2A534C',
