@@ -58,7 +58,7 @@ function DrawerContent(props) {
               <Text style={styles.items}>Home</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity >
+          <TouchableOpacity onPress={() => props.navigation.navigate(mainRoute.profile)}>
             <View style={styles.itemWrapper}>
               <Persons />
               <Text style={styles.items}>My Profile</Text>
