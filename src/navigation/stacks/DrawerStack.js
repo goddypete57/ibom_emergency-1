@@ -22,6 +22,7 @@ import MainStack from './MainStack';
 import {AuthContext} from '../../../context/AuthContext';
 import Sos from '../../screens/sos/Sos';
 import mainRoute from '../route/mainRoute';
+import Profile from '../../screens/setting/profile/Profile';
 
 const Drawer = createDrawerNavigator();
 
