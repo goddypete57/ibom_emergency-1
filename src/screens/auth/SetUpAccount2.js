@@ -22,7 +22,7 @@ export default SetUpAccount2 = ({ route, navigation }) => {
   const [NationalidentityNumber, setNationalId] = useState('');
 
   const canProceed =
-    NextofKin.length > 0 && NextofKinPhone.length > 0
+    NextofKin.length > 0 && NextofKinPhone.length >= 11
     && NationalidentityNumber.length == 11;
   //   let canLogin = email !== '' && password !== '';
   return (
@@ -45,9 +45,9 @@ export default SetUpAccount2 = ({ route, navigation }) => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.inputWrapper}>
           <View style={styles.Wrapper}>
-            <Text style={styles.text}>Next of Kin</Text>
+            <Text style={styles.text}>Next of Kin name</Text>
             <TextInput
-              style={styles.NextofKin}
+              style={styles.input}
               value={NextofKin}
               onChangeText={text => setNextOfKin(text)}
               selectionColor={'rgba(42, 83, 76, 0.7)'}
@@ -56,20 +56,22 @@ export default SetUpAccount2 = ({ route, navigation }) => {
 
             <Text style={styles.text2}>Next of Kin phone No.</Text>
             <TextInput
-              style={styles.NextofKinPhone}
+              style={styles.input}
               value={NextofKinPhone}
               onChangeText={text => setNextOfKinPhone(text)}
               selectionColor={'rgba(42, 83, 76, 0.7)'}
               placeholderTextColor={colors.inactiveColor}
+              keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
             />
 
             <Text style={styles.text2}>National  identity  Number</Text>
             <TextInput
-              style={styles.NationalidentityNumber}
+              style={styles.input}
               value={NationalidentityNumber}
               onChangeText={text => setNationalId(text)}
               selectionColor={'rgba(42, 83, 76, 0.7)'}
               placeholderTextColor={colors.inactiveColor}
+              keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
             />
 
             <Text style={styles.text3}>Please input your NIN</Text>
@@ -132,35 +134,16 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Outfit-Regular',
   },
-  NextofKinPhone: {
-    paddingVertical: 14,
+  input: {
+    paddingVertical: 12,
     backgroundColor: 'rgba(42, 83, 76, 0.1)',
     borderRadius: 5,
     width: '100%',
     marginTop: 5,
     fontSize: 18,
-    color: 'rgba(42, 83, 76, 0.7)',
+    color: colors.textGreen,
     fontFamily: 'Outfit-Regular',
-  },
-  NationalidentityNumber: {
-    paddingVertical: 14,
-    backgroundColor: 'rgba(42, 83, 76, 0.1)',
-    borderRadius: 5,
-    width: '100%',
-    marginTop: 5,
-    fontSize: 18,
-    color: 'rgba(42, 83, 76, 0.7)',
-    fontFamily: 'Outfit-Regular',
-  },
-  phoneNumber: {
-    paddingVertical: 14,
-    backgroundColor: 'rgba(42, 83, 76, 0.1)',
-    borderRadius: 5,
-    width: '100%',
-    marginTop: 5,
-    fontSize: 18,
-    color: 'rgba(42, 83, 76, 0.7)',
-    fontFamily: 'Outfit-Regular',
+    paddingHorizontal: 12,
   },
 
   Wrapper: { marginStart: 24, marginEnd: 24, marginTop: 95 },
