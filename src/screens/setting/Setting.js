@@ -4,6 +4,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import colors from '../../../assets/colors/colors';
 import endpoints from '../../../assets/EndPoint/Endpoint';
 import { AuthContext } from '../../../context/AuthContext';
+import mainRoute from '../../navigation/route/mainRoute';
 
 export default Setting = ({ navigation }) => {
     const { user, token, saveUser } = useContext(AuthContext);
@@ -23,7 +24,8 @@ export default Setting = ({ navigation }) => {
                 </View>
             </SafeAreaView>
 
-            <TouchableOpacity style={styles.profileWrapper}>
+            <TouchableOpacity onPress={() => navigation.navigate(mainRoute.profile)}
+            style={styles.profileWrapper}>
                 <View style={{
                     flexDirection: 'row',
                 }}>
