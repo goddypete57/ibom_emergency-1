@@ -13,7 +13,7 @@ export default Sos = ({ navigation }) => {
   const { user, token, saveUser } = useContext(AuthContext);
 
   useEffect(() => {
-    const response = fetch(endpoints.baseUrl + endpoints.user + (user ? user.id : '0'), {
+    const response = fetch(endpoints.baseUrl + endpoints.user, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
