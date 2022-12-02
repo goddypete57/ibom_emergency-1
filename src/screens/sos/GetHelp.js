@@ -5,7 +5,7 @@ import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
 
 
-export default GetHelp = () => {
+export default GetHelp = ({ navigation }) => {
   const width = useWindowDimensions().width;
   const [fadeAnim] = useState(new Animated.Value(0));
   spinValue = new Animated.Value(0);
@@ -63,7 +63,10 @@ export default GetHelp = () => {
           position: 'absolute',
         }}
       />
-      <View>
+      <View style={{
+        justifyContent: 'space-between',
+        flex: 1
+      }}>
         <View>
           <View style={styles.header}>
             <TouchableOpacity>
@@ -145,6 +148,12 @@ export default GetHelp = () => {
             }} />
           </View>
         </View>
+        <Button
+          title={'Cancel'}
+          onPress={() => navigation.goBack()}
+          buttonStyle={styles.button}
+          textColor={colors.white}
+        />
       </View>
     </View>
   );
@@ -213,6 +222,13 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontFamily: 'Outfit-Medium',
     textAlign: 'center',
+  },
+  button: {
+    width: '90%',
+    height: 50,
+    alignSelf: 'center',
+    marginTop: 63,
+    marginVertical: 50,
   },
 
 });
