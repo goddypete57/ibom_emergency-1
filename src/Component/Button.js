@@ -3,7 +3,7 @@ import { View, Text, TouchableHighlight, StyleSheet, ActivityIndicator } from "r
 import colors from "../../assets/colors/colors";
 
 
-export default Button = ({ title, onPress, buttonStyle, enabled, textColor, color, processing=false }) => {
+export default Button = ({ title, onPress, buttonStyle, enabled, textColor, color, processing = false }) => {
     return (
         <TouchableHighlight onPress={() => enabled ? onPress() : {}}
             underlayColor={colors.inactiveColor}
@@ -23,11 +23,13 @@ export default Button = ({ title, onPress, buttonStyle, enabled, textColor, colo
                     color: textColor ? textColor : colors.white,
                 })}>{title}</Text>
 
-                <ActivityIndicator
-                    animating={processing}
-                    color={colors.white}
-                    size="small"
-                />
+
+                {processing &&
+                    <ActivityIndicator
+                        animating={processing}
+                        color={colors.white}
+                        size="small"
+                    />}
             </View>
 
         </TouchableHighlight>
