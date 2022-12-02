@@ -57,6 +57,26 @@ export default GetHelp = () => {
         width: 250 / 360 * width,
         height: 250 / 360 * width,
       }}>
+        <Image
+          source={require('../../../assets/images/radar-bg.png')}
+          style={{
+            resizeMode: 'contain',
+            width: '100%',
+            height: '100%',
+            alignSelf: 'center',
+            position: 'absolute',
+          }}
+        />
+         <Image
+          source={require('../../../assets/images/radar-scan.png')}
+          style={{
+            resizeMode: 'contain',
+            width: '100%',
+            height: '100%',
+            alignSelf: 'center',
+          }}
+        />
+
 
       </View>
     </View>
