@@ -128,7 +128,7 @@ export default GetHelp = ({ navigation }) => {
             />
             <Animated.View style={{
               position: 'absolute',
-              backgroundColor: colors.lightGreen,
+              backgroundColor: colors.lightGreen2,
               width: 14 / 360 * width,
               height: 14 / 360 * width,
               borderRadius: 10 / 360 * width,
@@ -138,7 +138,7 @@ export default GetHelp = ({ navigation }) => {
             }} />
             <Animated.View style={{
               position: 'absolute',
-              backgroundColor: colors.lightGreen,
+              backgroundColor: colors.lightGreen2,
               width: 14 / 360 * width,
               height: 14 / 360 * width,
               borderRadius: 10 / 360 * width,
