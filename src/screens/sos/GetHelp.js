@@ -9,22 +9,22 @@ export default GetHelp = () => {
   const width = useWindowDimensions().width;
   spinValue = new Animated.Value(0);
 
-    // First set up animation 
-    Animated.loop(
-        Animated.timing(
-            this.spinValue,
-            {
-                toValue: 1,
-                duration: 3000,
-                easing: Easing.linear, // Easing is an additional import from react-native
-                useNativeDriver: true  // To make use of native driver for performance
-            }
-        )
-    ).start()
+  // First set up animation 
+  Animated.loop(
+    Animated.timing(
+      this.spinValue,
+      {
+        toValue: 1,
+        duration: 3000,
+        easing: Easing.linear, // Easing is an additional import from react-native
+        useNativeDriver: true  // To make use of native driver for performance
+      }
+    )
+  ).start()
 
-    const spin = this.spinValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '360deg']
+  const spin = this.spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
   })
 
   return (
@@ -87,18 +87,25 @@ export default GetHelp = () => {
             transform: [{ translateX: 3 }, { translateY: -1 }],
           }}
         />
-         <Animated.Image
+        <Animated.Image
           source={require('../../../assets/images/radar-scan.png')}
           style={{
             resizeMode: 'contain',
             width: '99%',
             height: '99%',
             alignSelf: 'center',
-            transform: [{ rotate: spin }, { perspective: 1000 }],
+            transform: [{ rotate: spin }],
           }}
         />
+        <View style={{
+          position: 'absolute',
+          backgroundColor: colors.Green,
+          width: 14 / 360 * width,
+          height: 14 / 360 * width,
+          borderRadius: 10 / 360 * width,
+          alignSelf: 'center',
 
-
+        }} />
       </View>
     </View>
   );
