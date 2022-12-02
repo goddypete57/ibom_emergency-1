@@ -6,7 +6,7 @@ import endpoints from '../../../../assets/EndPoint/Endpoint';
 import { AuthContext } from '../../../../context/AuthContext';
 
 
-export default Profile = () => {
+export default Profile = ({navigation}) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
@@ -60,7 +60,7 @@ export default Profile = () => {
 
                 </Modal>
                 <View style={styles.headerWrapper}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => {navigation.goBack() }}>
                         <Image
                             source={require('../../../../assets/images/back.png')}
                             style={styles.headerLeft}
@@ -128,10 +128,8 @@ const styles = StyleSheet.create({
     },
     headerLeft: {
         marginStart: 16,
-        marginBottom: 22,
         width: 24,
         height: 21,
-        marginTop: 15,
     },
     headerText: {
         fontFamily: 'Outfit-Medium',
@@ -154,8 +152,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: '#D9D9D9',
         marginTop: 26,
-        marginStart: 135,
-        marginEnd: 135,
+        alignSelf: 'center',
     },
     first: {
         marginStart: 16,
