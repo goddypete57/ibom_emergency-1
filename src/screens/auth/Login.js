@@ -17,12 +17,18 @@ import {AuthContext} from '../../../context/AuthContext';
 import endpoints from '../../../assets/EndPoint/Endpoint';
 import Toast from 'react-native-toast-message';
 import Button from '../../Component/Button';
+import InputField from '../../Component/InputField';
+import EyeClosed from '../../../assets/icons/EyeClosed.svg';
+
+
+
 export default Login = ({navigation}) => {
   const {login} = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isChecked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true);
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   const canProceed =
     email.length > 0 && password.length > 0 && emailReg.test(email);
@@ -115,6 +121,26 @@ export default Login = ({navigation}) => {
                 placeholderTextColor={colors.inactiveColor}
                 secureTextEntry={true}
               />
+               <InputField
+                                containerStyle={styles.Password}
+                                label="Password"
+                                style={{
+                                  flexGrow: 1,
+                                }}
+                                value={password}
+                                secureTextEntry={hidePassword}
+                                onChangeText={text => setPassword(text)}
+                                placeholder={"password"}
+                                leftComponet={
+                                    <TouchableOpacity
+                                        onPress={() => { setHidePassword(!hidePassword) }}>
+                                        {
+                                            hidePassword ?
+                                                <EyeClosed/> :
+                                                <EyeClosed />
+                                        }
+                                    </TouchableOpacity>}
+                                selectionColor={colors.primary} />
             </View>
             </KeyboardAvoidingView>
             <View style={styles.ButtonWrapper}>

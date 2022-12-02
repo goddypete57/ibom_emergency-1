@@ -1,7 +1,6 @@
 import React from "react";
 import { View, TextInput, Text } from "react-native";
-
-import colors from "../assets/colors/colors";
+import colors from "../../assets/colors/colors";
 
 
 export default function InputField({ leftComponet, containerStyle, label, ...rest }) {
