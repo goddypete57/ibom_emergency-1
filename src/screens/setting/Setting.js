@@ -45,7 +45,7 @@ export default Setting = ({ navigation }) => {
             </TouchableOpacity>
 
             <View style={styles.curveWrapper}>
-                <View style={styles.accountWrapper}>
+                <TouchableOpacity style={styles.accountWrapper}>
                     <Image
                         source={require('../../../assets/images/account.png')}
                         style={styles.accountImage}
@@ -56,8 +56,8 @@ export default Setting = ({ navigation }) => {
                         source={require('../../../assets/images/foward.png')}
                         style={styles.accountArrowWrapper}
                     />
-                </View>
-                <View style={styles.privacyWrapper}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.privacyWrapper}>
                     <Image
                         source={require('../../../assets/images/privacy.png')}
                         style={styles.privacyImage}
@@ -68,14 +68,14 @@ export default Setting = ({ navigation }) => {
                         source={require('../../../assets/images/foward.png')}
                         style={styles.privacyArrowWrapper}
                     />
-                </View>
-                <View style={styles.logoutWrapper}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.logoutWrapper}>
                     <Image
                         source={require('../../../assets/images/logout.png')}
                         style={styles.logoutImage}
                     />
                     <Text style={styles.logoutName}>Logout</Text>
-                </View>
+                </TouchableOpacity>
             </View>
 
         </View>
