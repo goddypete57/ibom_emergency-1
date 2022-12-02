@@ -17,6 +17,7 @@ red:"#FF1818",
 orange3:'#FF6244',
 alpha_orange:'#FC965A',
 gray2:'#E9E9E9',
+blue: '#2F80ED',
 white:'#ffffff',
 appTopBar: '#FFECDF',
 deepGreen:'#02382E',
@@ -30,6 +31,7 @@ greenGradient2: '#086136',
 lightGreen2:'#6EED4A',
 textGreen:'#02382E',
 popUp:'#FFF9F4',
+green2:'rgba(42, 83, 77, 0.8)'
 };
 
 export default colors;

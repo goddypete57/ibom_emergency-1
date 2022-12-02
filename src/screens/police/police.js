@@ -1,13 +1,33 @@
+import React, {useState, useEffect}  from "react";
+import { View, Text, StyleSheet, Image, Dimensions, } from "react-native";
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../../assets/colors/colors';
+import MapView, {PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps';
 
 
-export default Sos = () => {
+
+export default Police = () => {
+
+
+    const defaultProvider =
+    Platform.OS === 'ios' ? PROVIDER_DEFAULT : PROVIDER_GOOGLE;
     return (
         <View style={styles.container}>
+            {/* <Text style={styles.text}>Loading...</Text> */}
+     <MapView
+      provider={PROVIDER_GOOGLE}
+      style={styles.mapView}
+      initialRegion={{
+        latitude: 4.9057,
+        longitude: 7.8537,
+        latitudeDelta: 0.0025,
+        longitudeDelta: 0.0421,
+      }}>
+  
+      </MapView>
 
             <SafeAreaView>
                 <LinearGradient
@@ -76,6 +96,7 @@ export default Sos = () => {
                 </View>
             </TouchableOpacity>
 
+
         </View>
     );
 }
@@ -108,14 +129,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginStart: 17,
         marginTop: 20,
-        colors: colors.textColor1,
+        color: colors.textColor1,
     },
     textDo: {
         fontFamily: 'Outfit-Regular',
         fontSize: 16,
         marginStart: 17,
         marginTop: 8,
-        colors: colors.textColor1,
+        color: colors.textColor1,
     },
     crimeWrapper: {
         marginTop: 45,
@@ -183,7 +204,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginStart: 56,
         marginTop: 14,
-        colors: colors.textColor1,
+        color: colors.textColor1,
         marginBottom: 8,
         marginEnd: 15,
     },
@@ -216,7 +237,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginStart: 43,
         marginTop: 58,
-        colors: colors.textColor1,
+        color: colors.textColor1,
         marginBottom: 13,
         marginEnd: 15,
     },
@@ -250,8 +271,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginStart: 156,
         marginTop: 19,
-        colors: colors.textColor1,
+        color: colors.textColor1,
         marginBottom: 13,
         marginEnd: 15,
+    },
+     mapView: {
+     width: Dimensions.get("window").width,
+     height: Dimensions.get("window").height
+
     },
 });
