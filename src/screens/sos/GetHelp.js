@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
 
 
 export default GetHelp = () => {
+  const width = useWindowDimensions().width;
+
   return (
     <View style={styles.container}>
       <Image
@@ -51,7 +53,9 @@ export default GetHelp = () => {
 
       <View style={{
         alignSelf: 'center',
-    marginTop: 35
+        marginTop: 35,
+        width: 250 / 360 * width,
+        height: 250 / 360 * width,
       }}>
 
       </View>
