@@ -51,7 +51,8 @@ export default Profile = ({navigation}) => {
                             height: 35,
                             elevation: 5,
                             borderRadius: 5,
-                            backgroundColor: colors.textColor1
+                            backgroundColor: colors.textColor1,
+                            alignSelf: 'flex-end',
                         }}>
                             <Text>Edit profile</Text>
                         </View>
