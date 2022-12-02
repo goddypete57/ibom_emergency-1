@@ -19,7 +19,7 @@ export default SetUpAccount = ({ navigation }) => {
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   const canProceed =
     lastName.length > 0 && firstName.length > 0
-    && emailReg.test(email) && phoneNumber.length > 0;
+    && emailReg.test(email) && phoneNumber.length >= 11;
   return (
     <ScrollView
       vertical
