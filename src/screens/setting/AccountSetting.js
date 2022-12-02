@@ -21,15 +21,15 @@ export default AccountSetting = ({ navigation }) => {
 
             <Text style={styles.accountText}>Account Settings</Text>
 
-            <View style={styles.editWrapper}>
+            <TouchableOpacity style={styles.editWrapper}>
                 <Text style={styles.editText}>Edit Profile</Text>
 
                 <Image
                     source={require('../../../assets/images/foward.png')}
                     style={styles.editArrowWrapper}
                 />
-            </View>
-            <View style={styles.passwordWrapper}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.passwordWrapper}>
 
                 <Text style={styles.passwordText}>Change Password</Text>
 
@@ -37,7 +37,7 @@ export default AccountSetting = ({ navigation }) => {
                     source={require('../../../assets/images/foward.png')}
                     style={styles.passwordArrowWrapper}
                 />
-            </View>
+            </TouchableOpacity>
 
 
 
