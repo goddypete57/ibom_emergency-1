@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
@@ -7,7 +7,10 @@ import Menu from '../../../assets/icons/menu.svg';
 
 export default GetHelp = () => {
   const width = useWindowDimensions().width;
+  const [fadeAnim] = useState(new Animated.Value(0));
   spinValue = new Animated.Value(0);
+  const [x1, setX1] = useState(0);
+  const [y1, setY1] = useState(0);
 
   // First set up animation 
   Animated.loop(
@@ -21,6 +24,31 @@ export default GetHelp = () => {
       }
     )
   ).start()
+
+  useEffect(() => {
+    let visible = false;
+    setInterval(() => {
+      visible = !visible;
+      // setTimeout(() => {
+      if (visible) {
+        setX1(Math.floor(Math.random() * width));
+        setY1(Math.floor(Math.random() * width));
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true // <-- Add this
+        }).start();
+      } else {
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true // <-- Add this
+        }).start();
+      }
+      // }, 800)
+    }, 3000);
+
+  });
 
   const spin = this.spinValue.interpolate({
     inputRange: [0, 1],
@@ -97,14 +125,15 @@ export default GetHelp = () => {
             transform: [{ rotate: spin }],
           }}
         />
-        <View style={{
+        <Animated.View style={{
           position: 'absolute',
-          backgroundColor: colors.Green,
+          backgroundColor: colors.lightGreen,
           width: 14 / 360 * width,
           height: 14 / 360 * width,
           borderRadius: 10 / 360 * width,
           alignSelf: 'center',
-
+          opacity: fadeAnim,
+          transform: [{ translateX: x1 }, { translateY: y1 }],
         }} />
       </View>
     </View>
