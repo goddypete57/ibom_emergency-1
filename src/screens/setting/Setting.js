@@ -47,11 +47,15 @@ export default Setting = ({ navigation }) => {
             <View style={styles.curveWrapper}>
                 <TouchableOpacity onPress={() => navigation.navigate(mainRoute.accountSetting)}
                     style={styles.accountWrapper}>
-                    <Image
-                        source={require('../../../assets/images/account.png')}
-                        style={styles.accountImage}
-                    />
-                    <Text style={styles.accountName}>Account Settings</Text>
+                    <View style={{
+                        flexDirection: 'row',
+                    }}>
+                        <Image
+                            source={require('../../../assets/images/account.png')}
+                            style={styles.accountImage}
+                        />
+                        <Text style={styles.accountName}>Account Settings</Text>
+                    </View>
 
                     <Image
                         source={require('../../../assets/images/foward.png')}
@@ -60,12 +64,15 @@ export default Setting = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { }}
                     style={styles.privacyWrapper}>
-                    <Image
-                        source={require('../../../assets/images/privacy.png')}
-                        style={styles.privacyImage}
-                    />
-                    <Text style={styles.privacyName}>Privacy Policy</Text>
-
+                    <View style={{
+                        flexDirection: 'row',
+                    }}>
+                        <Image
+                            source={require('../../../assets/images/privacy.png')}
+                            style={styles.privacyImage}
+                        />
+                        <Text style={styles.privacyName}>Privacy Policy</Text>
+                    </View>
                     <Image
                         source={require('../../../assets/images/foward.png')}
                         style={styles.privacyArrowWrapper}
@@ -154,6 +161,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginStart: 10,
         marginTop: 41,
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     accountName: {
         fontFamily: 'Outfit-Regular',
@@ -172,6 +181,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginStart: 10,
         marginTop: 30,
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     privacyName: {
         fontFamily: 'Outfit-Regular',
