@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity,PermissionsAndroid,Platform } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
@@ -7,28 +7,10 @@ import mainRoute from '../../navigation/route/mainRoute';
 import { MotiView } from 'moti';
 import { color, Easing } from 'react-native-reanimated';
 import { AuthContext } from '../../../context/AuthContext';
-import endpoints from '../../../assets/EndPoint/Endpoint';
 
 export default Sos = ({ navigation }) => {
-  const { user, token, saveUser } = useContext(AuthContext);
-
-  useEffect(() => {
-    const response = fetch(endpoints.baseUrl + endpoints.user, {
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
-    });
-    response.then(res => res.json())
-      .then((data) => {
-        console.log(data);
-        if (response._j.ok) {
-          // console.log(data);
-          saveUser(data);
-        }
-      })
-
-  }, []);
-
+  const { user } = useContext(AuthContext);
+  
   return (
     <View style={styles.container}>
       <Image
