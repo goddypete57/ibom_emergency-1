@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import authRoute from '../route/authRoute';
@@ -8,17 +8,22 @@ import mainRoute from '../route/mainRoute';
 import Sos from '../../screens/sos/Sos';
 import setting from '../../screens/setting/Setting';
 import police from '../../screens/police/police';
-
 import PoliceIcon from '../../../assets/icons/Police.svg';
 import Setting from '../../../assets/icons/Setting.svg';
 import shop from '../../../assets/icons/Shop.svg';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import GetHelp from '../../screens/sos/GetHelp';
+import PoliceHightLight from '../../../assets/icons/policeHighLight.svg';
+import SettingHightLight from '../../../assets/icons/settinghightLight.svg';
+import Profile from '../../screens/setting/profile/Profile'
+import AccountSetting from '../../screens/setting/AccountSetting'
+
 
 const Stack = createNativeStackNavigator();
 const NavStack = createNativeStackNavigator();
 
-const Nav = ({route, navigation}) => {
+const Nav = ({ route, navigation }) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? mainRoute.sos;
 
   return (
@@ -27,18 +32,18 @@ const Nav = ({route, navigation}) => {
         <NavStack.Screen
           name={mainRoute.sos}
           component={Sos}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
 
         <NavStack.Screen
           name={mainRoute.police}
           component={police}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <NavStack.Screen
           name={mainRoute.setting}
           component={setting}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
       </NavStack.Navigator>
       <View
@@ -56,6 +61,7 @@ const Nav = ({route, navigation}) => {
           borderTopStartRadius: 20,
         }}>
         <TouchableOpacity
+          activeOpacity={0.8}
           onPress={() => {
             navigation.navigate(mainRoute.police);
           }}>
@@ -64,11 +70,8 @@ const Nav = ({route, navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <PoliceIcon
-              fill={
-                routeName === mainRoute.police ? colors.black : colors.black
-              }
-            />
+            {routeName === mainRoute.police ? <PoliceHightLight /> : <PoliceIcon />}
+
 
             <Text
               style={{
@@ -83,6 +86,7 @@ const Nav = ({route, navigation}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
+          activeOpacity={0.8}
           onPress={() => {
             navigation.navigate(mainRoute.sos);
           }}>
@@ -101,8 +105,8 @@ const Nav = ({route, navigation}) => {
             }}> */}
 
           <LinearGradient
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
             colors={['rgba(252, 155, 92, 1)', 'rgba(255, 24, 24, 1)']}
             style={{
               alignItems: 'center',
@@ -116,10 +120,10 @@ const Nav = ({route, navigation}) => {
                 width: 0,
                 height: 3,
               },
-             
+
               elevation: 10,
               shadowOpacity: 0.9,
-             
+
 
 
             }}>
@@ -138,6 +142,7 @@ const Nav = ({route, navigation}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
+          activeOpacity={0.8}
           onPress={() => {
             navigation.navigate(mainRoute.setting);
           }}>
@@ -146,7 +151,7 @@ const Nav = ({route, navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Setting />
+            {routeName === mainRoute.setting ? <SettingHightLight /> : <Setting />}
             <Text
               style={{
                 color:
@@ -163,10 +168,13 @@ const Nav = ({route, navigation}) => {
   );
 };
 
-export default MainStack = () => {
+export default MainStack = (route, navigation) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Nav" component={Nav} options={{headerShown: false}} />
+      <Stack.Screen name="Nav" component={Nav} options={{ headerShown: false }} />
+      <Stack.Screen name={mainRoute.getHelp} component={GetHelp} options={{ headerShown: false }} />
+      <Stack.Screen name={mainRoute.profile} component={Profile} options={{ headerShown: false }} />
+      <Stack.Screen name={mainRoute.accountSetting} component={AccountSetting} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };

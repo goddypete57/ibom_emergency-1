@@ -1,13 +1,13 @@
+
 import React, { useEffect, useContext, useState } from "react";
+
 import {StatusBar, Platform } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
-
-
 import Splash from "./src/screens/splash/Splash";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext.js";
 import AuthStack from "./src/navigation/stacks/AuthStack";
-import MainStack from "./src/navigation/stacks/MainStack";
+import MainStack from "./src/navigation/stacks/DrawerStack";
 
 
 
@@ -19,7 +19,7 @@ const RootNavigator = () => {
     <NavigationContainer>
       {
         isLoading ? <Splash /> :
-          !token ? <MainStack /> :
+          token ? <MainStack /> :
             <AuthStack />}
     </NavigationContainer>
   )

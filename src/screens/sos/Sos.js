@@ -1,11 +1,34 @@
-import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
+import mainRoute from '../../navigation/route/mainRoute';
+import { MotiView } from 'moti';
+import { color, Easing } from 'react-native-reanimated';
+import { AuthContext } from '../../../context/AuthContext';
+import endpoints from '../../../assets/EndPoint/Endpoint';
 
+export default Sos = ({ navigation }) => {
+  const { user, token, saveUser } = useContext(AuthContext);
 
-export default Sos = () => {
+  useEffect(() => {
+    const response = fetch(endpoints.baseUrl + endpoints.user, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    });
+    response.then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        if (response._j.ok) {
+          // console.log(data);
+          saveUser(data);
+        }
+      })
+
+  }, []);
+
   return (
     <View style={styles.container}>
       <Image
@@ -18,14 +41,20 @@ export default Sos = () => {
           position: 'absolute',
         }}
       />
+
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.openDrawer();
+          }}>
           <Menu />
         </TouchableOpacity>
-        <View style={styles.textandImageWrapper}>
+
+        <TouchableOpacity onPress={() => navigation.navigate(mainRoute.profile)}
+          style={styles.textandImageWrapper}>
           <View style={styles.textWrapper}>
             <Text style={styles.welcomeText}>
-              Welcome <Text style={styles.userNmae}>Samuel</Text>
+              Welcome <Text style={styles.userNmae}>{user ? user.firstName : ''}</Text>
               {'\n  '}
               <Text style={styles.profileStatus}>Complete profile</Text>
             </Text>
@@ -40,7 +69,7 @@ export default Sos = () => {
               borderRadius: 20,
             }}
           />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.keepCalmWrapper}>
@@ -51,24 +80,42 @@ export default Sos = () => {
         </Text>
       </View>
 
-      <View style={styles.circleWrapper}>
-
-        <View style={[styles.SecondText,styles.center]}>
-
-        <View
-          style={{
-            width: 208.66,
-            height: 208.66,
-            backgroundColor: colors.red,
-            borderRadius: 100,
-            justifyContent:'center',
-            alignItems:'center'
-          }}>
-          <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => navigation.navigate(mainRoute.getHelp)}
+        style={styles.circleWrapper}>
+        <View style={[styles.dot, styles.center]}>
+          {[...Array(3).keys()].map(index => {
+            return (
+              <MotiView
+                from={{ opacity: 0.7, scale: 1 }}
+                animate={{ opacity: 0, scale: 2 }}
+                transition={{
+                  type: 'timing',
+                  duration: 2000,
+                  easing: Easing.out(Easing.ease),
+                  loop: true,
+                  repeatReverse: false,
+                  delay: index * 400
+                }}
+                key={index}
+                style={[StyleSheet.absoluteFillObject, styles.dot]}
+              />
+            );
+          })}
+          <View
+            style={{
+              width: 208.66,
+              height: 208.66,
+              backgroundColor: colors.red,
+              borderRadius: 200,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.callhelpText}>Call{'\n'} Help</Text>
+          </View>
         </View>
-        </View>
-      
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -131,15 +178,23 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 5,
   },
-  callhelpText:{
+  callhelpText: {
     color: colors.white,
     fontSize: 32,
     fontFamily: 'Outfit-Medium',
     textAlign: 'center',
   },
 
-  circleWrapper:{
-    alignSelf:'center',
-    marginTop:35
-  }
+  circleWrapper: {
+    alignSelf: 'center',
+    marginTop: 80,
+  },
+
+  dot: {
+    width: 160.66,
+    height: 160.66,
+    borderRadius: 208.66,
+    backgroundColor: colors.alpha_orange
+  },
+  center: { alignItems: 'center', justifyContent: 'center' }
 });
