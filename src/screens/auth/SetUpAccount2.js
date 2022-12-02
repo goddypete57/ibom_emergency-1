@@ -21,7 +21,9 @@ export default SetUpAccount2 = ({ route, navigation }) => {
   const [NextofKinPhone, setNextOfKinPhone] = useState('');
   const [NationalidentityNumber, setNationalId] = useState('');
 
-
+  const canProceed =
+    NextofKin.length > 0 && NextofKinPhone.length > 0
+    && NationalidentityNumber.length == 11;
   //   let canLogin = email !== '' && password !== '';
   return (
     <ScrollView
@@ -77,8 +79,8 @@ export default SetUpAccount2 = ({ route, navigation }) => {
         <View style={styles.ButtonWrapper}>
           <Button
             title={'Confirm'}
-            enabled={true}
-            onPress={() => { navigation.navigate(mainRoute.sos) }}
+            enabled={canProceed}
+            onPress={() => { }}
             buttonStyle={styles.Button}
             textColor={colors.white}
           />
