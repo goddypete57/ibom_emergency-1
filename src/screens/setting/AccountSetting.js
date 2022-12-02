@@ -53,22 +53,21 @@ const styles = StyleSheet.create({
     },
     headerWrapper: {
         flexDirection: 'row',
-        backgroundColor: '#FFECDF',
+        backgroundColor: colors.appTopBar,
         alignItems: 'center',
-        paddingTop: 10,
+        paddingTop: 30,
+        paddingBottom: 20,
     },
     headerLeft: {
         marginStart: 16,
-        marginBottom: 22,
         width: 24,
         height: 21,
-        marginTop: 15,
     },
     headerText: {
         fontFamily: 'Outfit-Medium',
         fontSize: 20,
         marginStart: 33,
-        colors: colors.textColor1,
+        color: colors.textColor1,
     },
     accountText: {
         fontFamily: 'Outfit-Regular',
