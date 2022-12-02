@@ -7,7 +7,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import mainRoute from '../../navigation/route/mainRoute';
 
 export default Setting = ({ navigation }) => {
-    const { user, token, saveUser } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
 
     return (
         <View style={styles.container}>
@@ -25,7 +25,7 @@ export default Setting = ({ navigation }) => {
             </SafeAreaView>
 
             <TouchableOpacity onPress={() => navigation.navigate(mainRoute.profile)}
-            style={styles.profileWrapper}>
+                style={styles.profileWrapper}>
                 <View style={{
                     flexDirection: 'row',
                 }}>
@@ -45,7 +45,8 @@ export default Setting = ({ navigation }) => {
             </TouchableOpacity>
 
             <View style={styles.curveWrapper}>
-                <TouchableOpacity style={styles.accountWrapper}>
+                <TouchableOpacity onPress={() => navigation.navigate(mainRoute.accountSetting)}
+                    style={styles.accountWrapper}>
                     <Image
                         source={require('../../../assets/images/account.png')}
                         style={styles.accountImage}
@@ -57,7 +58,8 @@ export default Setting = ({ navigation }) => {
                         style={styles.accountArrowWrapper}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.privacyWrapper}>
+                <TouchableOpacity onPress={() => { }}
+                    style={styles.privacyWrapper}>
                     <Image
                         source={require('../../../assets/images/privacy.png')}
                         style={styles.privacyImage}
@@ -69,7 +71,8 @@ export default Setting = ({ navigation }) => {
                         style={styles.privacyArrowWrapper}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.logoutWrapper}>
+                <TouchableOpacity onPress={() => logout()}
+                    style={styles.logoutWrapper}>
                     <Image
                         source={require('../../../assets/images/logout.png')}
                         style={styles.logoutImage}
@@ -144,7 +147,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         borderTopStartRadius: 20,
         borderTopEndRadius: 20,
-        flex:1,
+        flex: 1,
         elevation: 5,
     },
     accountWrapper: {
