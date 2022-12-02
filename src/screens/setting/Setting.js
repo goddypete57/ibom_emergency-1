@@ -23,7 +23,7 @@ export default Setting = ({ navigation }) => {
                 </View>
             </SafeAreaView>
 
-            <View style={styles.profileWrapper}>
+            <TouchableOpacity style={styles.profileWrapper}>
                 <View style={{
                     flexDirection: 'row',
                 }}>
@@ -40,7 +40,7 @@ export default Setting = ({ navigation }) => {
                     source={require('../../../assets/images/foward.png')}
                     style={styles.arrowWrapper}
                 />
-            </View>
+            </TouchableOpacity>
 
             <View style={styles.curveWrapper}>
                 <View style={styles.accountWrapper}>
@@ -139,19 +139,10 @@ const styles = StyleSheet.create({
     curveWrapper: {
         marginTop: 25,
         flexDirection: 'column',
-        marginStart: 6,
-        marginEnd: 6,
-        height: 555,
         backgroundColor: colors.white,
         borderTopStartRadius: 20,
         borderTopEndRadius: 20,
-        shadowColor: colors.linearGradientOrange1,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 15,
+        flex:1,
         elevation: 5,
     },
     accountWrapper: {
