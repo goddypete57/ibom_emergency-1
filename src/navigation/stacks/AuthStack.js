@@ -35,9 +35,7 @@ export default AuthStack = () => {
         name={authRouts.login}
         component={Login}
         options={{headerShown: false}}
-      />
-
-
+        />
 <Stack.Screen
         name={authRouts.verifyOtp}
         component={verifyOtp}
