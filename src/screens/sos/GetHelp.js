@@ -9,8 +9,8 @@ export default GetHelp = () => {
   const width = useWindowDimensions().width;
   const [fadeAnim] = useState(new Animated.Value(0));
   spinValue = new Animated.Value(0);
-  const [x1, setX1] = useState(0);
-  const [y1, setY1] = useState(0);
+  const [x1, setX1] = useState(-50);
+  const [y1, setY1] = useState(-50);
 
   // First set up animation 
   Animated.loop(
@@ -27,12 +27,13 @@ export default GetHelp = () => {
 
   useEffect(() => {
     let visible = false;
+    let x = 0;
+    let y = 0;
     setInterval(() => {
       visible = !visible;
       // setTimeout(() => {
       if (visible) {
-        setX1(Math.floor(Math.random() * width));
-        setY1(Math.floor(Math.random() * width));
+       x= Math.floor(Math.random() * (-100 - 100 + 1)) + 100;
         Animated.timing(fadeAnim, {
           toValue: 1,
           duration: 1000,
@@ -45,6 +46,7 @@ export default GetHelp = () => {
           useNativeDriver: true // <-- Add this
         }).start();
       }
+      setX1(x);
       // }, 800)
     }, 3000);
 
