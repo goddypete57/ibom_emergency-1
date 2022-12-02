@@ -6,7 +6,7 @@ import endpoints from '../../../../assets/EndPoint/Endpoint';
 import { AuthContext } from '../../../../context/AuthContext';
 
 
-export default Profile = () => {
+export default Profile = ({navigation}) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
@@ -15,22 +15,22 @@ export default Profile = () => {
     const { user, token, saveUser } = useContext(AuthContext);
 
     useEffect(() => {
-      const response = fetch(endpoints.baseUrl + endpoints.user, {
-        headers: {
-          'Authorization': 'Bearer ' + token
-        }
-      });
-      response.then(res => res.json())
-        .then((data) => {
-          console.log(data);
-          if (response._j.ok) {
-            // console.log(data);
-            saveUser(data);
-          }
-        })
-  
+        const response = fetch(endpoints.baseUrl + endpoints.user, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        response.then(res => res.json())
+            .then((data) => {
+                console.log(data);
+                if (response._j.ok) {
+                    // console.log(data);
+                    saveUser(data);
+                }
+            })
+
     }, []);
-  
+
 
     return (
         <View style={styles.container}>
@@ -51,23 +51,31 @@ export default Profile = () => {
                             height: 35,
                             elevation: 5,
                             borderRadius: 5,
-                            backgroundColor: colors.textColor1
+                            backgroundColor: colors.popUp,
+                            alignSelf: 'flex-end',
+                            transform: [{ translateY: 60 }, { translateX: -20 }],
+                            alignItems: 'center',
+                            justifyContent: 'center'
                         }}>
-                            <Text>Edit profile</Text>
+                            <Text style={{
+                                color: colors.textColor1,
+                                fontSize: 16,
+                                fontFamily: 'Outfit-Regular'
+                            }}>Edit profile</Text>
                         </View>
 
                     </TouchableOpacity>
 
                 </Modal>
                 <View style={styles.headerWrapper}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => {navigation.goBack() }}>
                         <Image
                             source={require('../../../../assets/images/back.png')}
                             style={styles.headerLeft}
                         />
                     </TouchableOpacity>
                     <Text style={styles.headerText}>Profile</Text>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => {setShowModal(true) }}>
                         <Image
                             source={require('../../../../assets/images/moreVert.png')}
                             style={styles.headerRight}
@@ -83,58 +91,25 @@ export default Profile = () => {
 
             <View style={styles.first}>
                 <Text style={styles.nameText}>Full Name</Text>
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={styles.inputWrapper} >
-                    <TextInput
-                        style={styles.nameInput}
-                        placeholder={'Okon Udoh'}
-                        value={name} onChangeText={text => setName(text)}
-                        selectionColor={colors.inactive2}
-                        placeholderTextColor={colors.inactiveColor} />
-                </KeyboardAvoidingView>
+                <Text style={styles.fields}>{user ? user.firstName + ' ' + user.lastName : ''}</Text>
             </View>
 
             <View style={styles.second}>
                 <Text style={styles.emailText}>Email</Text>
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={styles.inputWrapper} >
-                    <TextInput
-                        style={styles.emailInput}
-                        placeholder={'name@email.com'}
-                        value={email} onChangeText={text => setEmail(text)}
-                        selectionColor={colors.inactive2}
-                        placeholderTextColor={colors.inactiveColor} />
-                </KeyboardAvoidingView>
+                <Text style={styles.fields}>{user ? user.email : ''}</Text>
+
             </View>
 
             <View style={styles.third}>
                 <Text style={styles.numberText}>Phone Number</Text>
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={styles.inputWrapper} >
-                    <TextInput
-                        style={styles.numberInput}
-                        placeholder={'07012345671'}
-                        value={number} onChangeText={text => setNumber(text)}
-                        selectionColor={colors.inactive2}
-                        placeholderTextColor={colors.inactiveColor} />
-                </KeyboardAvoidingView>
+                <Text style={styles.fields}>{user ? user.phoneNumber : ''}</Text>
+
             </View>
 
             <View style={styles.fourth}>
                 <Text style={styles.dobText}>Date Of Birth</Text>
-                <KeyboardAvoidingView
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                    style={styles.inputWrapper} >
-                    <TextInput
-                        style={styles.dobInput}
-                        placeholder={'19-12-1999'}
-                        value={dob} onChangeText={text => setDob(text)}
-                        selectionColor={colors.inactive2}
-                        placeholderTextColor={colors.inactiveColor} />
-                </KeyboardAvoidingView>
+                <Text style={styles.fields}>{user ? user.dateOfBirth : ''}</Text>
+
             </View>
             <View style={styles.kycWrapper}>
                 <Text style={styles.kycText}>KYC</Text>
@@ -155,22 +130,20 @@ const styles = StyleSheet.create({
     },
     headerWrapper: {
         flexDirection: 'row',
-        backgroundColor: '#FFECDF',
+        backgroundColor: colors.appTopBar,
         alignItems: 'center',
         paddingTop: 10,
     },
     headerLeft: {
         marginStart: 16,
-        marginBottom: 22,
         width: 24,
         height: 21,
-        marginTop: 15,
     },
     headerText: {
         fontFamily: 'Outfit-Medium',
         fontSize: 20,
         marginStart: 33,
-        colors: colors.textColor1,
+        color: colors.textColor1,
     },
     headerRight: {
         width: 32,
@@ -187,8 +160,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: '#D9D9D9',
         marginTop: 26,
-        marginStart: 135,
-        marginEnd: 135,
+        alignSelf: 'center',
     },
     first: {
         marginStart: 16,
@@ -200,17 +172,17 @@ const styles = StyleSheet.create({
         fontSize: 16,
         colors: colors.inactiveColor,
     },
-    nameInput: {
+    fields: {
         marginTop: 5,
         paddingHorizontal: 12,
-        backgroundColor: '#FFF',
         borderRadius: 10,
         borderColor: '#D1D1D6',
-        borderWidth: 0.5,
+        borderWidth: 1,
         width: '100%',
         fontSize: 16,
         colors: colors.inactiveColor,
         fontFamily: "Outfit-Regular",
+        paddingVertical: 16,
     },
     second: {
         marginStart: 16,
@@ -222,18 +194,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         colors: colors.inactiveColor,
     },
-    emailInput: {
-        marginTop: 5,
-        paddingHorizontal: 12,
-        backgroundColor: '#FFF',
-        borderRadius: 10,
-        borderColor: '#D1D1D6',
-        borderWidth: 0.5,
-        width: '100%',
-        fontSize: 16,
-        colors: colors.inactiveColor,
-        fontFamily: "Outfit-Regular",
-    },
+  
     third: {
         marginStart: 16,
         marginEnd: 19,
@@ -244,18 +205,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         colors: colors.inactiveColor,
     },
-    numberInput: {
-        marginTop: 5,
-        paddingHorizontal: 12,
-        backgroundColor: '#FFF',
-        borderRadius: 10,
-        borderColor: '#D1D1D6',
-        borderWidth: 0.5,
-        width: '100%',
-        fontSize: 16,
-        colors: colors.inactiveColor,
-        fontFamily: "Outfit-Regular",
-    },
+   
     fourth: {
         marginStart: 16,
         marginEnd: 19,
@@ -266,18 +216,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         colors: colors.inactiveColor,
     },
-    dobInput: {
-        marginTop: 5,
-        paddingHorizontal: 12,
-        backgroundColor: '#FFF',
-        borderRadius: 10,
-        borderColor: '#D1D1D6',
-        borderWidth: 0.5,
-        width: '100%',
-        fontSize: 16,
-        colors: colors.inactiveColor,
-        fontFamily: "Outfit-Regular",
-    },
+  
     kycWrapper: {
         marginTop: 20,
         marginStart: 16,
@@ -286,6 +225,11 @@ const styles = StyleSheet.create({
         borderColor: colors.inactive2,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingHorizontal: 12,
+        borderRadius: 10,
+        borderColor: '#D1D1D6',
+        borderWidth: 1,
+        paddingVertical: 16,
     },
     kycText: {
         fontFamily: 'Outfit-Regular',
