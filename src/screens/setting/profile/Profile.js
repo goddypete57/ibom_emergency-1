@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     },
     headerWrapper: {
         flexDirection: 'row',
-        backgroundColor: '#FFECDF',
+        backgroundColor: colors.appTopBar,
         alignItems: 'center',
         paddingTop: 10,
     },
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Outfit-Medium',
         fontSize: 20,
         marginStart: 33,
-        colors: colors.textColor1,
+        color: colors.textColor1,
     },
     headerRight: {
         width: 32,
