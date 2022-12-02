@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     emailInput: {
         marginTop: 5,
         paddingHorizontal: 12,
-        backgroundColor: '#FFF',
+        backgroundColor: rgba(42, 83, 76, 0.1),
         borderRadius: 10,
         borderColor: '#D1D1D6',
         borderWidth: 0.5,
