@@ -82,7 +82,17 @@ export default SetUpAccount = ({ navigation }) => {
           <Button
             title={'Go ahead...'}
             enabled={canProceed}
-            onPress={() => { navigation.navigate(authRoute.setUpAccount2) }}
+            onPress={() => {
+              navigation.navigate(
+                authRoute.setUpAccount2,
+                {
+                  email: email,
+                  firstName: firstName,
+                  lastName: lastName,
+                  phoneNumber: phoneNumber
+                }
+              )
+            }}
             buttonStyle={styles.Button}
             textColor={colors.white}
           />
