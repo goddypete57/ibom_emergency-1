@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
@@ -7,6 +7,25 @@ import Menu from '../../../assets/icons/menu.svg';
 
 export default GetHelp = () => {
   const width = useWindowDimensions().width;
+  spinValue = new Animated.Value(0);
+
+    // First set up animation 
+    Animated.loop(
+        Animated.timing(
+            this.spinValue,
+            {
+                toValue: 1,
+                duration: 3000,
+                easing: Easing.linear, // Easing is an additional import from react-native
+                useNativeDriver: true  // To make use of native driver for performance
+            }
+        )
+    ).start()
+
+    const spin = this.spinValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg']
+  })
 
   return (
     <View style={styles.container}>
@@ -65,15 +84,17 @@ export default GetHelp = () => {
             height: '100%',
             alignSelf: 'center',
             position: 'absolute',
+            transform: [{ translateX: 3 }, { translateY: -1 }],
           }}
         />
-         <Image
+         <Animated.Image
           source={require('../../../assets/images/radar-scan.png')}
           style={{
             resizeMode: 'contain',
-            width: '100%',
-            height: '100%',
+            width: '99%',
+            height: '99%',
             alignSelf: 'center',
+            transform: [{ rotate: spin }, { perspective: 1000 }],
           }}
         />
 
