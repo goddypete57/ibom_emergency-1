@@ -156,14 +156,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit-Regular',
   },
   email: {
-    paddingVertical: 14,
+    paddingVertical: 12,
     backgroundColor: 'rgba(42, 83, 76, 0.1)',
     borderRadius: 5,
     width: '100%',
     marginTop: 5,
     fontSize: 18,
-    color: 'rgba(42, 83, 76, 0.7)',
+    color: colors.textGreen,
     fontFamily: 'Outfit-Regular',
+    paddingHorizontal: 12,
   },
   text2: {
     marginTop: 24,
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit-Regular',
   },
   Password: {
-    paddingVertical: 14,
+    paddingVertical: 12,
     backgroundColor: 'rgba(42, 83, 76, 0.1)',
     borderRadius: 5,
     width: '100%',
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'rgba(42, 83, 76, 0.7)',
     fontFamily: 'Outfit-Regular',
+    paddingHorizontal: 12,
   },
   Wrapper: {marginStart: 24, marginEnd: 24, marginTop: 60},
   Button: {
