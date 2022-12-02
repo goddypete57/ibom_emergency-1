@@ -8,22 +8,11 @@ export default function InputField({ leftComponet, containerStyle, label, ...res
         <View style={[{
             borderColor: colors.black,
             borderRadius: 8,
-            borderWidth: 1,
             paddingHorizontal: 10,
             marginEnd: 10,
             height: 50,
         }, containerStyle]}>
-            <Text style={{
-                color: colors.black,
-                fontSize: 10,
-                fontFamily: 'Lato-Regular',
-                backgroundColor: colors.white,
-                transform: [{ translateY: -8 }],
-                paddingHorizontal: 9,
-                textAlign: 'center',
-                position: 'absolute',
-                marginStart: 10,
-            }}>{label}</Text>
+           
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
