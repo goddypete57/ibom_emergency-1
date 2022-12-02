@@ -24,13 +24,17 @@ export default Setting = ({ navigation }) => {
             </SafeAreaView>
 
             <View style={styles.profileWrapper}>
-                <Image
-                    source={require('../../../assets/images/profile-image.png')}
-                    style={styles.profileImage}
-                />
-                <View style={styles.profileTextWrapper}>
-                    <Text style={styles.profileName}>{user ? user.firstName + ' ' + user.lastName : ''}</Text>
-                    <Text style={styles.profileText}>Profile</Text>
+                <View style={{
+                    flexDirection: 'row',
+                }}>
+                    <Image
+                        source={require('../../../assets/images/profile-image.png')}
+                        style={styles.profileImage}
+                    />
+                    <View style={styles.profileTextWrapper}>
+                        <Text style={styles.profileName}>{user ? user.firstName + ' ' + user.lastName : ''}</Text>
+                        <Text style={styles.profileText}>Profile</Text>
+                    </View>
                 </View>
                 <Image
                     source={require('../../../assets/images/foward.png')}
@@ -104,6 +108,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 17,
         paddingTop: 24,
+        justifyContent: 'space-between',
     },
     profileImage: {
         width: 45,
