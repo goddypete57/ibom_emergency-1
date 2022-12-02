@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -13,16 +13,23 @@ import {
 
 import colors from '../../../assets/colors/colors';
 import authRouts from '../../navigation/route/authRoute';
-import {AuthContext} from '../../../context/AuthContext';
+import { AuthContext } from '../../../context/AuthContext';
 import endpoints from '../../../assets/EndPoint/Endpoint';
 import Toast from 'react-native-toast-message';
 import Button from '../../Component/Button';
-export default Login = ({navigation}) => {
-  const {login} = useContext(AuthContext);
+import InputField from '../../Component/InputField';
+import EyeClosed from '../../../assets/icons/EyeClosed.svg';
+import EyeOpened from '../../../assets/icons/EyeOpened.svg';
+
+
+
+export default Login = ({ navigation }) => {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isChecked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true);
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   const canProceed =
     email.length > 0 && password.length > 0 && emailReg.test(email);
@@ -107,29 +114,50 @@ export default Login = ({navigation}) => {
               />
 
               <Text style={styles.text2}>Password</Text>
-              <TextInput
+              {/* <TextInput
                 style={styles.Password}
                 value={password}
                 onChangeText={text => setPassword(text)}
                 selectionColor={'rgba(42, 83, 76, 0.7)'}
                 placeholderTextColor={colors.inactiveColor}
                 secureTextEntry={true}
-              />
-            </View>
-            </KeyboardAvoidingView>
-            <View style={styles.ButtonWrapper}>
-              <Button
-                enabled={canProceed}
-                title={'Login'}
-                onPress={() => {
-                  signIn();
+              /> */}
+              <InputField
+                containerStyle={styles.Password}
+                style={{
+                  flexGrow: 1,
                 }}
-                processing={loading}
-                buttonStyle={styles.Button}
-                textColor={colors.white}
-              />
+                value={password}
+                secureTextEntry={hidePassword}
+                onChangeText={text => setPassword(text)}
+                placeholder={"password"}
+                leftComponet={
+                  <TouchableOpacity
+                    onPress={() => { setHidePassword(!hidePassword) }}>
+                    {
+                      hidePassword ?
+                        <EyeClosed /> :
+                        <EyeOpened />
+                    }
+                  </TouchableOpacity>}
+                selectionColor={'rgba(42, 83, 76, 0.7)'}
+                placeholderTextColor={colors.inactiveColor}
+                 />
             </View>
-         
+          </KeyboardAvoidingView>
+          <View style={styles.ButtonWrapper}>
+            <Button
+              enabled={canProceed}
+              title={'Login'}
+              onPress={() => {
+                signIn();
+              }}
+              processing={loading}
+              buttonStyle={styles.Button}
+              textColor={colors.white}
+            />
+          </View>
+
         </View>
       </ScrollView>
     </>
@@ -175,7 +203,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit-Regular',
   },
   Password: {
-    paddingVertical: 12,
+    // paddingVertical: 12,
     backgroundColor: 'rgba(42, 83, 76, 0.1)',
     borderRadius: 5,
     width: '100%',
@@ -185,12 +213,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit-Regular',
     paddingHorizontal: 12,
   },
-  Wrapper: {marginStart: 24, marginEnd: 24, marginTop: 60},
+  Wrapper: { marginStart: 24, marginEnd: 24, marginTop: 60 },
   Button: {
     width: '100%',
     height: 50,
     alignSelf: 'center',
     marginVertical: 63,
   },
-  ButtonWrapper: {marginStart: 24, marginEnd: 24, marginTop: 90},
+  ButtonWrapper: { marginStart: 24, marginEnd: 24, marginTop: 90 },
 });
