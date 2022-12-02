@@ -67,7 +67,7 @@ export default Profile = ({navigation}) => {
                         />
                     </TouchableOpacity>
                     <Text style={styles.headerText}>Profile</Text>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => {setShowModal(true) }}>
                         <Image
                             source={require('../../../../assets/images/moreVert.png')}
                             style={styles.headerRight}
