@@ -14,10 +14,12 @@ import colors from '../../../assets/colors/colors';
 import Button from '../../Component/Button';
 import authRoute from '../../navigation/route/authRoute';
 import endpoints from '../../../assets/EndPoint/Endpoint';
+import { AuthContext } from '../../../context/AuthContext';
 
 
 
 export default SetUpAccount = ({ navigation }) => {
+  const { saveUser } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -26,6 +28,7 @@ export default SetUpAccount = ({ navigation }) => {
   const canProceed =
     lastName.length > 0 && firstName.length > 0
     && emailReg.test(email) && password.length >= 4;
+  const [loading, setLoading] = useState(false);
 
   const signUp = async () => {
     setLoading(true);
@@ -52,7 +55,7 @@ export default SetUpAccount = ({ navigation }) => {
             text1: 'Sign up Successful',
             text2: data.message,
           });
-          login(data.access_token, data.user);
+          saveUser(data.noPasswordUser);
         } else {
           Toast.show({
             type: 'error',
@@ -136,19 +139,10 @@ export default SetUpAccount = ({ navigation }) => {
           <Button
             title={'Go ahead...'}
             enabled={canProceed}
-            onPress={() => {
-              navigation.navigate(
-                authRoute.setUpAccount2,
-                {
-                  email: email,
-                  firstName: firstName,
-                  lastName: lastName,
-                  phoneNumber: password
-                }
-              )
-            }}
+            onPress={() => { signUp() }}
             buttonStyle={styles.Button}
             textColor={colors.white}
+            processing={loading}
           />
         </View>
       </View>
