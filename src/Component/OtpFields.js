@@ -49,17 +49,18 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     otpField: {
-        width: 69,
-        height: 71,
-        borderRadius: 11,
+        width: 50,
+        height: 48,
+        borderRadius: 5,
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 1,
-        marginHorizontal: 6
+        marginHorizontal: 12,
+        backgroundColor:'rgba(42, 83, 76, 0.1)',
+        marginTop:39
     },
     otpText: {
         fontSize: 32,
         color: colors.textDark,
-        fontFamily: "OpenSans-SemiBold",
+        fontFamily: "out-SemiBold",
     },
 })

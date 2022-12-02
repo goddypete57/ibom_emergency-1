@@ -30,6 +30,7 @@ greenGradient2: '#086136',
 lightGreen2:'#6EED4A',
 textGreen:'#02382E',
 popUp:'#FFF9F4',
+green2:'rgba(42, 83, 77, 0.8)'
 };
 
 export default colors;
