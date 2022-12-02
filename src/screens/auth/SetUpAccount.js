@@ -76,16 +76,17 @@ export default SetUpAccount = ({ navigation }) => {
               placeholderTextColor={'rgba(42, 83, 76, 0.7)'}
             />
           </View>
-          <View style={styles.ButtonWrapper}>
-            <Button
-              title={'Go ahead...'}
-              enabled={canProceed}
-              onPress={() => { navigation.navigate(authRoute.setUpAccount2) }}
-              buttonStyle={styles.Button}
-              textColor={colors.white}
-            />
-          </View>
+
         </KeyboardAvoidingView>
+        <View style={styles.ButtonWrapper}>
+          <Button
+            title={'Go ahead...'}
+            enabled={canProceed}
+            onPress={() => { navigation.navigate(authRoute.setUpAccount2) }}
+            buttonStyle={styles.Button}
+            textColor={colors.white}
+          />
+        </View>
       </View>
     </ScrollView>
 
@@ -139,5 +140,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 63,
   },
-  ButtonWrapper: { marginStart: 24, marginEnd: 24, marginTop: 24 }
+  ButtonWrapper: {
+    marginHorizontal: 24,
+    marginVertical: 24
+  }
 });
