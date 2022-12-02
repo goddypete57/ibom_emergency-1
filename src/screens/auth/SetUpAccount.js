@@ -8,9 +8,15 @@ import {
   TextInput,
   ScrollView
 } from 'react-native';
+import Toast from 'react-native-toast-message';
+
 import colors from '../../../assets/colors/colors';
 import Button from '../../Component/Button';
 import authRoute from '../../navigation/route/authRoute';
+import endpoints from '../../../assets/EndPoint/Endpoint';
+
+
+
 export default SetUpAccount = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -20,6 +26,52 @@ export default SetUpAccount = ({ navigation }) => {
   const canProceed =
     lastName.length > 0 && firstName.length > 0
     && emailReg.test(email) && password.length >= 4;
+
+  const signUp = async () => {
+    setLoading(true);
+    const response = await fetch(endpoints.baseUrl + endpoints.signUp, {
+      method: 'POST',
+      body: JSON.stringify({
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "password": password
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    response
+      .json()
+      .then(data => {
+        setLoading(false);
+        console.log(data);
+        if (response.ok) {
+          Toast.show({
+            type: 'success',
+            text1: 'Sign up Successful',
+            text2: data.message,
+          });
+          login(data.access_token, data.user);
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: 'Sign Up Failed',
+            text2: data.message,
+          });
+        }
+        // navigation.navigate(authRouts.otp, data)
+      })
+      .catch(err => {
+        setLoading(false);
+        Toast.show({
+          type: 'error',
+          text1: 'Sign Up Failed',
+          text2: err.message,
+        });
+        console.log(err.message);
+      });
+  };
   return (
     <ScrollView
       vertical
@@ -75,7 +127,7 @@ export default SetUpAccount = ({ navigation }) => {
               onChangeText={text => setPassword(text)}
               selectionColor={'rgba(42, 83, 76, 0.7)'}
               placeholderTextColor={'rgba(42, 83, 76, 0.7)'}
-              // keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
+            // keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
             />
           </View>
 
