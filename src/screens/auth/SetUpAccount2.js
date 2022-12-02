@@ -72,16 +72,17 @@ export default SetUpAccount2 = ({ route, navigation }) => {
 
             <Text style={styles.text3}>Please input your NIN</Text>
           </View>
-          <View style={styles.ButtonWrapper}>
-            <Button
-              title={'Confirm'}
-              enabled={true}
-              onPress={() => { navigation.navigate(mainRoute.sos) }}
-              buttonStyle={styles.Button}
-              textColor={colors.white}
-            />
-          </View>
+
         </KeyboardAvoidingView>
+        <View style={styles.ButtonWrapper}>
+          <Button
+            title={'Confirm'}
+            enabled={true}
+            onPress={() => { navigation.navigate(mainRoute.sos) }}
+            buttonStyle={styles.Button}
+            textColor={colors.white}
+          />
+        </View>
       </View>
     </ScrollView>
 
@@ -168,5 +169,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 123,
   },
-  ButtonWrapper: { marginStart: 24, marginEnd: 24, marginTop: 24 }
+  ButtonWrapper: {
+    marginHorizontal: 24,
+    marginVertical: 24
+  }
 });
