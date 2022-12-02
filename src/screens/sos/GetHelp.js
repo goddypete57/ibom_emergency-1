@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
-
+import { AuthContext } from '../../../context/AuthContext';
+import endpoints from '../../../assets/EndPoint/Endpoint';
 
 export default GetHelp = ({ navigation }) => {
+  const { user, token, saveUser } = useContext(AuthContext);
   const width = useWindowDimensions().width;
   const [fadeAnim] = useState(new Animated.Value(0));
   spinValue = new Animated.Value(0);
@@ -51,6 +53,22 @@ export default GetHelp = ({ navigation }) => {
     outputRange: ['0deg', '360deg']
   })
 
+  useEffect(() => {
+    const response = fetch(endpoints.baseUrl + endpoints.user + (user ? user.id : '0'), {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    });
+    response.then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        if (response._j.ok) {
+          // console.log(data);
+          saveUser(data);
+        }
+      })
+
+  }, []);
   return (
     <View style={styles.container}>
       <Image
