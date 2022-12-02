@@ -48,14 +48,14 @@ export default Login = ({navigation}) => {
           Toast.show({
             type: 'success',
             text1: 'Sign In Successful',
-            text2: 'You have sign in ',
+            text2: 'You have sign in successfully',
           });
           login(data.access_token, data.user);
         } else {
           Toast.show({
             type: 'error',
             text1: 'Sign Up Failed',
-            text2: '',
+            text2: 'Oops! Something isn\'t right',
           });
         }
         // navigation.navigate(authRouts.otp, data)
