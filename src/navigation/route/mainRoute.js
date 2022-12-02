@@ -3,6 +3,7 @@ const mainRoute = {
     police:'Police',
     setting:'Setting',
     getHelp: 'GetHelp',
+    profile: 'Profile',
 };
 
 export default mainRoute;

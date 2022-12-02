@@ -1,7 +1,7 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView, TouchableOpacity, TextInput, Modal } from 'react-native';
-import colors from '../../../assets/colors/colors';
+import colors from '../../../../assets/colors/colors';
 
 
 export default Profile = () => {
@@ -41,14 +41,14 @@ export default Profile = () => {
                 <View style={styles.headerWrapper}>
                     <TouchableOpacity onPress={() => { }}>
                         <Image
-                            source={require('../../../assets/images/back.png')}
+                            source={require('../../../../assets/images/back.png')}
                             style={styles.headerLeft}
                         />
                     </TouchableOpacity>
                     <Text style={styles.headerText}>Profile</Text>
                     <TouchableOpacity onPress={() => { }}>
                         <Image
-                            source={require('../../../assets/images/moreVert.png')}
+                            source={require('../../../../assets/images/moreVert.png')}
                             style={styles.headerRight}
                         />
                     </TouchableOpacity>
@@ -56,7 +56,7 @@ export default Profile = () => {
             </SafeAreaView>
 
             <Image
-                source={require('../../../assets/images/profile-image.png')}
+                source={require('../../../../assets/images/profile-image.png')}
                 style={styles.profileImage}
             />
 
@@ -118,7 +118,7 @@ export default Profile = () => {
             <View style={styles.kycWrapper}>
                 <Text style={styles.kycText}>KYC</Text>
                 <Image
-                    source={require('../../../assets/images/tick.png')}
+                    source={require('../../../../assets/images/tick.png')}
                     style={styles.kycTick}
                 />
             </View>

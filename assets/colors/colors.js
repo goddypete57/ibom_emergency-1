@@ -27,6 +27,7 @@ gray:'#F0F2F2',
 inactive2: '#D1D1D6',
 greenGradient1: '#02381E',
 greenGradient2: '#086136',
+lightGreen:'#6EED4A',
 
 };
 
