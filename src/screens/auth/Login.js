@@ -48,14 +48,14 @@ export default Login = ({navigation}) => {
           Toast.show({
             type: 'success',
             text1: 'Sign In Successful',
-            text2: 'You have sign in ',
+            text2: 'You have sign in successfully',
           });
           login(data.access_token, data.user);
         } else {
           Toast.show({
             type: 'error',
             text1: 'Sign Up Failed',
-            text2: '',
+            text2: 'Oops! Something isn\'t right',
           });
         }
         // navigation.navigate(authRouts.otp, data)
@@ -113,8 +113,10 @@ export default Login = ({navigation}) => {
                 onChangeText={text => setPassword(text)}
                 selectionColor={'rgba(42, 83, 76, 0.7)'}
                 placeholderTextColor={colors.inactiveColor}
+                secureTextEntry={true}
               />
             </View>
+            </KeyboardAvoidingView>
             <View style={styles.ButtonWrapper}>
               <Button
                 enabled={canProceed}
@@ -127,7 +129,7 @@ export default Login = ({navigation}) => {
                 textColor={colors.white}
               />
             </View>
-          </KeyboardAvoidingView>
+         
         </View>
       </ScrollView>
     </>
@@ -156,14 +158,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit-Regular',
   },
   email: {
-    paddingVertical: 14,
+    paddingVertical: 12,
     backgroundColor: 'rgba(42, 83, 76, 0.1)',
     borderRadius: 5,
     width: '100%',
     marginTop: 5,
     fontSize: 18,
-    color: 'rgba(42, 83, 76, 0.7)',
+    color: colors.textGreen,
     fontFamily: 'Outfit-Regular',
+    paddingHorizontal: 12,
   },
   text2: {
     marginTop: 24,
@@ -172,21 +175,22 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit-Regular',
   },
   Password: {
-    paddingVertical: 14,
+    paddingVertical: 12,
     backgroundColor: 'rgba(42, 83, 76, 0.1)',
     borderRadius: 5,
     width: '100%',
     marginTop: 5,
     fontSize: 18,
-    color: 'rgba(42, 83, 76, 0.7)',
+    color: colors.textGreen,
     fontFamily: 'Outfit-Regular',
+    paddingHorizontal: 12,
   },
   Wrapper: {marginStart: 24, marginEnd: 24, marginTop: 60},
   Button: {
     width: '100%',
     height: 50,
     alignSelf: 'center',
-    marginTop: 63,
+    marginVertical: 63,
   },
   ButtonWrapper: {marginStart: 24, marginEnd: 24, marginTop: 90},
 });

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
-
+import { AuthContext } from '../../../context/AuthContext';
+import endpoints from '../../../assets/EndPoint/Endpoint';
 
 export default GetHelp = ({ navigation }) => {
+  const { user, token, saveUser } = useContext(AuthContext);
   const width = useWindowDimensions().width;
   const [fadeAnim] = useState(new Animated.Value(0));
   spinValue = new Animated.Value(0);
@@ -51,6 +53,22 @@ export default GetHelp = ({ navigation }) => {
     outputRange: ['0deg', '360deg']
   })
 
+  useEffect(() => {
+    const response = fetch(endpoints.baseUrl + endpoints.user, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    });
+    response.then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        if (response._j.ok) {
+          // console.log(data);
+          saveUser(data);
+        }
+      })
+
+  }, []);
   return (
     <View style={styles.container}>
       <Image
@@ -74,7 +92,7 @@ export default GetHelp = ({ navigation }) => {
             <View style={styles.textandImageWrapper}>
               <View style={styles.textWrapper}>
                 <Text style={styles.welcomeText}>
-                  Welcome <Text style={styles.userNmae}>Samuel</Text>
+                  Welcome <Text style={styles.userNmae}>{user ? user.firstName : ''}</Text>
                   {'\n  '}
                   <Text style={styles.profileStatus}>Complete profile</Text>
                 </Text>
@@ -128,7 +146,7 @@ export default GetHelp = ({ navigation }) => {
             />
             <Animated.View style={{
               position: 'absolute',
-              backgroundColor: colors.lightGreen,
+              backgroundColor: colors.lightGreen2,
               width: 14 / 360 * width,
               height: 14 / 360 * width,
               borderRadius: 10 / 360 * width,
@@ -138,7 +156,7 @@ export default GetHelp = ({ navigation }) => {
             }} />
             <Animated.View style={{
               position: 'absolute',
-              backgroundColor: colors.lightGreen,
+              backgroundColor: colors.lightGreen2,
               width: 14 / 360 * width,
               height: 14 / 360 * width,
               borderRadius: 10 / 360 * width,

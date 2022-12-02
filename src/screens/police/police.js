@@ -1,13 +1,39 @@
+<<<<<<< HEAD
+import React, {useState, useEffect}  from "react";
+import { View, Text, StyleSheet, Image, Dimensions, } from "react-native";
+=======
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
+>>>>>>> 025ed0d2b0a2c70d3bc330f01e9a05e21319bb98
 import colors from '../../../assets/colors/colors';
+import MapView, {PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps';
 
 
-export default Sos = () => {
+
+export default Police = () => {
+
+
+    const defaultProvider =
+    Platform.OS === 'ios' ? PROVIDER_DEFAULT : PROVIDER_GOOGLE;
     return (
         <View style={styles.container}>
+<<<<<<< HEAD
+            {/* <Text style={styles.text}>Loading...</Text> */}
+     <MapView
+      provider={PROVIDER_GOOGLE}
+      style={styles.mapView}
+      initialRegion={{
+        latitude: 4.9057,
+        longitude: 7.8537,
+        latitudeDelta: 0.0025,
+        longitudeDelta: 0.0421,
+      }}>
+  
+      </MapView>
+   
+=======
 
             <SafeAreaView>
                 <LinearGradient
@@ -76,6 +102,7 @@ export default Sos = () => {
                 </View>
             </TouchableOpacity>
 
+>>>>>>> 025ed0d2b0a2c70d3bc330f01e9a05e21319bb98
         </View>
     );
 }
@@ -253,5 +280,10 @@ const styles = StyleSheet.create({
         color: colors.textColor1,
         marginBottom: 13,
         marginEnd: 15,
+    },
+     mapView: {
+     width: Dimensions.get("window").width,
+     height: Dimensions.get("window").height
+
     },
 });

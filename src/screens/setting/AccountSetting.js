@@ -1,15 +1,15 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import colors from '../../../assets/colors/colors';
 
-export default AccountSetting = () => {
+export default AccountSetting = ({ navigation }) => {
     return (
         <View style={styles.container}>
 
             <SafeAreaView>
                 <View style={styles.headerWrapper}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Image
                             source={require('../../../assets/images/back.png')}
                             style={styles.headerLeft}
@@ -21,15 +21,15 @@ export default AccountSetting = () => {
 
             <Text style={styles.accountText}>Account Settings</Text>
 
-            <View style={styles.editWrapper}>
+            <TouchableOpacity style={styles.editWrapper}>
                 <Text style={styles.editText}>Edit Profile</Text>
 
                 <Image
                     source={require('../../../assets/images/foward.png')}
                     style={styles.editArrowWrapper}
                 />
-            </View>
-            <View style={styles.passwordWrapper}>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.passwordWrapper}>
 
                 <Text style={styles.passwordText}>Change Password</Text>
 
@@ -37,7 +37,7 @@ export default AccountSetting = () => {
                     source={require('../../../assets/images/foward.png')}
                     style={styles.passwordArrowWrapper}
                 />
-            </View>
+            </TouchableOpacity>
 
 
 
@@ -53,27 +53,26 @@ const styles = StyleSheet.create({
     },
     headerWrapper: {
         flexDirection: 'row',
-        backgroundColor: '#FFECDF',
+        backgroundColor: colors.appTopBar,
         alignItems: 'center',
-        paddingTop: 10,
+        paddingTop: 30,
+        paddingBottom: 20,
     },
     headerLeft: {
         marginStart: 16,
-        marginBottom: 22,
         width: 24,
         height: 21,
-        marginTop: 15,
     },
     headerText: {
         fontFamily: 'Outfit-Medium',
         fontSize: 20,
         marginStart: 33,
-        colors: colors.textColor1,
+        color: colors.textColor1,
     },
     accountText: {
         fontFamily: 'Outfit-Regular',
         fontSize: 18,
-        colors: colors.inactiveColor,
+        color: colors.inactiveColor,
         marginTop: 20,
         marginStart: 15,
     },
@@ -81,12 +80,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginStart: 15,
         marginEnd: 37,
+        marginTop: 37,
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     editText: {
         fontFamily: 'Outfit-Regular',
         fontSize: 16,
-        colors: colors.textColor1,
-        alignItems: 'flex-start',
+        color: colors.textColor1,
     },
     editArrowWrapper: {
         alignItems: 'flex-end',
@@ -97,13 +98,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginStart: 15,
         marginEnd: 37,
-        marginTop: 31,
+        marginTop: 37,
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     passwordText: {
         fontFamily: 'Outfit-Regular',
         fontSize: 16,
-        colors: colors.textColor1,
-        alignItems: 'flex-start',
+        color: colors.textColor1,
     },
     passwordArrowWrapper: {
         alignItems: 'flex-end',
