@@ -51,10 +51,17 @@ export default Profile = ({navigation}) => {
                             height: 35,
                             elevation: 5,
                             borderRadius: 5,
-                            backgroundColor: colors.textColor1,
+                            backgroundColor: colors.popUp,
                             alignSelf: 'flex-end',
+                            transform: [{ translateY: 60 }, { translateX: -20 }],
+                            alignItems: 'center',
+                            justifyContent: 'center'
                         }}>
-                            <Text>Edit profile</Text>
+                            <Text style={{
+                                color: colors.textColor1,
+                                fontSize: 16,
+                                fontFamily: 'Outfit-Regular'
+                            }}>Edit profile</Text>
                         </View>
 
                     </TouchableOpacity>
