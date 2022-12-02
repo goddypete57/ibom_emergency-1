@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import colors from '../../../assets/colors/colors';
+import endpoints from '../../../assets/EndPoint/Endpoint';
+import { AuthContext } from '../../../context/AuthContext';
+import mainRoute from '../../navigation/route/mainRoute';
 
-export default Setting = () => {
+export default Setting = ({ navigation }) => {
+    const { user, logout } = useContext(AuthContext);
+
     return (
         <View style={styles.container}>
 
             <SafeAreaView>
                 <View style={styles.headerWrapper}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Image
                             source={require('../../../assets/images/back.png')}
                             style={styles.headerLeft}
@@ -19,53 +24,68 @@ export default Setting = () => {
                 </View>
             </SafeAreaView>
 
-            <View style={styles.profileWrapper}>
-                <Image
-                    source={require('../../../assets/images/profile-image.png')}
-                    style={styles.profileImage}
-                />
-                <View style={styles.profileTextWrapper}>
-                    <Text style={styles.profileName}>Samuel Okon Udoh</Text>
-                    <Text style={styles.profileText}>Profile</Text>
+            <TouchableOpacity onPress={() => navigation.navigate(mainRoute.profile)}
+                style={styles.profileWrapper}>
+                <View style={{
+                    flexDirection: 'row',
+                }}>
+                    <Image
+                        source={require('../../../assets/images/profile-image.png')}
+                        style={styles.profileImage}
+                    />
+                    <View style={styles.profileTextWrapper}>
+                        <Text style={styles.profileName}>{user ? user.firstName + ' ' + user.lastName : ''}</Text>
+                        <Text style={styles.profileText}>Profile</Text>
+                    </View>
                 </View>
                 <Image
                     source={require('../../../assets/images/foward.png')}
                     style={styles.arrowWrapper}
                 />
-            </View>
+            </TouchableOpacity>
 
             <View style={styles.curveWrapper}>
-                <View style={styles.accountWrapper}>
-                    <Image
-                        source={require('../../../assets/images/account.png')}
-                        style={styles.accountImage}
-                    />
-                    <Text style={styles.accountName}>Account Settings</Text>
+                <TouchableOpacity onPress={() => navigation.navigate(mainRoute.accountSetting)}
+                    style={styles.accountWrapper}>
+                    <View style={{
+                        flexDirection: 'row',
+                    }}>
+                        <Image
+                            source={require('../../../assets/images/account.png')}
+                            style={styles.accountImage}
+                        />
+                        <Text style={styles.accountName}>Account Settings</Text>
+                    </View>
 
                     <Image
                         source={require('../../../assets/images/foward.png')}
                         style={styles.accountArrowWrapper}
                     />
-                </View>
-                <View style={styles.privacyWrapper}>
-                    <Image
-                        source={require('../../../assets/images/privacy.png')}
-                        style={styles.privacyImage}
-                    />
-                    <Text style={styles.privacyName}>Privacy Policy</Text>
-
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => { }}
+                    style={styles.privacyWrapper}>
+                    <View style={{
+                        flexDirection: 'row',
+                    }}>
+                        <Image
+                            source={require('../../../assets/images/privacy.png')}
+                            style={styles.privacyImage}
+                        />
+                        <Text style={styles.privacyName}>Privacy Policy</Text>
+                    </View>
                     <Image
                         source={require('../../../assets/images/foward.png')}
                         style={styles.privacyArrowWrapper}
                     />
-                </View>
-                <View style={styles.logoutWrapper}>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => logout()}
+                    style={styles.logoutWrapper}>
                     <Image
                         source={require('../../../assets/images/logout.png')}
                         style={styles.logoutImage}
                     />
                     <Text style={styles.logoutName}>Logout</Text>
-                </View>
+                </TouchableOpacity>
             </View>
 
         </View>
@@ -80,27 +100,27 @@ const styles = StyleSheet.create({
     },
     headerWrapper: {
         flexDirection: 'row',
-        backgroundColor: '#FFECDF',
+        backgroundColor: colors.appTopBar,
         alignItems: 'center',
-        paddingTop: 10,
+        paddingTop: 30,
+        paddingBottom: 20,
     },
     headerLeft: {
         marginStart: 16,
-        marginBottom: 22,
         width: 24,
         height: 21,
-        marginTop: 15,
     },
     headerText: {
         fontFamily: 'Outfit-Medium',
         fontSize: 20,
         marginStart: 33,
-        colors: colors.textColor1,
+        color: colors.textColor1,
     },
     profileWrapper: {
         flexDirection: 'row',
         paddingHorizontal: 17,
         paddingTop: 24,
+        justifyContent: 'space-between',
     },
     profileImage: {
         width: 45,
@@ -131,25 +151,18 @@ const styles = StyleSheet.create({
     curveWrapper: {
         marginTop: 25,
         flexDirection: 'column',
-        marginStart: 6,
-        marginEnd: 6,
-        height: 555,
         backgroundColor: colors.white,
         borderTopStartRadius: 20,
         borderTopEndRadius: 20,
-        shadowColor: colors.linearGradientOrange1,
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: 15,
+        flex: 1,
         elevation: 5,
     },
     accountWrapper: {
         flexDirection: 'row',
         marginStart: 10,
         marginTop: 41,
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     accountName: {
         fontFamily: 'Outfit-Regular',
@@ -168,6 +181,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginStart: 10,
         marginTop: 30,
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     privacyName: {
         fontFamily: 'Outfit-Regular',

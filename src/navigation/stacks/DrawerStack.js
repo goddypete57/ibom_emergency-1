@@ -52,39 +52,40 @@ function DrawerContent(props) {
             paddingHorizontal: 20,
             paddingVertical: 30,
           }}>
-          <TouchableOpacity onPress={() => props.navigation.navigate(mainRoute.sos)}>
+          <TouchableOpacity style={{marginTop: 30}}
+          onPress={() => props.navigation.navigate(mainRoute.sos)}>
             <View style={styles.itemWrapper}>
               <SOSIcon />
               <Text style={styles.items}>Home</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.navigation.navigate(mainRoute.profile)}>
+          <TouchableOpacity style={{marginTop: 30}} onPress={() => props.navigation.navigate(mainRoute.profile)}>
             <View style={styles.itemWrapper}>
               <Persons />
               <Text style={styles.items}>My Profile</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity >
+          <TouchableOpacity style={{marginTop: 30}} >
             <View style={styles.itemWrapper}>
               <Notfication />
               <Text style={styles.items}>Notfication</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity >
+          <TouchableOpacity style={{marginTop: 30}} >
             <View style={styles.itemWrapper}>
               <Refresh />
               <Text style={styles.items}>Feedback</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity >
+          <TouchableOpacity style={{marginTop: 30}} >
             <View style={styles.itemWrapper}>
               <Help />
               <Text style={styles.items}>Help & Support</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity >
+          <TouchableOpacity style={{marginTop: 30}} >
             <View style={styles.itemWrapper}>
               <Info />
               <Text style={styles.items}>About App</Text>
@@ -115,7 +116,6 @@ const styles = StyleSheet.create({
   },
   itemWrapper: {
     flexDirection: 'row',
-    marginTop: 40,
     alignItems:'center'
   },
 });
