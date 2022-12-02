@@ -88,19 +88,19 @@ export default Profile = () => {
 
             <View style={styles.second}>
                 <Text style={styles.emailText}>Email</Text>
-                <Text style={styles.fields}>{user ? user.firstName + ' ' + user.lastName : ''}</Text>
+                <Text style={styles.fields}>{user ? user.email : ''}</Text>
 
             </View>
 
             <View style={styles.third}>
                 <Text style={styles.numberText}>Phone Number</Text>
-                <Text style={styles.fields}>{user ? user.firstName + ' ' + user.lastName : ''}</Text>
+                <Text style={styles.fields}>{user ? user.phoneNumber : ''}</Text>
 
             </View>
 
             <View style={styles.fourth}>
                 <Text style={styles.dobText}>Date Of Birth</Text>
-                <Text style={styles.fields}>{user ? user.firstName + ' ' + user.lastName : ''}</Text>
+                <Text style={styles.fields}>{user ? user.dateOfBirth : ''}</Text>
 
             </View>
             <View style={styles.kycWrapper}>
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderRadius: 10,
         borderColor: '#D1D1D6',
-        borderWidth: 0.5,
+        borderWidth: 1,
         width: '100%',
         fontSize: 16,
         colors: colors.inactiveColor,
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderRadius: 10,
         borderColor: '#D1D1D6',
-        borderWidth: 0.5,
+        borderWidth: 1,
         paddingVertical: 16,
     },
     kycText: {
