@@ -7,13 +7,27 @@ import mainRoute from '../../navigation/route/mainRoute';
 import { MotiView } from 'moti';
 import { color, Easing } from 'react-native-reanimated';
 import { AuthContext } from '../../../context/AuthContext';
+import endpoints from '../../../assets/EndPoint/Endpoint';
 
 export default Sos = ({ navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { user, token, saveUser } = useContext(AuthContext);
 
   useEffect(() => {
-    
-  }, [])
+    const response = fetch(endpoints.baseUrl + endpoints.user + (user ? user.id : '0'), {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    });
+    response.then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        if (response._j.ok) {
+          // console.log(data);
+          saveUser(data);
+        }
+      })
+
+  }, []);
 
   return (
     <View style={styles.container}>
