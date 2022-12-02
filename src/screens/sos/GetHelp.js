@@ -92,7 +92,7 @@ export default GetHelp = ({ navigation }) => {
             <View style={styles.textandImageWrapper}>
               <View style={styles.textWrapper}>
                 <Text style={styles.welcomeText}>
-                  Welcome <Text style={styles.userNmae}>Samuel</Text>
+                  Welcome <Text style={styles.userNmae}>{user ? user.firstName : ''}</Text>
                   {'\n  '}
                   <Text style={styles.profileStatus}>Complete profile</Text>
                 </Text>
