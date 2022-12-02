@@ -29,7 +29,8 @@ export default Sos = ({navigation}) => {
           <Menu />
         </TouchableOpacity>
 
-        <View style={styles.textandImageWrapper}>
+        <TouchableOpacity onPress={() => navigation.navigate(mainRoute.profile)}
+        style={styles.textandImageWrapper}>
           <View style={styles.textWrapper}>
             <Text style={styles.welcomeText}>
               Welcome <Text style={styles.userNmae}>Samuel</Text>
@@ -47,7 +48,7 @@ export default Sos = ({navigation}) => {
               borderRadius: 20,
             }}
           />
-        </View>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.keepCalmWrapper}>
@@ -59,6 +60,7 @@ export default Sos = ({navigation}) => {
       </View>
 
       <TouchableOpacity
+          activeOpacity={0.8}
         onPress={() => navigation.navigate(mainRoute.getHelp)}
         style={styles.circleWrapper}>
         <View style={[styles.dot, styles.center]}>
@@ -85,7 +87,7 @@ export default Sos = ({navigation}) => {
               width: 208.66,
               height: 208.66,
               backgroundColor: colors.red,
-              borderRadius: 100,
+              borderRadius: 200,
               justifyContent: 'center',
               alignItems: 'center',
             }}>

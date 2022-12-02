@@ -16,6 +16,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import GetHelp from '../../screens/sos/GetHelp';
 import PoliceHightLight from '../../../assets/icons/policeHighLight.svg';
 import SettingHightLight from '../../../assets/icons/settinghightLight.svg';
+import Profile from '../../screens/setting/profile/Profile'
+
+
 const Stack = createNativeStackNavigator();
 const NavStack = createNativeStackNavigator();
 
@@ -169,6 +172,8 @@ export default MainStack = (route, navigation ) => {
     <Stack.Navigator>
       <Stack.Screen name="Nav" component={Nav} options={{headerShown: false}} />
       <Stack.Screen name={mainRoute.getHelp} component={GetHelp} options={{headerShown: false}} />
+      <Stack.Screen name={mainRoute.profile} component={Profile} options={{headerShown: false}} />
+
     </Stack.Navigator>
   );
 };

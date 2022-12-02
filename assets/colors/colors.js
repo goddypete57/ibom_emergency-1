@@ -14,17 +14,20 @@ black:'#1B1919',
 lightOrange:'#FFECDF',
 brown:'#543623',
 red:"#FF1818",
+orange3:'#FF6244',
 alpha_orange:'#FC965A',
+gray2:'#E9E9E9',
 white:'#ffffff',
 appTopBar: '#FFECDF',
 deepGreen:'#02382E',
 Green:'#056755',
 lightGreen:'#2A534C',
 orange:'#FF6244',
-
+gray:'#F0F2F2',
 inactive2: '#D1D1D6',
 greenGradient1: '#02381E',
 greenGradient2: '#086136',
+lightGreen:'#6EED4A',
 
 };
 
