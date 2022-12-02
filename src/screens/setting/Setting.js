@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, {useState, useEffect} from 'react';
 import { View, Text, StyleSheet, Image,  SafeAreaView,PermissionsAndroid,Platform,Button,} from "react-native";
 import colors from '../../../assets/colors/colors';
@@ -117,7 +116,7 @@ export default Setting = () => {
           },
         );
       };
-=======
+
 import React, { useContext, useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
@@ -129,12 +128,11 @@ import mainRoute from '../../navigation/route/mainRoute';
 export default Setting = ({ navigation }) => {
     const { user, logout } = useContext(AuthContext);
 
->>>>>>> 025ed0d2b0a2c70d3bc330f01e9a05e21319bb98
     return (
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.container}>
         <View style={styles.container}>
-<<<<<<< HEAD
+
           <Image
             source={{
               uri:
@@ -245,7 +243,6 @@ export default Setting = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
->>>>>>> 025ed0d2b0a2c70d3bc330f01e9a05e21319bb98
         </View>
         <Text
           style={{
