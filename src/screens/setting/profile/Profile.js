@@ -2,6 +2,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, KeyboardAvoidingView, TouchableOpacity, TextInput, Modal } from 'react-native';
 import colors from '../../../../assets/colors/colors';
+import endpoints from '../../../../assets/EndPoint/Endpoint';
+import { AuthContext } from '../../../../context/AuthContext';
 
 
 export default Profile = () => {
@@ -10,6 +12,25 @@ export default Profile = () => {
     const [number, setNumber] = useState("");
     const [dob, setDob] = useState("");
     const [showModal, setShowModal] = useState(false)
+    const { user, token, saveUser } = useContext(AuthContext);
+
+    useEffect(() => {
+      const response = fetch(endpoints.baseUrl + endpoints.user + (user ? user.id : '0'), {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      });
+      response.then(res => res.json())
+        .then((data) => {
+          console.log(data);
+          if (response._j.ok) {
+            // console.log(data);
+            saveUser(data);
+          }
+        })
+  
+    }, []);
+  
 
     return (
         <View style={styles.container}>
