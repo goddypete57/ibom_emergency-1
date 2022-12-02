@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     accountText: {
         fontFamily: 'Outfit-Regular',
         fontSize: 18,
-        colors: colors.inactiveColor,
+        color: colors.inactiveColor,
         marginTop: 20,
         marginStart: 15,
     },
@@ -80,12 +80,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginStart: 15,
         marginEnd: 37,
+        marginTop: 37,
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     editText: {
         fontFamily: 'Outfit-Regular',
         fontSize: 16,
-        colors: colors.textColor1,
-        alignItems: 'flex-start',
+        color: colors.textColor1,
     },
     editArrowWrapper: {
         alignItems: 'flex-end',
@@ -96,13 +98,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginStart: 15,
         marginEnd: 37,
-        marginTop: 31,
+        marginTop: 37,
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     passwordText: {
         fontFamily: 'Outfit-Regular',
         fontSize: 16,
-        colors: colors.textColor1,
-        alignItems: 'flex-start',
+        color: colors.textColor1,
     },
     passwordArrowWrapper: {
         alignItems: 'flex-end',
