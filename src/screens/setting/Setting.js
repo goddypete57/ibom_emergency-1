@@ -3,13 +3,13 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import colors from '../../../assets/colors/colors';
 
-export default Setting = () => {
+export default Setting = ({navigation}) => {
     return (
         <View style={styles.container}>
 
             <SafeAreaView>
                 <View style={styles.headerWrapper}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => {navigation.goBack() }}>
                         <Image
                             source={require('../../../assets/images/back.png')}
                             style={styles.headerLeft}
