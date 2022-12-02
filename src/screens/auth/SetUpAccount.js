@@ -74,6 +74,7 @@ export default SetUpAccount = ({ navigation }) => {
               onChangeText={text => setPhoneNumber(text)}
               selectionColor={'rgba(42, 83, 76, 0.7)'}
               placeholderTextColor={'rgba(42, 83, 76, 0.7)'}
+              keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
             />
           </View>
 
