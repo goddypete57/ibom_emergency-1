@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,PermissionsAndroid,Platform } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
@@ -10,6 +11,51 @@ import { AuthContext } from '../../../context/AuthContext';
 
 export default Sos = ({ navigation }) => {
   const { user } = useContext(AuthContext);
+  const [
+    currentLongitude,
+    setCurrentLongitude
+  ] = useState('...');
+  const [
+    currentLatitude,
+    setCurrentLatitude
+  ] = useState('...');
+  const [
+    locationStatus,
+    setLocationStatus
+  ] = useState('');
+
+
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'ios') {
+        getOneTimeLocation();
+        subscribeLocationLocation();
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            {
+              title: 'Location Access Required',
+              message: 'This App needs to Access your location',
+            },
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            //To Check, If Permission is granted
+            getOneTimeLocation();
+            subscribeLocationLocation();
+          } else {
+            setLocationStatus('Permission Denied');
+          }
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+    };
+    requestLocationPermission();
+    return () => {
+      Geolocation.clearWatch(watchID);
+    };
+  }, []);
   
   return (
     <View style={styles.container}>
