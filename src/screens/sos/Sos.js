@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import colors from '../../../assets/colors/colors';
@@ -10,6 +10,11 @@ import { AuthContext } from '../../../context/AuthContext';
 
 export default Sos = ({ navigation }) => {
   const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    
+  }, [])
+
   return (
     <View style={styles.container}>
       <Image
