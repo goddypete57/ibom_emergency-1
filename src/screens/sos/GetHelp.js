@@ -54,7 +54,7 @@ export default GetHelp = ({ navigation }) => {
   })
 
   useEffect(() => {
-    const response = fetch(endpoints.baseUrl + endpoints.user + (user ? user.id : '0'), {
+    const response = fetch(endpoints.baseUrl + endpoints.user, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
