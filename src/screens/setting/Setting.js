@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import colors from '../../../assets/colors/colors';
+import endpoints from '../../../assets/EndPoint/Endpoint';
+import { AuthContext } from '../../../context/AuthContext';
 
-export default Setting = ({navigation}) => {
+export default Setting = ({ navigation }) => {
+    const { user, token, saveUser } = useContext(AuthContext);
+
     return (
         <View style={styles.container}>
 
             <SafeAreaView>
                 <View style={styles.headerWrapper}>
-                    <TouchableOpacity onPress={() => {navigation.goBack() }}>
+                    <TouchableOpacity onPress={() => { navigation.goBack() }}>
                         <Image
                             source={require('../../../assets/images/back.png')}
                             style={styles.headerLeft}
@@ -25,7 +29,7 @@ export default Setting = ({navigation}) => {
                     style={styles.profileImage}
                 />
                 <View style={styles.profileTextWrapper}>
-                    <Text style={styles.profileName}>Samuel Okon Udoh</Text>
+                    <Text style={styles.profileName}>{user ? user.firstName + ' ' + user.lastName : ''}</Text>
                     <Text style={styles.profileText}>Profile</Text>
                 </View>
                 <Image
