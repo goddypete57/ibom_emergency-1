@@ -49,9 +49,10 @@ export default GetHelp = () => {
         </Text>
       </View>
 
-      <View style={styles.circleWrapper}>
-
-
+      <View style={{
+        alignSelf: 'center',
+    marginTop: 35
+      }}>
 
       </View>
     </View>
@@ -123,8 +124,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  circleWrapper: {
-    alignSelf: 'center',
-    marginTop: 35
-  }
 });
