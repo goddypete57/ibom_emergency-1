@@ -153,6 +153,7 @@ export default GetHelp = ({ navigation }) => {
           onPress={() => navigation.goBack()}
           buttonStyle={styles.button}
           textColor={colors.white}
+          enabled={true}
         />
       </View>
     </View>
