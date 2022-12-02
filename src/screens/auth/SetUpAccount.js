@@ -15,11 +15,11 @@ export default SetUpAccount = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   const canProceed =
     lastName.length > 0 && firstName.length > 0
-    && emailReg.test(email) && phoneNumber.length >= 11;
+    && emailReg.test(email) && password.length >= 4;
   return (
     <ScrollView
       vertical
@@ -67,14 +67,15 @@ export default SetUpAccount = ({ navigation }) => {
               placeholderTextColor={colors.inactiveColor}
             />
 
-            <Text style={styles.text2}>Phone Number</Text>
+            <Text style={styles.text2}>Password</Text>
             <TextInput
               style={styles.email}
-              value={phoneNumber}
-              onChangeText={text => setPhoneNumber(text)}
+              value={password}
+              secureTextEntry={true}
+              onChangeText={text => setPassword(text)}
               selectionColor={'rgba(42, 83, 76, 0.7)'}
               placeholderTextColor={'rgba(42, 83, 76, 0.7)'}
-              keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
+              // keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
             />
           </View>
 
@@ -90,7 +91,7 @@ export default SetUpAccount = ({ navigation }) => {
                   email: email,
                   firstName: firstName,
                   lastName: lastName,
-                  phoneNumber: phoneNumber
+                  phoneNumber: password
                 }
               )
             }}
