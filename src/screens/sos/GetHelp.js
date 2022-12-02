@@ -9,9 +9,7 @@ export default GetHelp = () => {
   const width = useWindowDimensions().width;
   const [fadeAnim] = useState(new Animated.Value(0));
   spinValue = new Animated.Value(0);
-  const [x1, setX1] = useState(-50);
-  const [y1, setY1] = useState(-50);
-
+  let visible = false;
   // First set up animation 
   Animated.loop(
     Animated.timing(
@@ -26,14 +24,10 @@ export default GetHelp = () => {
   ).start()
 
   useEffect(() => {
-    let visible = false;
-    let x = 0;
-    let y = 0;
     setInterval(() => {
       visible = !visible;
       // setTimeout(() => {
       if (visible) {
-       x= Math.floor(Math.random() * (-100 - 100 + 1)) + 100;
         Animated.timing(fadeAnim, {
           toValue: 1,
           duration: 1000,
@@ -46,7 +40,7 @@ export default GetHelp = () => {
           useNativeDriver: true // <-- Add this
         }).start();
       }
-      setX1(x);
+      // console.log(fadeAnim)
       // }, 800)
     }, 3000);
 
@@ -69,74 +63,88 @@ export default GetHelp = () => {
           position: 'absolute',
         }}
       />
-      <View style={styles.header}>
-        <TouchableOpacity>
-        </TouchableOpacity>
-        <View style={styles.textandImageWrapper}>
-          <View style={styles.textWrapper}>
-            <Text style={styles.welcomeText}>
-              Welcome <Text style={styles.userNmae}>Samuel</Text>
-              {'\n  '}
-              <Text style={styles.profileStatus}>Complete profile</Text>
+      <View>
+        <View>
+          <View style={styles.header}>
+            <TouchableOpacity>
+            </TouchableOpacity>
+            <View style={styles.textandImageWrapper}>
+              <View style={styles.textWrapper}>
+                <Text style={styles.welcomeText}>
+                  Welcome <Text style={styles.userNmae}>Samuel</Text>
+                  {'\n  '}
+                  <Text style={styles.profileStatus}>Complete profile</Text>
+                </Text>
+              </View>
+              <Image
+                source={{
+                  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_mNmpqHOTakNgIaKR5bxJFfkUtiLdPBXPMw&usqp=CAU',
+                }}
+                style={{
+                  width: 30,
+                  height: 30,
+                  borderRadius: 20,
+                }}
+              />
+            </View>
+          </View>
+
+          <View style={styles.keepCalmWrapper}>
+            <Text style={styles.keepCalmText}>Do not panic</Text>
+            <Text style={styles.SecondText}>
+              Help is on the way
             </Text>
           </View>
-          <Image
-            source={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_mNmpqHOTakNgIaKR5bxJFfkUtiLdPBXPMw&usqp=CAU',
-            }}
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 20,
-            }}
-          />
+
+          <View style={{
+            alignSelf: 'center',
+            marginTop: 35,
+            width: 250 / 360 * width,
+            height: 250 / 360 * width,
+          }}>
+            <Image
+              source={require('../../../assets/images/radar-bg.png')}
+              style={{
+                resizeMode: 'contain',
+                width: '100%',
+                height: '100%',
+                alignSelf: 'center',
+                position: 'absolute',
+                transform: [{ translateX: 3 }, { translateY: -1 }],
+              }}
+            />
+            <Animated.Image
+              source={require('../../../assets/images/radar-scan.png')}
+              style={{
+                resizeMode: 'contain',
+                width: '99%',
+                height: '99%',
+                alignSelf: 'center',
+                transform: [{ rotate: spin }],
+              }}
+            />
+            <Animated.View style={{
+              position: 'absolute',
+              backgroundColor: colors.lightGreen,
+              width: 14 / 360 * width,
+              height: 14 / 360 * width,
+              borderRadius: 10 / 360 * width,
+              alignSelf: 'center',
+              opacity: fadeAnim,
+              transform: [{ translateX: 50 }, { translateY: 50 }],
+            }} />
+            <Animated.View style={{
+              position: 'absolute',
+              backgroundColor: colors.lightGreen,
+              width: 14 / 360 * width,
+              height: 14 / 360 * width,
+              borderRadius: 10 / 360 * width,
+              alignSelf: 'center',
+              opacity: fadeAnim,
+              transform: [{ translateX: -50 }, { translateY: 100 }],
+            }} />
+          </View>
         </View>
-      </View>
-
-      <View style={styles.keepCalmWrapper}>
-        <Text style={styles.keepCalmText}>Do not panic</Text>
-        <Text style={styles.SecondText}>
-          Help is on the way
-        </Text>
-      </View>
-
-      <View style={{
-        alignSelf: 'center',
-        marginTop: 35,
-        width: 250 / 360 * width,
-        height: 250 / 360 * width,
-      }}>
-        <Image
-          source={require('../../../assets/images/radar-bg.png')}
-          style={{
-            resizeMode: 'contain',
-            width: '100%',
-            height: '100%',
-            alignSelf: 'center',
-            position: 'absolute',
-            transform: [{ translateX: 3 }, { translateY: -1 }],
-          }}
-        />
-        <Animated.Image
-          source={require('../../../assets/images/radar-scan.png')}
-          style={{
-            resizeMode: 'contain',
-            width: '99%',
-            height: '99%',
-            alignSelf: 'center',
-            transform: [{ rotate: spin }],
-          }}
-        />
-        <Animated.View style={{
-          position: 'absolute',
-          backgroundColor: colors.lightGreen,
-          width: 14 / 360 * width,
-          height: 14 / 360 * width,
-          borderRadius: 10 / 360 * width,
-          alignSelf: 'center',
-          opacity: fadeAnim,
-          transform: [{ translateX: x1 }, { translateY: y1 }],
-        }} />
       </View>
     </View>
   );
