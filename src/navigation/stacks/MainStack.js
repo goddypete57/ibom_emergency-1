@@ -139,7 +139,7 @@ const Nav = ({route, navigation}) => {
 
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate(mainRoute.police);
+            navigation.navigate(mainRoute.setting);
           }}>
           <View
             style={{
@@ -150,7 +150,7 @@ const Nav = ({route, navigation}) => {
             <Text
               style={{
                 color:
-                  routeName === mainRoute.police ? colors.black : colors.black,
+                  routeName === mainRoute.setting ? colors.black : colors.black,
                 fontFamily: 'Outfit-Medium',
                 fontSize: 16,
               }}>

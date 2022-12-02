@@ -5,7 +5,7 @@ import Geolocation from '@react-native-community/geolocation';
 
 
 
-export default Setting = () => {
+export default Location = () => {
 
     const [
         currentLongitude,
