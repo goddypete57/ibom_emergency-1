@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing, PermissionsAndroid, Platform } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing, PermissionsAndroid, Platform, Modal } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Toast from 'react-native-toast-message';
 
@@ -207,6 +207,38 @@ export default GetHelp = ({ navigation }) => {
   }, []);
   return (
     <View style={styles.container}>
+      <Modal
+        transparent
+        visible={showModal}
+        animationType={'fade'}
+        onRequestClose={() => setShowModal(false)}
+      >
+        <TouchableOpacity
+          onPress={() => setShowModal(false)}
+          style={{
+            flex: 1
+          }}>
+          <View style={{
+            width: 118,
+            height: 35,
+            elevation: 5,
+            borderRadius: 5,
+            backgroundColor: colors.popUp,
+            alignSelf: 'flex-end',
+            transform: [{ translateY: 60 }, { translateX: -20 }],
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text style={{
+              color: colors.textColor1,
+              fontSize: 16,
+              fontFamily: 'Outfit-Regular'
+            }}>Edit profile</Text>
+          </View>
+
+        </TouchableOpacity>
+
+      </Modal>
       <Image
         source={require('../../../assets/images/Map.png')}
         style={{
