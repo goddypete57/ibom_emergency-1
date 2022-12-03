@@ -1,33 +1,17 @@
 import React, {useState, useEffect}  from "react";
-import { View, Text, StyleSheet, Image, Dimensions, } from "react-native";
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image ,Dimensions} from "react-native";
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import colors from '../../../assets/colors/colors';
-import MapView, {PROVIDER_GOOGLE, PROVIDER_DEFAULT} from 'react-native-maps';
 
 
 
 export default Police = () => {
 
-
-    const defaultProvider =
-    Platform.OS === 'ios' ? PROVIDER_DEFAULT : PROVIDER_GOOGLE;
     return (
         <View style={styles.container}>
             {/* <Text style={styles.text}>Loading...</Text> */}
-     <MapView
-      provider={PROVIDER_GOOGLE}
-      style={styles.mapView}
-      initialRegion={{
-        latitude: 4.9057,
-        longitude: 7.8537,
-        latitudeDelta: 0.0025,
-        longitudeDelta: 0.0421,
-      }}>
-  
-      </MapView>
+
 
             <SafeAreaView>
                 <LinearGradient
