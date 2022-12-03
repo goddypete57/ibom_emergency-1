@@ -137,9 +137,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: colors.appTopBar,
         alignItems: 'center',
-        paddingTop: 30,
+        paddingTop: 25,
         justifyContent: 'space-between',
-        paddingHorizontal: 20,
+        paddingStart: 20,
         paddingBottom: 20
     },
     headerLeft: {
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     headerRight: {
         width: 32,
         height: 32,
+        marginEnd: 10
     },
     profileImage: {
         width: 90,
