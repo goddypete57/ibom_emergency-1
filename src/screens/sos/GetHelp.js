@@ -14,7 +14,7 @@ export default GetHelp = ({ navigation }) => {
   spinValue = new Animated.Value(0);
   let visible = false;
 
-   const [
+  const [
     currentLongitude,
     setCurrentLongitude
   ] = useState('...');
@@ -28,11 +28,12 @@ export default GetHelp = ({ navigation }) => {
   ] = useState('');
 
   const getHelp = async () => {
-    const response = await fetch(endpoints.baseUrl + endpoints.signin, {
+    const response = await fetch(endpoints.baseUrl + endpoints.requestHelp, {
       method: 'POST',
       body: JSON.stringify({
-        email: email,
-        password: password,
+        "latitude": currentLatitude,
+        "longitude": currentLongitude,
+        // "location": "string",
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -44,7 +45,7 @@ export default GetHelp = ({ navigation }) => {
       .then(data => {
         console.log(data);
         if (response.ok) {
-         
+
         } else {
           Toast.show({
             type: 'error',
