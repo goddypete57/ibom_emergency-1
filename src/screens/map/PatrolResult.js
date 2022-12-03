@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, Dimensions, } from "react-native";
-import colors from '../../../assets/colors/colors';
+import React, { useState, useEffect, useContext } from "react";
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 
 import colors from '../../../assets/colors/colors';
@@ -12,7 +11,7 @@ export default PatrolResult = ({ navigation }) => {
     const { user, token } = useContext(AuthContext);
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
+            <View style={styles.headerWrapper}>
                 <View style={styles.header}>
                     <TouchableOpacity>
                     </TouchableOpacity>
@@ -36,6 +35,15 @@ export default PatrolResult = ({ navigation }) => {
                         />
                     </View>
                 </View>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    paddingHorizontal: 20,
+                    height: 72,
+                }}>
+
+                </View>
             </View>
         </View>
     )
@@ -46,12 +54,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    headerWrapper: {
+        backgroundColor: colors.appTopBar,
+    },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 24,
-        marginLeft: 16,
-        marginRight: 19,
+        marginTop: 20,
+        marginRight: 10,
+        alignSelf: 'flex-end',
     },
     textandImageWrapper: {
         flexDirection: 'row',
