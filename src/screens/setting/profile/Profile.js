@@ -6,7 +6,7 @@ import endpoints from '../../../../assets/EndPoint/Endpoint';
 import { AuthContext } from '../../../../context/AuthContext';
 
 
-export default Profile = ({navigation}) => {
+export default Profile = ({ navigation }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [number, setNumber] = useState("");
@@ -68,14 +68,19 @@ export default Profile = ({navigation}) => {
 
                 </Modal>
                 <View style={styles.headerWrapper}>
-                    <TouchableOpacity onPress={() => {navigation.goBack() }}>
-                        <Image
-                            source={require('../../../../assets/images/back.png')}
-                            style={styles.headerLeft}
-                        />
-                    </TouchableOpacity>
-                    <Text style={styles.headerText}>Profile</Text>
-                    <TouchableOpacity onPress={() => {setShowModal(true) }}>
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}>
+                        <TouchableOpacity onPress={() => { navigation.goBack() }}>
+                            <Image
+                                source={require('../../../../assets/images/back.png')}
+                                style={styles.headerLeft}
+                            />
+                        </TouchableOpacity>
+                        <Text style={styles.headerText}>Profile</Text>
+                    </View>
+                    <TouchableOpacity onPress={() => { setShowModal(true) }}>
                         <Image
                             source={require('../../../../assets/images/moreVert.png')}
                             style={styles.headerRight}
@@ -132,26 +137,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: colors.appTopBar,
         alignItems: 'center',
-        paddingTop: 10,
+        paddingTop: 30,
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        paddingBottom: 20
     },
     headerLeft: {
-        marginStart: 16,
         width: 24,
         height: 21,
     },
     headerText: {
         fontFamily: 'Outfit-Medium',
         fontSize: 20,
-        marginStart: 33,
+        marginStart: 20,
         color: colors.textColor1,
     },
     headerRight: {
         width: 32,
         height: 32,
-        marginStart: 202,
-        marginTop: 15,
-        alignContent: 'flex-end',
-        marginBottom: 16,
     },
     profileImage: {
         width: 90,
@@ -194,7 +197,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         colors: colors.inactiveColor,
     },
-  
+
     third: {
         marginStart: 16,
         marginEnd: 19,
@@ -205,7 +208,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         colors: colors.inactiveColor,
     },
-   
+
     fourth: {
         marginStart: 16,
         marginEnd: 19,
@@ -216,7 +219,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         colors: colors.inactiveColor,
     },
-  
+
     kycWrapper: {
         marginTop: 20,
         marginStart: 16,
