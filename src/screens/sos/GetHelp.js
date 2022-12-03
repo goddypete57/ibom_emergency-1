@@ -14,7 +14,29 @@ export default GetHelp = ({ navigation }) => {
   const [fadeAnim] = useState(new Animated.Value(0));
   spinValue = new Animated.Value(0);
   let visible = false;
+  const watchID = Geolocation.watchPosition(
+    (position) => {
+      //Will give you the location on location change
 
+      setLocationStatus('You are Here');
+      console.log(position);
+
+      //getting the Longitude from the location json
+      //Setting Longitude state
+      setCurrentLongitude(JSON.stringify(position.coords.longitude));
+
+      //getting the Latitude from the location json
+      //Setting Latitude state
+      setCurrentLatitude(JSON.stringify(position.coords.latitude));
+    },
+    (error) => {
+      setLocationStatus(error.message);
+    },
+    {
+      enableHighAccuracy: false,
+      maximumAge: 1000
+    },
+  );
   const [
     currentLongitude,
     setCurrentLongitude
@@ -69,7 +91,7 @@ export default GetHelp = ({ navigation }) => {
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
       getOneTimeLocation();
-      subscribeLocationLocation();
+      watchID
     } else {
       try {
         const granted = await PermissionsAndroid.request(
@@ -82,7 +104,7 @@ export default GetHelp = ({ navigation }) => {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           //To Check, If Permission is granted
           getOneTimeLocation();
-          subscribeLocationLocation();
+          watchID
         } else {
           setLocationStatus('Permission Denied');
         }
@@ -125,31 +147,7 @@ export default GetHelp = ({ navigation }) => {
     );
   };
 
-  const subscribeLocationLocation = () => {
-    watchID = Geolocation.watchPosition(
-      (position) => {
-        //Will give you the location on location change
-
-        setLocationStatus('You are Here');
-        console.log(position);
-
-        //getting the Longitude from the location json
-        //Setting Longitude state
-        setCurrentLongitude(JSON.stringify(position.coords.longitude));
-
-        //getting the Latitude from the location json
-        //Setting Latitude state
-        setCurrentLatitude(JSON.stringify(position.coords.latitude));
-      },
-      (error) => {
-        setLocationStatus(error.message);
-      },
-      {
-        enableHighAccuracy: false,
-        maximumAge: 1000
-      },
-    );
-  };
+ 
   // First set up animation 
   Animated.loop(
     Animated.timing(
