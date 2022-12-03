@@ -1,5 +1,5 @@
 import * as React from 'react';
-,import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import authRouts from '../route/authRoute';
 import Login from '../../../src/screens/auth/Login';
 import OnboardingScreen from '../../../src/screens/auth/OnboardScreen';
@@ -14,18 +14,18 @@ const Stack = createNativeStackNavigator();
 export default AuthStack = () => {
   return (
     <Stack.Navigator>
+ 
 
       <Stack.Screen
         name={authRouts.illusion}
         component={Illusion}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+     <Stack.Screen
         name={authRouts.verifyOtp}
-        component={verifyOtp}
+        component={VerifyOtp}
         options={{headerShown: false}}
       />
-
       <Stack.Screen
         name={authRouts.onbordingScreen}
         component={OnboardingScreen}

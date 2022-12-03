@@ -1,5 +1,4 @@
-
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {
   View,
   Text,
@@ -7,73 +6,76 @@ import {
   Image,
   KeyboardAvoidingView,
   TextInput,
-  ScrollView
+  ScrollView,
+  Modal,
+  TouchableOpacity
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import colors from '../../../assets/colors/colors';
-import { AuthContext } from '../../../context/AuthContext';
+import {AuthContext} from '../../../context/AuthContext';
 import Button from '../../Component/Button';
 import mainRoute from '../../navigation/route/mainRoute';
 import endpoints from '../../../assets/EndPoint/Endpoint';
+import OtpFields from '../../Component/OtpFields';
 
 
-export default SetUpAccount2 = ({ route, navigation }) => {
-  const { email, firstName, lastName, phoneNumber } = route.params;
-  const { login } = useContext(AuthContext);
-  const [NextofKin, setNextOfKin] = useState('');
-  const [NextofKinPhone, setNextOfKinPhone] = useState('');
-  const [NationalidentityNumber, setNationalId] = useState('');
 
+export default SetUpAccount2 = ({route, navigation}) => {
+
+  const [otp, setOtp] = useState('');
+
+  const [showModal, setShowModal] = useState(false)
   const canProceed =
-    NextofKin.length > 0 && NextofKinPhone.length >= 11
-    && NationalidentityNumber.length == 11;
-  //   let canLogin = email !== '' && password !== '';
+    otp.length ==4 
+    
 
-  const signIn = async () => {
-    setLoading(true);
-    const response = await fetch(endpoints.baseUrl + endpoints.signin, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-    response
-      .json()
-      .then(data => {
-        setLoading(false);
-        console.log(data);
-        if (response.ok) {
-          Toast.show({
-            type: 'success',
-            text1: 'Sign In Successful',
-            text2: 'You have sign in successfully',
-          });
-          login(data.access_token, data.user);
-        } else {
-          Toast.show({
-            type: 'error',
-            text1: 'Sign Up Failed',
-            text2: 'Oops! Something isn\'t right',
-          });
-        }
-        // navigation.navigate(authRouts.otp, data)
-      })
-      .catch(err => {
-        setLoading(false);
-        Toast.show({
-          type: 'error',
-          text1: 'Sign Up Failed',
-          text2: err.message,
-        });
-        console.log(err.message);
-      });
-  };
+
+  //   const VerifyOtp = async () => {
+  //     setLoading(true);
+  //     const response = await fetch(endpoints.baseUrl + endpoints.signin, {
+  //       method: 'POST',
+  //       body: JSON.stringify({
+  //         email: email,
+  //         password: password,
+  //       }),
+  //       headers: {
+  //         'Content-type': 'application/json; charset=UTF-8',
+  //       },
+  //     });
+  //     response
+  //       .json()
+  //       .then(data => {
+  //         setLoading(false);
+  //         console.log(data);
+  //         if (response.ok) {
+  //           Toast.show({
+  //             type: 'success',
+  //             text1: 'Sign In Successful',
+  //             text2: 'You have sign in successfully',
+  //           });
+  //           login(data.access_token, data.user);
+  //         } else {
+  //           Toast.show({
+  //             type: 'error',
+  //             text1: 'Sign Up Failed',
+  //             text2: 'Oops! Something isn\'t right',
+  //           });
+  //         }
+  //         // navigation.navigate(authRouts.otp, data)
+  //       })
+  //       .catch(err => {
+  //         setLoading(false);
+  //         Toast.show({
+  //           type: 'error',
+  //           text1: 'Sign Up Failed',
+  //           text2: err.message,
+  //         });
+  //         console.log(err.message);
+  //       });
+  //   };
   return (
+ 
     <ScrollView
       vertical
       showsHorizontalScrollIndicator={false}
@@ -82,62 +84,105 @@ export default SetUpAccount2 = ({ route, navigation }) => {
         justifyContent: 'flex-start',
         width: '100%',
       }}>
+           <Modal
+            transparent
+            visible={showModal}
+            animationType={'fade'}
+            >
+    <View
+      style={{
+        width: 292,
+        elevation: 5,
+        borderRadius: 8,
+        backgroundColor: colors.white,
+        transform: [{translateY: 200}, {translateX: 50}],
+        justifyContent: 'center',
+      }}>
+      <Image
+        source={require('../../../assets/images/checked.png')}
+        style={{alignSelf: 'center',marginTop:36}}
+      />
+      <Image
+        source={require('../../../assets/images/Verified.png')}
+        style={{marginTop: 20, alignSelf: 'center'}}
+      />
+      <Text
+        style={{
+          textAlign: 'center',
+          alignSelf: 'center',
+          color: 'rgba(42, 83, 76, 0.7)',
+          fontSize: 16,
+          fontFamily: 'Outfit-Regular',
+          marginTop: 5,
+        }}>
+        You have succesfully Verified {'\n'}
+        Your account.
+      </Text>
+
+      <View style={styles.ButtonWrapper2}>
+        <Button
+          enabled={true}
+          title={'Back'}
+          onPress={() => {setShowModal(false)}}
+          buttonStyle={styles.Button2}
+          textColor={colors.white}
+        />
+    
+      </View>
+    </View> 
+    </Modal>
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
+          <Image source={require('../../../assets/images/emails2.png')} />
           <Image
-            source={require('../../../assets/images/SetUpYourAccount.png')}
+            source={require('../../../assets/images/Verifyyouremail.png')}
+            style={styles.verifyimg}
           />
-
+          <Text style={styles.subtext}>
+            Please enter the 4 digit code sent to{'\n'}
+            yourmail@example.com
+          </Text>
         </View>
+      
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           style={styles.inputWrapper}>
-          <View style={styles.Wrapper}>
-            <Text style={styles.text}>Next of Kin name</Text>
-            <TextInput
-              style={styles.input}
-              value={NextofKin}
-              onChangeText={text => setNextOfKin(text)}
-              selectionColor={'rgba(42, 83, 76, 0.7)'}
-              placeholderTextColor={colors.inactiveColor}
-            />
-
-            <Text style={styles.text2}>Next of Kin phone No.</Text>
-            <TextInput
-              style={styles.input}
-              value={NextofKinPhone}
-              onChangeText={text => setNextOfKinPhone(text)}
-              selectionColor={'rgba(42, 83, 76, 0.7)'}
-              placeholderTextColor={colors.inactiveColor}
-              keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
-            />
-
-            <Text style={styles.text2}>National  identity  Number</Text>
-            <TextInput
-              style={styles.input}
-              value={NationalidentityNumber}
-              onChangeText={text => setNationalId(text)}
-              selectionColor={'rgba(42, 83, 76, 0.7)'}
-              placeholderTextColor={colors.inactiveColor}
-              keyboardType={Platform.OS === "ios" ? "number-pad" : "numeric"}
-            />
-
-            <Text style={styles.text3}>Please input your NIN</Text>
-          </View>
+          <OtpFields
+            style={styles.otp}
+            nuberOfFields={4}
+            value={otp}
+            onChangeText={text => {
+              setOtp(text);
+             
+            }}
+          />
 
         </KeyboardAvoidingView>
+        <TouchableOpacity>
+             <Image
+            source={require('../../../assets/images/Resendcode.png')}
+            style={styles.resendimage}
+          />
+        </TouchableOpacity>
+       
         <View style={styles.ButtonWrapper}>
           <Button
+          enabled={canProceed}
             title={'Confirm'}
-            enabled={canProceed}
-            onPress={() => { }}
+            onPress={() => {setShowModal(true)}}
             buttonStyle={styles.Button}
             textColor={colors.white}
           />
+               <TouchableOpacity>
+             <Image
+            source={require('../../../assets/images/changeemail.png')}
+            style={styles.changeemail}
+          />
+        </TouchableOpacity>
+       
         </View>
       </View>
     </ScrollView>
-
   );
 };
 
@@ -145,10 +190,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+    justifyContent: 'center',
   },
   headerWrapper: {
-    marginStart: 24,
-    marginTop: 60,
+    alignSelf: 'center',
+    alignItems: 'center',
   },
   subtext: {
     color: 'rgba(42, 83, 76, 0.7)',
@@ -156,54 +202,36 @@ const styles = StyleSheet.create({
     fontFamily: 'Outfit-Regular',
     marginTop: 5,
   },
-  NextofKin: {
-    paddingVertical: 14,
-    backgroundColor: 'rgba(42, 83, 76, 0.1)',
-    borderRadius: 5,
-    width: '100%',
-    marginTop: 5,
-    fontSize: 18,
-    color: 'rgba(42, 83, 76, 0.7)',
-    fontFamily: 'Outfit-Regular',
-  },
-  text: {
-    color: 'rgba(42, 83, 77, 0.8)',
-    fontSize: 16,
-    fontFamily: 'Outfit-Regular',
-  },
-  text2: {
-    marginTop: 24,
-    color: 'rgba(42, 83, 77, 0.8)',
-    fontSize: 16,
-    fontFamily: 'Outfit-Regular',
-  },
-  text3: {
-    color: 'rgba(42, 83, 77, 0.8)',
-    fontSize: 10,
-    fontFamily: 'Outfit-Regular',
-  },
-  input: {
-    paddingVertical: 12,
-    backgroundColor: 'rgba(42, 83, 76, 0.1)',
-    borderRadius: 5,
-    width: '100%',
-    marginTop: 5,
-    fontSize: 18,
-    color: colors.textGreen,
-    fontFamily: 'Outfit-Regular',
-    paddingHorizontal: 12,
+  verifyimg:{
+    marginTop:32
   },
 
-  Wrapper: { marginStart: 24, marginEnd: 24, marginTop: 95 },
+  resendimage:{
+    alignSelf:'center'
 
+  },
+  changeemail:{
+    alignSelf:'center',
+    marginTop:5
+  },
   Button: {
     width: '100%',
     height: 50,
     alignSelf: 'center',
-    marginTop: 123,
+    marginTop: 96,
   },
   ButtonWrapper: {
     marginHorizontal: 24,
-    marginVertical: 24
-  }
+    marginVertical: 24,
+  },
+
+  Button2: {
+    width: '100%',
+    height: 50,
+    alignSelf: 'center',
+  },
+  ButtonWrapper2: {
+    marginHorizontal: 38,
+    marginVertical: 44,
+  },
 });

@@ -54,13 +54,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: "center",
         alignItems: "center",
-        marginHorizontal: 12,
+        marginHorizontal: 10,
         backgroundColor:'rgba(42, 83, 76, 0.1)',
-        marginTop:39
+        marginTop:30
     },
     otpText: {
-        fontSize: 32,
-        color: colors.textDark,
-        fontFamily: "out-SemiBold",
+        color: 'rgba(42, 83, 76, 0.7)',
+        fontSize: 24,
+        fontFamily: 'Outfit-Regular',
+       
     },
 })
