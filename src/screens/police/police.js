@@ -259,9 +259,9 @@ const styles = StyleSheet.create({
         marginBottom: 13,
         marginEnd: 15,
     },
-    mapView: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height
+     mapView: {
+     width: Dimensions.get("window").width,
+     height: Dimensions.get("window").height
 
     },
 });
