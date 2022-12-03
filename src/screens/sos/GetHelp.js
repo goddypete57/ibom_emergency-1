@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
@@ -12,6 +13,103 @@ export default GetHelp = ({ navigation }) => {
   const [fadeAnim] = useState(new Animated.Value(0));
   spinValue = new Animated.Value(0);
   let visible = false;
+
+   const [
+    currentLongitude,
+    setCurrentLongitude
+  ] = useState('...');
+  const [
+    currentLatitude,
+    setCurrentLatitude
+  ] = useState('...');
+  const [
+    locationStatus,
+    setLocationStatus
+  ] = useState('');
+
+  const requestLocationPermission = async () => {
+    if (Platform.OS === 'ios') {
+      getOneTimeLocation();
+      subscribeLocationLocation();
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Access Required',
+            message: 'This App needs to Access your location',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          //To Check, If Permission is granted
+          getOneTimeLocation();
+          subscribeLocationLocation();
+        } else {
+          setLocationStatus('Permission Denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    requestLocationPermission();
+    return () => {
+      Geolocation.clearWatch(watchID);
+    };
+  }, []);
+
+  const getOneTimeLocation = () => {
+    setLocationStatus('Getting Location ...');
+    Geolocation.getCurrentPosition(
+      //Will give you the current location
+      (position) => {
+        setLocationStatus('You are Here');
+
+        //getting the Longitude from the location json
+        //Setting Longitude state
+        setCurrentLongitude(JSON.stringify(position.coords.longitude));
+
+        //Setting Longitude state
+        setCurrentLatitude(JSON.stringify(position.coords.latitude));
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 30000,
+        maximumAge: 1000
+      },
+    );
+  };
+
+  const subscribeLocationLocation = () => {
+    watchID = Geolocation.watchPosition(
+      (position) => {
+        //Will give you the location on location change
+
+        setLocationStatus('You are Here');
+        console.log(position);
+
+        //getting the Longitude from the location json
+        //Setting Longitude state
+        setCurrentLongitude(JSON.stringify(position.coords.longitude));
+
+        //getting the Latitude from the location json
+        //Setting Latitude state
+        setCurrentLatitude(JSON.stringify(position.coords.latitude));
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      {
+        enableHighAccuracy: false,
+        maximumAge: 1000
+      },
+    );
+  };
   // First set up animation 
   Animated.loop(
     Animated.timing(
