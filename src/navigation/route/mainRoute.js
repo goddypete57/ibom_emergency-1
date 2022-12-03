@@ -5,6 +5,7 @@ const mainRoute = {
     getHelp: 'GetHelp',
     profile: 'Profile',
     accountSetting: 'AccountSetting',
+    patrolResult: 'PatrolResult',
 };
 
 export default mainRoute;
