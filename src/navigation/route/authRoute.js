@@ -4,7 +4,8 @@ const authRoute = {
     singUp:'SignUP',
     setUpAccount:'SetUpAccount',
     setUpAccount2:'SetUpAccount2',
-    verifyOtp:'VerifyOtp'
+    verifyOtp:'VerifyOtp',
+    illusion: 'Illusion',
 };
 
 export default authRoute;
