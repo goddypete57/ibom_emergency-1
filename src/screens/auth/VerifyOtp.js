@@ -23,6 +23,7 @@ import OtpFields from '../../Component/OtpFields';
 
 export default VerifyOtp = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const [otp, setOtp] = useState('');
 
@@ -35,7 +36,7 @@ export default VerifyOtp = ({ route, navigation }) => {
     const response = await fetch(endpoints.baseUrl + endpoints.verifyOtp, {
       method: 'POST',
       body: JSON.stringify({
-        "otp": otp, 
+        "otp": otp,
         "email": user.email
       }),
       headers: {
@@ -53,8 +54,7 @@ export default VerifyOtp = ({ route, navigation }) => {
             text1: 'Verification Successful',
             text2: data.message,
           });
-          saveUser(data.user);
-          navigation.navigate(authRoute.verifyOtp);
+          // navigation.navigate(authRoute.SetUpAccount2, { token: data.token });
         } else {
           Toast.show({
             type: 'error',
@@ -125,7 +125,7 @@ export default VerifyOtp = ({ route, navigation }) => {
           <View style={styles.ButtonWrapper2}>
             <Button
               enabled={true}
-              title={'Back'}
+              title={'Proce'}
               onPress={() => { setShowModal(false) }}
               buttonStyle={styles.Button2}
               textColor={colors.white}
