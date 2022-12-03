@@ -39,9 +39,43 @@ export default PatrolResult = ({ navigation }) => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    paddingHorizontal: 20,
-                    height: 72,
+                    height: 75,
                 }}>
+                    <Image
+                        source={require('../../../assets/images/patrol-result-top.png')}
+                        style={{
+                            resizeMode: 'cover',
+                            width: '100%',
+                            height: '100%',
+                            alignSelf: 'center',
+                            position: 'absolute',
+                        }}
+                    />
+                    <Text style={{
+                        fontSize: 24,
+                        fontFamily: 'Outfit-Medium',
+                        color: colors.white,
+                        textAlign: 'center',
+                        marginLeft: 20,
+                    }}>10mins{'\n'}<Text style={{
+                        fontSize: 16,
+                        fontFamily: 'Outfit-Regular',
+                    }}>Help arrival time</Text></Text>
+                    <View style={{
+                        height: '100%',
+                        width: 1,
+                        backgroundColor: colors.white,
+                    }} />
+                    <Text style={{
+                        fontSize: 24,
+                        fontFamily: 'Outfit-Medium',
+                        color: colors.white,
+                        textAlign: 'center',
+                        marginRight: 20,
+                    }}>15km{'\n'}<Text style={{
+                        fontSize: 16,
+                        fontFamily: 'Outfit-Regular',
+                    }}>Distance from help</Text></Text>
 
                 </View>
             </View>
