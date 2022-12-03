@@ -5,7 +5,7 @@ import Login from '../../../src/screens/auth/Login';
 import OnboardingScreen from '../../../src/screens/auth/OnboardScreen';
 import SetUpAccount from '../../../src/screens/auth/SetUpAccount';
 import SetUpAccount2 from '../../screens/auth/SetUpAccount2';
-import verifyOtp from '../../screens/auth/verifyOtp';
+// import verifyOtp from '../../screens/auth/verifyOtp';
 import Illusion from '../../screens/auth/Illusion';
 
 const Stack = createNativeStackNavigator();
@@ -18,11 +18,11 @@ export default AuthStack = () => {
         component={Illusion}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name={authRouts.verifyOtp}
         component={verifyOtp}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name={authRouts.onbordingScreen}
         component={OnboardingScreen}
