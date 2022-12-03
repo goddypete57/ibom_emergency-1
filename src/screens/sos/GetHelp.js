@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
+import Toast from 'react-native-toast-message';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
