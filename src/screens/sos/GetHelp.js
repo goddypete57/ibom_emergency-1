@@ -27,6 +27,43 @@ export default GetHelp = ({ navigation }) => {
     setLocationStatus
   ] = useState('');
 
+  const getHelp = async () => {
+    const response = await fetch(endpoints.baseUrl + endpoints.signin, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' + token
+      },
+    });
+    response
+      .json()
+      .then(data => {
+        console.log(data);
+        if (response.ok) {
+         
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: 'Request Failed',
+            text2: data.message,
+          });
+        }
+        // navigation.navigate(authRouts.otp, data)
+      })
+      .catch(err => {
+        Toast.show({
+          type: 'error',
+          text1: 'Request Failed',
+          text2: err.message,
+        });
+        console.log(err.message);
+      });
+  };
+
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
       getOneTimeLocation();
