@@ -23,7 +23,6 @@ export default AuthStack = () => {
         component={verifyOtp}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name={authRouts.onbordingScreen}
         component={OnboardingScreen}
