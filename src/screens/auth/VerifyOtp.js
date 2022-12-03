@@ -21,7 +21,7 @@ import OtpFields from '../../Component/OtpFields';
 
 
 
-export default SetUpAccount2 = ({route, navigation}) => {
+export default VerifyOtp = ({route, navigation}) => {
 
   const [otp, setOtp] = useState('');
 
@@ -31,49 +31,6 @@ export default SetUpAccount2 = ({route, navigation}) => {
     
 
 
-  //   const VerifyOtp = async () => {
-  //     setLoading(true);
-  //     const response = await fetch(endpoints.baseUrl + endpoints.signin, {
-  //       method: 'POST',
-  //       body: JSON.stringify({
-  //         email: email,
-  //         password: password,
-  //       }),
-  //       headers: {
-  //         'Content-type': 'application/json; charset=UTF-8',
-  //       },
-  //     });
-  //     response
-  //       .json()
-  //       .then(data => {
-  //         setLoading(false);
-  //         console.log(data);
-  //         if (response.ok) {
-  //           Toast.show({
-  //             type: 'success',
-  //             text1: 'Sign In Successful',
-  //             text2: 'You have sign in successfully',
-  //           });
-  //           login(data.access_token, data.user);
-  //         } else {
-  //           Toast.show({
-  //             type: 'error',
-  //             text1: 'Sign Up Failed',
-  //             text2: 'Oops! Something isn\'t right',
-  //           });
-  //         }
-  //         // navigation.navigate(authRouts.otp, data)
-  //       })
-  //       .catch(err => {
-  //         setLoading(false);
-  //         Toast.show({
-  //           type: 'error',
-  //           text1: 'Sign Up Failed',
-  //           text2: err.message,
-  //         });
-  //         console.log(err.message);
-  //       });
-  //   };
   return (
  
     <ScrollView
@@ -88,6 +45,8 @@ export default SetUpAccount2 = ({route, navigation}) => {
             transparent
             visible={showModal}
             animationType={'fade'}
+            onDismiss={()=>{setShowModal(false)}}
+            onRequestClose={() => setShowModal(false)}
             >
     <View
       style={{
