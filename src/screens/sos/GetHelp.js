@@ -254,7 +254,9 @@ export default GetHelp = ({ navigation }) => {
               fontFamily: 'Outfit-Regular',
               marginTop: 16,
             }}>Call this Emergency number</Text>
-            <Text style={{
+            <Text 
+            onPress={() => Linking.openURL(`tel:${+2347025568546}`)}
+            style={{
               color: colors.orange3,
               fontSize: 16,
               fontFamily: 'Outfit-Regular',
