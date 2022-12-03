@@ -21,11 +21,13 @@ export default AuthStack = () => {
         component={Illusion}
         options={{ headerShown: false }}
       />
-     <Stack.Screen
+
+<Stack.Screen
         name={authRouts.verifyOtp}
         component={VerifyOtp}
         options={{headerShown: false}}
       />
+      guy
       <Stack.Screen
         name={authRouts.onbordingScreen}
         component={OnboardingScreen}

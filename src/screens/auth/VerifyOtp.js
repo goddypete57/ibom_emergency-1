@@ -30,7 +30,44 @@ export default VerifyOtp = ({route, navigation}) => {
     otp.length ==4 
     
 
-
+    const verify = async (token) => {
+        console.log(token);
+        setLoading(true)
+        let response = await fetch(endpoints.baseUrl + endpoints.verifyOtp, {
+          method: 'POST',
+          body: JSON.stringify({
+            "token": token,
+            "email": user.email
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setLoading(false)
+            console.log(data,);
+            Toast.show({
+              type: !data.statusCode ? 'success' : data.statusCode >= 200 && data.statusCode <= 299 ? 'success' : 'error',
+              text1: !data.statusCode ? 'success' : data.statusCode == 200 && data.statusCode <= 299 ? 'Verification Successful'
+                : 'Verification Failed',
+              text2: data.message
+            })
+            if (data.token.length > 0) {
+              login(data.token, data.user);
+            }
+          })
+          .catch((err) => {
+            setLoading(false)
+            Toast.show({
+              type: 'error',
+              text1: 'Verification Failed',
+              text2: err.message
+            })
+            console.log(err.message);
+          });
+      };
+    
   return (
  
     <ScrollView
