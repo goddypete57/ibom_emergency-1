@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity,PermissionsAndroid,Platform } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 
@@ -28,8 +28,8 @@ export default Sos = ({ navigation }) => {
   useEffect(() => {
     const requestLocationPermission = async () => {
       if (Platform.OS === 'ios') {
-        getOneTimeLocation();
-        subscribeLocationLocation();
+        // getOneTimeLocation();
+        // subscribeLocationLocation();
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -41,8 +41,8 @@ export default Sos = ({ navigation }) => {
           );
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             //To Check, If Permission is granted
-            getOneTimeLocation();
-            subscribeLocationLocation();
+            // getOneTimeLocation();
+            // subscribeLocationLocation();
           } else {
             setLocationStatus('Permission Denied');
           }
