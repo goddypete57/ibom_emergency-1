@@ -55,7 +55,7 @@ export default SetUpAccount = ({ navigation }) => {
             text1: 'Sign up Successful',
             text2: data.message,
           });
-          saveUser(data.noPasswordUser);
+          saveUser(data.user);
         } else {
           Toast.show({
             type: 'error',

@@ -27,7 +27,7 @@ export default VerifyOtp = ({route, navigation}) => {
 
   const [showModal, setShowModal] = useState(false)
   const canProceed =
-    otp.length ==4 
+    otp.length ==4
     
 
     const verify = async (token) => {
