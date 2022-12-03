@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing, PermissionsAndroid, Platform } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Toast from 'react-native-toast-message';
 
@@ -147,7 +147,7 @@ export default GetHelp = ({ navigation }) => {
     );
   };
 
- 
+
   // First set up animation 
   Animated.loop(
     Animated.timing(
