@@ -258,7 +258,8 @@ export default GetHelp = ({ navigation }) => {
               color: colors.orange3,
               fontSize: 16,
               fontFamily: 'Outfit-Regular',
-              marginTop: 15
+              marginTop: 15,
+              textDecorationLine: 'underline'
             }}>+234 7025 5685 46</Text>
           </View>
 
