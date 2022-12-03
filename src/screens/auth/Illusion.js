@@ -8,53 +8,8 @@ import mainRoute from '../../navigation/route/mainRoute';
 import { MotiView } from 'moti';
 import { color, Easing } from 'react-native-reanimated';
 
-export default Sos = ({ navigation }) => {
-  const [
-    currentLongitude,
-    setCurrentLongitude
-  ] = useState('...');
-  const [
-    currentLatitude,
-    setCurrentLatitude
-  ] = useState('...');
-  const [
-    locationStatus,
-    setLocationStatus
-  ] = useState('');
-
-
-  useEffect(() => {
-    const requestLocationPermission = async () => {
-      if (Platform.OS === 'ios') {
-        getOneTimeLocation();
-        subscribeLocationLocation();
-      } else {
-        try {
-          const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-            {
-              title: 'Location Access Required',
-              message: 'This App needs to Access your location',
-            },
-          );
-          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            //To Check, If Permission is granted
-            getOneTimeLocation();
-            subscribeLocationLocation();
-          } else {
-            setLocationStatus('Permission Denied');
-          }
-        } catch (err) {
-          console.warn(err);
-        }
-      }
-    };
-    requestLocationPermission();
-    return () => {
-      Geolocation.clearWatch(watchID);
-    };
-  }, []);
-  
+export default Illusion = ({ navigation }) => {
+ 
   return (
     <View style={styles.container}>
       <Image
@@ -67,36 +22,6 @@ export default Sos = ({ navigation }) => {
           position: 'absolute',
         }}
       />
-
-      <View style={styles.header}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.openDrawer();
-          }}>
-          <Menu />
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigation.navigate(mainRoute.profile)}
-          style={styles.textandImageWrapper}>
-          <View style={styles.textWrapper}>
-            <Text style={styles.welcomeText}>
-              Welcome <Text style={styles.userNmae}>{user ? user.firstName : ''}</Text>
-              {'\n  '}
-              <Text style={styles.profileStatus}>Complete profile</Text>
-            </Text>
-          </View>
-          <Image
-            source={{
-              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_mNmpqHOTakNgIaKR5bxJFfkUtiLdPBXPMw&usqp=CAU',
-            }}
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 20,
-            }}
-          />
-        </TouchableOpacity>
-      </View>
 
       <View style={styles.keepCalmWrapper}>
         <Text style={styles.keepCalmText}>KEEP CALM!</Text>
