@@ -111,6 +111,7 @@ export default GetHelp = ({ navigation }) => {
 
         //Setting Longitude state
         setCurrentLatitude(JSON.stringify(position.coords.latitude));
+        getHelp();
       },
       (error) => {
         setLocationStatus(error.message);
