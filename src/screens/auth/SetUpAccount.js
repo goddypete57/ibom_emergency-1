@@ -56,6 +56,7 @@ export default SetUpAccount = ({ navigation }) => {
             text2: data.message,
           });
           saveUser(data.user);
+          navigation.navigate(authRoute.verifyOtp);
         } else {
           Toast.show({
             type: 'error',
