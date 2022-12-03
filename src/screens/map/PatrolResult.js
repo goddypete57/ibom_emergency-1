@@ -77,8 +77,20 @@ export default PatrolResult = ({ navigation }) => {
                         fontSize: 16,
                         fontFamily: 'Outfit-Regular',
                     }}>Distance from help</Text></Text>
-
                 </View>
+            </View>
+            <View style={styles.mapWrapper}>
+                <MapView
+                    provider={PROVIDER_GOOGLE}
+                    style={styles.mapView}
+                    initialRegion={{
+                        latitude: 4.9057,
+                        longitude: 7.8537,
+                        latitudeDelta: 0.0025,
+                        longitudeDelta: 0.0421,
+                    }}>
+
+                </MapView>
             </View>
         </View>
     )
@@ -120,5 +132,10 @@ const styles = StyleSheet.create({
         color: colors.red,
         fontSize: 16,
         fontFamily: 'Outfit-Medium',
+    },
+    mapView: {
+        width: '100%',
+        height: '100%',
+
     },
 });
