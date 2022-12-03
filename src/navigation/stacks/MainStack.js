@@ -18,6 +18,7 @@ import PoliceHightLight from '../../../assets/icons/policeHighLight.svg';
 import SettingHightLight from '../../../assets/icons/settinghightLight.svg';
 import Profile from '../../screens/setting/profile/Profile'
 import AccountSetting from '../../screens/setting/AccountSetting'
+import PatrolResult from '../../screens/map/PatrolResult'
 
 
 const Stack = createNativeStackNavigator();
@@ -175,6 +176,7 @@ export default MainStack = (route, navigation) => {
       <Stack.Screen name={mainRoute.getHelp} component={GetHelp} options={{ headerShown: false }} />
       <Stack.Screen name={mainRoute.profile} component={Profile} options={{ headerShown: false }} />
       <Stack.Screen name={mainRoute.accountSetting} component={AccountSetting} options={{ headerShown: false }} />
+      <Stack.Screen name={mainRoute.patrolResult} component={PatrolResult} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 };
