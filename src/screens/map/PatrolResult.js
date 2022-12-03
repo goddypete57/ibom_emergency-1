@@ -62,9 +62,10 @@ export default PatrolResult = ({ navigation }) => {
                         fontFamily: 'Outfit-Regular',
                     }}>Help arrival time</Text></Text>
                     <View style={{
-                        height: '100%',
-                        width: 1,
-                        backgroundColor: colors.white,
+                        height: '60%',
+                        width: 3,
+                        backgroundColor: colors.background5,
+                        transform: [{ translateY: 7 }],
                     }} />
                     <Text style={{
                         fontSize: 24,
