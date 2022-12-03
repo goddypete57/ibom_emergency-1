@@ -35,9 +35,9 @@ export default Illusion = ({ navigation }) => {
             }
         };
         requestLocationPermission();
-        return () => {
-            Geolocation.clearWatch(watchID);
-        };
+        // return () => {
+        //     Geolocation.clearWatch(watchID);
+        // };
     }, []);
     return (
         <View style={styles.container}>
@@ -99,9 +99,26 @@ export default Illusion = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.bottomWrapper}>
-                <Text style={styles.bottomText}>Sign in now<Text style={{}}>Don't wait for emergency</Text></Text>
-                <TouchableOpacity>
-                    <Text style={{}}>SignIn</Text>
+                <Text style={styles.bottomText}>Sign in now{'\n'}<Text style={{
+                    fontSize: 16,
+                    color: colors.textGreen,
+                    fontFamily: 'Outfit-Regular',
+                }}>Don't wait for emergency</Text></Text>
+                <TouchableOpacity 
+                onPress={() => navigation.navigate(authRouts.onbordingScreen)}
+                style={{
+                    backgroundColor: colors.orange3,
+                    width: 80,
+                    height: 34,
+                    borderRadius: 5,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <Text style={{
+                        fontSize: 16,
+                        color: colors.white,
+                        fontFamily: 'Outfit-Regular',
+                    }}>SignIn</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -112,6 +129,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.lightOrange,
+        justifyContent: 'space-between',
     },
     text: {
         color: colors.white,
@@ -184,5 +202,17 @@ const styles = StyleSheet.create({
         borderRadius: 208.66,
         backgroundColor: colors.alpha_orange
     },
-    center: { alignItems: 'center', justifyContent: 'center' }
+    center: { alignItems: 'center', justifyContent: 'center' },
+    bottomWrapper: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 20,
+        marginBottom: 20,
+        alignItems: 'center',
+    },
+    bottomText: {
+        fontSize: 20,
+        color: colors.textColor1,
+        fontFamily: 'Outfit-Medium',
+    },
 });
