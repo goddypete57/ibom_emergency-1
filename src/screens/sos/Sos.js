@@ -52,9 +52,9 @@ export default Sos = ({ navigation }) => {
       }
     };
     requestLocationPermission();
-    return () => {
-      Geolocation.clearWatch(watchID);
-    };
+    // return () => {
+    //   Geolocation.clearWatch(watchID);
+    // };
   }, []);
   
   return (

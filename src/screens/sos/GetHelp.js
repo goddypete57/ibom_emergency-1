@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing, PermissionsAndroid, Platform, Modal } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+import Toast from 'react-native-toast-message';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
@@ -10,8 +12,148 @@ export default GetHelp = ({ navigation }) => {
   const { user, token, saveUser } = useContext(AuthContext);
   const width = useWindowDimensions().width;
   const [fadeAnim] = useState(new Animated.Value(0));
+  const [showModal, setShowModal] = useState(false)
+
   spinValue = new Animated.Value(0);
   let visible = false;
+
+
+  const watchID = Geolocation.watchPosition(
+    (position) => {
+      //Will give you the location on location change
+
+      setLocationStatus('You are Here');
+      console.log(position);
+
+      //getting the Longitude from the location json
+      //Setting Longitude state
+      setCurrentLongitude(JSON.stringify(position.coords.longitude));
+
+      //getting the Latitude from the location json
+      //Setting Latitude state
+      setCurrentLatitude(JSON.stringify(position.coords.latitude));
+    },
+    (error) => {
+      setLocationStatus(error.message);
+    },
+    {
+      enableHighAccuracy: false,
+      maximumAge: 1000
+    },
+  );
+  const [
+    currentLongitude,
+    setCurrentLongitude
+  ] = useState('...');
+  const [
+    currentLatitude,
+    setCurrentLatitude
+  ] = useState('...');
+  const [
+    locationStatus,
+    setLocationStatus
+  ] = useState('');
+
+  const getHelp = async () => {
+    const response = await fetch(endpoints.baseUrl + endpoints.requestHelp, {
+      method: 'POST',
+      body: JSON.stringify({
+        "latitude": currentLatitude,
+        "longitude": currentLongitude,
+        // "location": "string",
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' + token
+      },
+    });
+    response
+      .json()
+      .then(data => {
+        console.log(data);
+        if (response.ok) {
+
+        } else {
+          setShowModal(true)
+          Toast.show({
+            type: 'error',
+            text1: 'Request Failed',
+            text2: data.message,
+          });
+        }
+        // navigation.navigate(authRouts.otp, data)
+      })
+      .catch(err => {
+        setShowModal(true)
+        Toast.show({
+          type: 'error',
+          text1: 'Request Failed',
+          text2: err.message,
+        });
+        console.log(err.message);
+      });
+  };
+
+  const requestLocationPermission = async () => {
+    if (Platform.OS === 'ios') {
+      getOneTimeLocation();
+      watchID
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+          {
+            title: 'Location Access Required',
+            message: 'This App needs to Access your location',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          //To Check, If Permission is granted
+          getOneTimeLocation();
+          watchID
+        } else {
+          setLocationStatus('Permission Denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
+
+  useEffect(() => {
+    requestLocationPermission();
+    return () => {
+      Geolocation.clearWatch(watchID);
+    };
+  }, []);
+
+  const getOneTimeLocation = () => {
+    setLocationStatus('Getting Location ...');
+    Geolocation.getCurrentPosition(
+      //Will give you the current location
+      (position) => {
+        setLocationStatus('You are Here');
+
+        //getting the Longitude from the location json
+        //Setting Longitude state
+        setCurrentLongitude(JSON.stringify(position.coords.longitude));
+
+        //Setting Longitude state
+        setCurrentLatitude(JSON.stringify(position.coords.latitude));
+        getHelp();
+      },
+      (error) => {
+        setLocationStatus(error.message);
+      },
+      {
+        enableHighAccuracy: false,
+        timeout: 30000,
+        maximumAge: 1000
+      },
+    );
+  };
+
+
   // First set up animation 
   Animated.loop(
     Animated.timing(
@@ -71,6 +213,38 @@ export default GetHelp = ({ navigation }) => {
   }, []);
   return (
     <View style={styles.container}>
+      <Modal
+        transparent
+        visible={showModal}
+        animationType={'fade'}
+        onRequestClose={() => setShowModal(false)}
+      >
+        <TouchableOpacity
+          onPress={() => setShowModal(false)}
+          style={{
+            flex: 1
+          }}>
+          <View style={{
+            width: 118,
+            height: 35,
+            elevation: 5,
+            borderRadius: 5,
+            backgroundColor: colors.popUp,
+            alignSelf: 'flex-end',
+            transform: [{ translateY: 60 }, { translateX: -20 }],
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Text style={{
+              color: colors.textColor1,
+              fontSize: 16,
+              fontFamily: 'Outfit-Regular'
+            }}>Edit profile</Text>
+          </View>
+
+        </TouchableOpacity>
+
+      </Modal>
       <Image
         source={require('../../../assets/images/Map.png')}
         style={{

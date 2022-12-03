@@ -3,6 +3,7 @@ const endpoints = {
     signUp: '/auth/sign-up',
     signin: '/auth/sign-in',
     user: '/account/profile',
+    requestHelp: '/account/requests',
 }
 
 export default endpoints;
