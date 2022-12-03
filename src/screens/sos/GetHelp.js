@@ -12,8 +12,12 @@ export default GetHelp = ({ navigation }) => {
   const { user, token, saveUser } = useContext(AuthContext);
   const width = useWindowDimensions().width;
   const [fadeAnim] = useState(new Animated.Value(0));
+  const [showModal, setShowModal] = useState(false)
+
   spinValue = new Animated.Value(0);
   let visible = false;
+
+
   const watchID = Geolocation.watchPosition(
     (position) => {
       //Will give you the location on location change
@@ -70,6 +74,7 @@ export default GetHelp = ({ navigation }) => {
         if (response.ok) {
 
         } else {
+          setShowModal(true)
           Toast.show({
             type: 'error',
             text1: 'Request Failed',
@@ -79,6 +84,7 @@ export default GetHelp = ({ navigation }) => {
         // navigation.navigate(authRouts.otp, data)
       })
       .catch(err => {
+        setShowModal(true)
         Toast.show({
           type: 'error',
           text1: 'Request Failed',
