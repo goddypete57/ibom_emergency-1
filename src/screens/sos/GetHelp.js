@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing, PermissionsAndroid, Platform, Modal } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing, PermissionsAndroid, Platform, Modal, Linking } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Toast from 'react-native-toast-message';
 
@@ -217,29 +217,52 @@ export default GetHelp = ({ navigation }) => {
         transparent
         visible={showModal}
         animationType={'fade'}
-        onRequestClose={() => setShowModal(false)}
+        onRequestClose={() => {
+          setShowModal(false);
+          navigation.goBack();
+        }}
       >
         <TouchableOpacity
-          onPress={() => setShowModal(false)}
+          onPress={() => {
+            setShowModal(false);
+            navigation.goBack();
+          }}
           style={{
-            flex: 1
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0,0,0,0.5)'
           }}>
           <View style={{
-            width: 118,
-            height: 35,
+            width: "90%",
+            height: 202,
             elevation: 5,
-            borderRadius: 5,
-            backgroundColor: colors.popUp,
-            alignSelf: 'flex-end',
-            transform: [{ translateY: 60 }, { translateX: -20 }],
+            borderRadius: 20,
+            backgroundColor: colors.white,
             alignItems: 'center',
             justifyContent: 'center'
           }}>
             <Text style={{
               color: colors.textColor1,
               fontSize: 16,
-              fontFamily: 'Outfit-Regular'
-            }}>Edit profile</Text>
+              fontFamily: 'Outfit-Bold',
+              textAlign: 'center',
+            }}>Sorry!{'\n'}No patrol team or checkpoint found.</Text>
+            <Text style={{
+              color: colors.textColor1,
+              fontSize: 16,
+              fontFamily: 'Outfit-Regular',
+              marginTop: 16,
+            }}>Call this Emergency number</Text>
+            <Text 
+            onPress={() => Linking.openURL(`tel:${+2347025568546}`)}
+            style={{
+              color: colors.orange3,
+              fontSize: 16,
+              fontFamily: 'Outfit-Regular',
+              marginTop: 15,
+              textDecorationLine: 'underline'
+            }}>+234 7025 5685 46</Text>
           </View>
 
         </TouchableOpacity>
