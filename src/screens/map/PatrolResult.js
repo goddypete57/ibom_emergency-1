@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
 
 import colors from '../../../assets/colors/colors';
 import { AuthContext } from '../../../context/AuthContext';
@@ -9,6 +10,43 @@ import endpoints from '../../../assets/EndPoint/Endpoint';
 
 export default PatrolResult = ({ navigation }) => {
     const { user, token } = useContext(AuthContext);
+    const [
+        currentLongitude,
+        setCurrentLongitude
+    ] = useState(0);
+    const [
+        currentLatitude,
+        setCurrentLatitude
+    ] = useState(0);
+    const [
+        locationStatus,
+        setLocationStatus
+    ] = useState('');
+    useEffect(() => {
+        Geolocation.watchPosition(
+            (position) => {
+                //Will give you the location on location change
+
+                setLocationStatus('You are Here');
+                console.log(position);
+
+                //getting the Longitude from the location json
+                //Setting Longitude state
+                setCurrentLongitude(JSON.stringify(position.coords.longitude));
+
+                //getting the Latitude from the location json
+                //Setting Latitude state
+                setCurrentLatitude(JSON.stringify(position.coords.latitude));
+            },
+            (error) => {
+                setLocationStatus(error.message);
+            },
+            {
+                enableHighAccuracy: true,
+                maximumAge: 1000
+            },
+        );
+    })
     return (
         <View style={styles.container}>
             <View style={styles.headerWrapper}>
@@ -83,6 +121,12 @@ export default PatrolResult = ({ navigation }) => {
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={styles.mapView}
+                    region={{
+                        latitude: parseFloat(currentLatitude),
+                        longitude: parseFloat(currentLongitude),
+                        latitudeDelta: 0.015,
+                        longitudeDelta: 0.0121,
+                    }}
                     initialRegion={{
                         latitude: 4.9057,
                         longitude: 7.8537,
