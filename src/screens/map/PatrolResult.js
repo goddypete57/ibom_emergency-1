@@ -10,8 +10,21 @@ import endpoints from '../../../assets/EndPoint/Endpoint';
 
 
 export default PatrolResult = ({ navigation }) => {
-    const GOOGLE_MAPS_APIKEY = '…';
+    const { width, height } = Dimensions.get('window');
+    const GOOGLE_API_KEY = endpoints.gg;
     const { user, token } = useContext(AuthContext);
+    const [distance, setDistance] = useState(0);
+    const [duration, setDuration] = useState(0);
+    this.mapView = null;
+    onMapPress = (e) => {
+        this.setState({
+          coordinates: [
+            ...this.state.coordinates,
+            e.nativeEvent.coordinate,
+          ],
+        });
+      }
+
     const [coordinates] = useState([
         {
             latitude: 48.8587741,
@@ -107,7 +120,7 @@ export default PatrolResult = ({ navigation }) => {
                         color: colors.white,
                         textAlign: 'center',
                         marginLeft: 20,
-                    }}>10mins{'\n'}<Text style={{
+                    }}>{duration.toFixed(2)}mins{'\n'}<Text style={{
                         fontSize: 16,
                         fontFamily: 'Outfit-Regular',
                     }}>Help arrival time</Text></Text>
@@ -123,7 +136,7 @@ export default PatrolResult = ({ navigation }) => {
                         color: colors.white,
                         textAlign: 'center',
                         marginRight: 20,
-                    }}>15km{'\n'}<Text style={{
+                    }}>{distance}km{'\n'}<Text style={{
                         fontSize: 16,
                         fontFamily: 'Outfit-Regular',
                     }}>Distance from help</Text></Text>
@@ -133,18 +146,43 @@ export default PatrolResult = ({ navigation }) => {
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={styles.mapView}
+                    onPress={this.onMapPress}
                     // region={{
                     //     latitude: parseFloat(currentLatitude),
                     //     longitude: parseFloat(currentLongitude),
                     //     latitudeDelta: 0.015,
                     //     longitudeDelta: 0.0121,
                     // }}
+                    ref={c => this.mapView = c}
                     initialRegion={{
                         latitude: coordinates[0].latitude,
                         longitude: coordinates[0].longitude,
                         latitudeDelta: 0.0622,
                         longitudeDelta: 0.0121,
                     }}>
+                    <MapViewDirections
+                        origin={coordinates[0]}
+                        destination={coordinates[1]}
+                        apikey={GOOGLE_API_KEY}
+                        strokeWidth={4}
+                        strokeColor="#111111"
+                        timePrecision="now"
+                        onReady={result => {
+                            console.log(`Distance: ${result.distance} km`)
+                            console.log(`Duration: ${result.duration} min.`)
+                            setDistance(result.distance);
+                            setDuration(result.duration);
+
+                            this.mapView.fitToCoordinates(result.coordinates, {
+                                edgePadding: {
+                                    right: (width / 20),
+                                    bottom: (height / 20),
+                                    left: (width / 20),
+                                    top: (height / 20),
+                                }
+                            });
+                        }}
+                    />
                     <Marker coordinate={coordinates[0]} />
                     <Marker coordinate={coordinates[1]} />
                 </MapView>
