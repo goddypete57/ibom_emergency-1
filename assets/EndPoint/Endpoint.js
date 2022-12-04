@@ -1,4 +1,5 @@
 const endpoints = {
+    gg: 'AIzaSyCaTVs4mAldtKZN_6XO955UjlCWWc45ZOs',
     baseUrl: 'https://police.breeks.io',
     signUp: '/auth/sign-up',
     signin: '/auth/sign-in',

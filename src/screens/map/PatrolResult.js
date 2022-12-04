@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
+import MapViewDirections from 'react-native-maps-directions';
 
 import colors from '../../../assets/colors/colors';
 import { AuthContext } from '../../../context/AuthContext';
@@ -9,6 +10,7 @@ import endpoints from '../../../assets/EndPoint/Endpoint';
 
 
 export default PatrolResult = ({ navigation }) => {
+    const GOOGLE_MAPS_APIKEY = '…';
     const { user, token } = useContext(AuthContext);
     const [coordinates] = useState([
         {
