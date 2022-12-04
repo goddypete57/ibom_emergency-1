@@ -110,7 +110,7 @@ export default Sos = ({ navigation }) => {
 
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => navigation.navigate(mainRoute.patrolResult)}
+        onPress={() => navigation.navigate(mainRoute.getHelp)}
         style={styles.circleWrapper}>
         <View style={[styles.dot, styles.center]}>
           {[...Array(3).keys()].map(index => {

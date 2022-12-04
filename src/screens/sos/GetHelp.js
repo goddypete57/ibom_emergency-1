@@ -59,7 +59,7 @@ export default GetHelp = ({ navigation }) => {
       method: 'POST',
       body: JSON.stringify({
         "latitude": currentLatitude,
-        "longitude": currentLongitude,
+        "longitude": currentLongitude
         // "location": "string",
       }),
       headers: {
