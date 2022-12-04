@@ -186,11 +186,11 @@ const styles = StyleSheet.create({
     checkpointText: {
         fontFamily: 'Outfit-Regular',
         fontSize: 16,
-        marginStart: 56,
         marginTop: 14,
         color: colors.textColor1,
         marginBottom: 8,
         marginEnd: 15,
+        textAlign: 'right',
     },
     policeTab: {
         flexDirection: 'column',
@@ -218,11 +218,11 @@ const styles = StyleSheet.create({
     policeText: {
         fontFamily: 'Outfit-Regular',
         fontSize: 16,
-        marginStart: 43,
         marginTop: 58,
         color: colors.textColor1,
         marginBottom: 13,
         marginEnd: 15,
+        textAlign: 'right',
     },
     officerTab: {
         marginTop: 10,
@@ -251,11 +251,11 @@ const styles = StyleSheet.create({
     officerText: {
         fontFamily: 'Outfit-Regular',
         fontSize: 16,
-        marginStart: 156,
         marginTop: 19,
         color: colors.textColor1,
         marginBottom: 13,
         marginEnd: 15,
+        textAlign: 'right',
     },
      mapView: {
      width: Dimensions.get("window").width,
