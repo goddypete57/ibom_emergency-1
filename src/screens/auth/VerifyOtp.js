@@ -179,12 +179,12 @@ export default VerifyOtp = ({ route, navigation }) => {
             textColor={colors.white}
             processing={loading}
           />
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Image
               source={require('../../../assets/images/changeemail.png')}
               style={styles.changeemail}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
         </View>
       </View>
