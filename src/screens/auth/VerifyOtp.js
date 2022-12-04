@@ -24,6 +24,7 @@ import OtpFields from '../../Component/OtpFields';
 export default VerifyOtp = ({ route, navigation }) => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState('');
 
   const [otp, setOtp] = useState('');
 
@@ -54,7 +55,8 @@ export default VerifyOtp = ({ route, navigation }) => {
             text1: 'Verification Successful',
             text2: data.message,
           });
-          // navigation.navigate(authRoute.SetUpAccount2, { token: data.token });
+          setToken(data.token)
+          setShowModal(true)
         } else {
           Toast.show({
             type: 'error',
@@ -125,8 +127,8 @@ export default VerifyOtp = ({ route, navigation }) => {
           <View style={styles.ButtonWrapper2}>
             <Button
               enabled={true}
-              title={'Proce'}
-              onPress={() => { setShowModal(false) }}
+              title={'Proceed'}
+              onPress={() => navigation.navigate(authRoute.SetUpAccount2, { token: data.token })}
               buttonStyle={styles.Button2}
               textColor={colors.white}
             />
@@ -172,9 +174,10 @@ export default VerifyOtp = ({ route, navigation }) => {
           <Button
             enabled={canProceed}
             title={'Confirm'}
-            onPress={() => { setShowModal(true) }}
+            onPress={() => { verify() }}
             buttonStyle={styles.Button}
             textColor={colors.white}
+            processing={loading}
           />
           <TouchableOpacity>
             <Image
