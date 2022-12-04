@@ -4,7 +4,8 @@ const endpoints = {
     signin: '/auth/sign-in',
     user: '/account/profile',
     requestHelp: '/account/requests',
-    verifyOtp:'/auth/verify-otp'
+    verifyOtp:'/auth/verify-otp',
+    resendOtp:'/auth/resend-otp',
 }
 
 export default endpoints;
