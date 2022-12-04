@@ -32,8 +32,10 @@ export default Police = ({navigation}) => {
             <Text style={styles.textDo}>What do you want to do?  (this copy can be
                 {'\n'} changed)</Text>
             <View style={styles.crimeWrapper}>
-                <TouchableOpacity onPress={() => { }}>
-                    <View>
+                <TouchableOpacity onPress={() => { }}
+                style={{
+                    width: '30%'
+                }}>
                         <LinearGradient
                             colors={[colors.linearGradientRed1, colors.linearGradientRed2]}
                             start={{ x: 0.0, y: 1.0 }}
@@ -46,38 +48,34 @@ export default Police = ({navigation}) => {
                             <Text style={styles.crimeText}>Report a
                                 {'\n'}crime</Text>
                         </LinearGradient>
-                    </View>
                 </TouchableOpacity>
 
                 <View style={styles.policeCheckpointWrapper}>
-                    <TouchableOpacity onPress={() => { }}>
-                        <View style={styles.checkpointTab}>
+                    <TouchableOpacity onPress={() => { }}
+                    style={styles.checkpointTab}>
                             <Image
                                 source={require('../../../assets/images/checkpoint_icon.png')}
                                 style={styles.checkpointImage}
                             />
                             <Text style={styles.checkpointText}>Nearest Checkpoint</Text>
-                        </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
-                        <View style={styles.policeTab}>
+                    <TouchableOpacity onPress={() => { }}
+                    style={styles.policeTab}>
                             <Image
                                 source={require('../../../assets/images/police_icon.png')}
                                 style={styles.policeImage}
                             />
                             <Text style={styles.policeText}>Nearest Police Station</Text>
-                        </View>
                     </TouchableOpacity>
                 </View>
             </View>
-            <TouchableOpacity onPress={() => { }}>
-                <View style={styles.officerTab}>
+            <TouchableOpacity onPress={() => { }}
+            style={styles.officerTab}>
                     <Image
                         source={require('../../../assets/images/officer_icon.png')}
                         style={styles.officerImage}
                     />
                     <Text style={styles.officerText}>Report a Police Officer</Text>
-                </View>
             </TouchableOpacity>
 
 
@@ -94,13 +92,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingTop: 10,
         alignItems: 'center',
+        paddingBottom: 20,
+        paddingHorizontal: 20,
+        paddingTop: 40,
     },
     headerLeft: {
-        marginStart: 16,
-        marginBottom: 22,
         width: 24,
         height: 21,
-        marginTop: 15,
     },
     headerText: {
         fontFamily: 'Outfit-Medium',
@@ -126,12 +124,14 @@ const styles = StyleSheet.create({
         marginTop: 45,
         marginStart: 16,
         marginEnd: 16,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     crimeTab: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        width: 106,
+        width: '100%',
         height: 216,
         borderRadius: 10,
         shadowColor: colors.black,
@@ -159,15 +159,15 @@ const styles = StyleSheet.create({
     policeCheckpointWrapper: {
         marginStart: 10,
         flexDirection: 'column',
+        width: '67%'
     },
     checkpointTab: {
         flexDirection: 'column',
-        width: 220,
+        width: '100%',
         height: 80,
         backgroundColor: colors.white,
         justifyContent: 'space-between',
         borderRadius: 10,
-        marginStart: 10,
         shadowColor: colors.black,
         shadowOffset: {
             width: 0,
@@ -194,10 +194,9 @@ const styles = StyleSheet.create({
     },
     policeTab: {
         flexDirection: 'column',
-        width: 220,
+        width: '100%',
         height: 130,
         marginTop: 6,
-        marginStart: 10,
         backgroundColor: colors.white,
         justifyContent: 'space-between',
         borderRadius: 10,
@@ -226,12 +225,11 @@ const styles = StyleSheet.create({
         marginEnd: 15,
     },
     officerTab: {
-        marginTop: 6,
+        marginTop: 10,
         marginStart: 16,
         marginEnd: 16,
         borderRadius: 10,
         backgroundColor: colors.white,
-        width: 347,
         height: 94,
         justifyContent: 'space-between',
         flexDirection: 'column',
