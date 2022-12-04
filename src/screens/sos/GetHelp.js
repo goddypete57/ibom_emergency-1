@@ -44,11 +44,11 @@ export default GetHelp = ({ navigation }) => {
   const [
     currentLongitude,
     setCurrentLongitude
-  ] = useState('...');
+  ] = useState('0');
   const [
     currentLatitude,
     setCurrentLatitude
-  ] = useState('...');
+  ] = useState('0');
   const [
     locationStatus,
     setLocationStatus
