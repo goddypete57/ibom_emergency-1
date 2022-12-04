@@ -160,31 +160,42 @@ export default PatrolResult = ({ navigation }) => {
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0922 * (width / height),
                     }}>
-                    <MapViewDirections
-                        origin={coordinates[0]}
-                        destination={coordinates[1]}
-                        apikey={GOOGLE_API_KEY}
-                        strokeWidth={4}
-                        strokeColor="#111111"
-                        timePrecision="now"
-                        onReady={result => {
-                            console.log(`Distance: ${result.distance} km`)
-                            console.log(`Duration: ${result.duration} min.`)
-                            setDistance(result.distance);
-                            setDuration(result.duration);
+                    {coordinates.map((coordinate, index) =>
+                        <Marker key={`coordinate_${index}`} coordinate={coordinate} pinColor={index == 0 ? "#495BF8" : undefined} />
+                    )}
+                    {(coordinates.length >= 2) && (
 
-                            this.mapView.fitToCoordinates(result.coordinates, {
-                                edgePadding: {
-                                    right: (width / 20),
-                                    bottom: (height / 20),
-                                    left: (width / 20),
-                                    top: (height / 20),
-                                }
-                            });
-                        }}
-                    />
-                    <Marker coordinate={coordinates[0]} />
-                    <Marker coordinate={coordinates[1]} />
+                        <MapViewDirections
+                            origin={coordinates[0]}
+                            destination={coordinates[1]}
+                            apikey={GOOGLE_API_KEY}
+                            strokeWidth={4}
+                            strokeColor="#495BF8"
+                            timePrecision="now"
+                            onStart={(params) => {
+                                console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
+                            }}
+                            onReady={result => {
+                                console.log(`Distance: ${result.distance} km`)
+                                console.log(`Duration: ${result.duration} min.`)
+                                setDistance(result.distance);
+                                setDuration(result.duration);
+
+                                this.mapView.fitToCoordinates(result.coordinates, {
+                                    edgePadding: {
+                                        right: (width / 20),
+                                        bottom: (height / 20),
+                                        left: (width / 20),
+                                        top: (height / 20),
+                                    }
+                                });
+                            }}
+                            onError={(errorMessage) => {
+                                // console.log('GOT AN ERROR');
+                            }}
+                        />)}
+                    {/* <Marker coordinate={coordinates[0]} />
+                    <Marker coordinate={coordinates[1]} /> */}
                 </MapView>
             </View>
         </View>
