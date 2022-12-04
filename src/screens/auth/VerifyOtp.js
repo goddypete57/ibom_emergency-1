@@ -31,6 +31,47 @@ export default VerifyOtp = ({ route, navigation }) => {
   const [showModal, setShowModal] = useState(false)
   const canProceed =
     otp.length == 4
+  const resendOtp = async () => {
+    setLoading(true);
+    const response = await fetch(endpoints.baseUrl + endpoints.resendOtp, {
+      method: 'POST',
+      body: JSON.stringify({
+        "email": user.email
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    response
+      .json()
+      .then(data => {
+        setLoading(false);
+        console.log(data);
+        if (response.ok) {
+          Toast.show({
+            type: 'success',
+            text1: 'Resend Successful',
+            text2: data.message,
+          });
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: 'Resend Failed',
+            text2: data.message,
+          });
+        }
+        // navigation.navigate(authRouts.otp, data)
+      })
+      .catch(err => {
+        setLoading(false);
+        Toast.show({
+          type: 'error',
+          text1: 'Resend Failed',
+          text2: err.message,
+        });
+        console.log(err.message);
+      });
+  };
 
   const verify = async () => {
     setLoading(true);
@@ -163,7 +204,7 @@ export default VerifyOtp = ({ route, navigation }) => {
           />
 
         </KeyboardAvoidingView>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => resendOtp()}>
           <Image
             source={require('../../../assets/images/Resendcode.png')}
             style={styles.resendimage}
