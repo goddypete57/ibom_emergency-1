@@ -18,13 +18,14 @@ import Button from '../../Component/Button';
 import mainRoute from '../../navigation/route/mainRoute';
 import endpoints from '../../../assets/EndPoint/Endpoint';
 import OtpFields from '../../Component/OtpFields';
+import authRoute from '../../navigation/route/authRoute';
 
 
 
 export default VerifyOtp = ({ route, navigation }) => {
-  const { user } = useContext(AuthContext);
+  const { user, login } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState('');
+  const [data, setData] = useState('');
 
   const [otp, setOtp] = useState('');
 
@@ -96,7 +97,7 @@ export default VerifyOtp = ({ route, navigation }) => {
             text1: 'Verification Successful',
             text2: data.message,
           });
-          setToken(data.token)
+          setData(data)
           setShowModal(true)
         } else {
           Toast.show({
@@ -169,7 +170,10 @@ export default VerifyOtp = ({ route, navigation }) => {
             <Button
               enabled={true}
               title={'Proceed'}
-              onPress={() => navigation.navigate(authRoute.SetUpAccount2, { token: data.token })}
+              onPress={() =>
+                // navigation.navigate(authRoute.setUpAccount2, { token: token })
+                login(data.token, data.user)
+              }
               buttonStyle={styles.Button2}
               textColor={colors.white}
             />
@@ -213,7 +217,7 @@ export default VerifyOtp = ({ route, navigation }) => {
 
         <View style={styles.ButtonWrapper}>
           <Button
-            enabled={canProceed}
+            enabled={canProceed && !loading}
             title={'Confirm'}
             onPress={() => { verify() }}
             buttonStyle={styles.Button}
