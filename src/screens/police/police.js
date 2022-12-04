@@ -6,7 +6,7 @@ import colors from '../../../assets/colors/colors';
 
 
 
-export default Police = () => {
+export default Police = ({navigation}) => {
 
     return (
         <View style={styles.container}>
@@ -19,7 +19,7 @@ export default Police = () => {
                     start={{ x: 0.0, y: 1.0 }}
                     end={{ x: 1.0, y: 1.0 }}
                     style={styles.headerWrapper}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => {navigation.goBack() }}>
                         <Image
                             source={require('../../../assets/images/back_white.png')}
                             style={styles.headerLeft}
