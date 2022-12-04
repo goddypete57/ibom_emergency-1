@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
-import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 
 import colors from '../../../assets/colors/colors';
@@ -10,6 +10,16 @@ import endpoints from '../../../assets/EndPoint/Endpoint';
 
 export default PatrolResult = ({ navigation }) => {
     const { user, token } = useContext(AuthContext);
+    const [coordinates] = useState([
+        {
+            latitude: 48.8587741,
+            longitude: 2.2069771,
+        },
+        {
+            latitude: 48.8323785,
+            longitude: 2.3361663,
+        },
+    ]);
     const [
         currentLongitude,
         setCurrentLongitude
@@ -121,19 +131,20 @@ export default PatrolResult = ({ navigation }) => {
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     style={styles.mapView}
-                    region={{
-                        latitude: parseFloat(currentLatitude),
-                        longitude: parseFloat(currentLongitude),
-                        latitudeDelta: 0.015,
-                        longitudeDelta: 0.0121,
-                    }}
+                    // region={{
+                    //     latitude: parseFloat(currentLatitude),
+                    //     longitude: parseFloat(currentLongitude),
+                    //     latitudeDelta: 0.015,
+                    //     longitudeDelta: 0.0121,
+                    // }}
                     initialRegion={{
-                        latitude: 4.9057,
-                        longitude: 7.8537,
-                        latitudeDelta: 0.0025,
-                        longitudeDelta: 0.0421,
+                        latitude: coordinates[0].latitude,
+                        longitude: coordinates[0].longitude,
+                        latitudeDelta: 0.0622,
+                        longitudeDelta: 0.0121,
                     }}>
-
+                    <Marker coordinate={coordinates[0]} />
+                    <Marker coordinate={coordinates[1]} />
                 </MapView>
             </View>
         </View>
