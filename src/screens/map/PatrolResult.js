@@ -17,13 +17,13 @@ export default PatrolResult = ({ navigation }) => {
     const [duration, setDuration] = useState(0);
     this.mapView = null;
     onMapPress = (e) => {
-        this.setState({
-          coordinates: [
-            ...this.state.coordinates,
-            e.nativeEvent.coordinate,
-          ],
+        this.mapView.animateToRegion({
+            latitude: e.nativeEvent.coordinate.latitude,
+            longitude: e.nativeEvent.coordinate.longitude,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
         });
-      }
+    }
 
     const [coordinates] = useState([
         {
@@ -136,7 +136,7 @@ export default PatrolResult = ({ navigation }) => {
                         color: colors.white,
                         textAlign: 'center',
                         marginRight: 20,
-                    }}>{distance}km{'\n'}<Text style={{
+                    }}>{distance.toFixed(2)}km{'\n'}<Text style={{
                         fontSize: 16,
                         fontFamily: 'Outfit-Regular',
                     }}>Distance from help</Text></Text>
@@ -157,8 +157,8 @@ export default PatrolResult = ({ navigation }) => {
                     initialRegion={{
                         latitude: coordinates[0].latitude,
                         longitude: coordinates[0].longitude,
-                        latitudeDelta: 0.0622,
-                        longitudeDelta: 0.0121,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0922 * (width / height),
                     }}>
                     <MapViewDirections
                         origin={coordinates[0]}
