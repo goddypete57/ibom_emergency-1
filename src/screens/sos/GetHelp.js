@@ -94,7 +94,7 @@ export default GetHelp = ({ navigation }) => {
       .then(data => {
         console.log(data);
         if (response.ok) {
-          // navigation.replace(mainRoute.patrolResult)
+          navigation.replace(mainRoute.patrolResult)
         } else {
           setShowModal(true)
           Toast.show({
