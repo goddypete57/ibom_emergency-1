@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {
   View,
   Text,
@@ -8,36 +8,33 @@ import {
   TextInput,
   ScrollView,
   Modal,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 import colors from '../../../assets/colors/colors';
-import { AuthContext } from '../../../context/AuthContext';
+import {AuthContext} from '../../../context/AuthContext';
 import Button from '../../Component/Button';
 import mainRoute from '../../navigation/route/mainRoute';
 import endpoints from '../../../assets/EndPoint/Endpoint';
 import OtpFields from '../../Component/OtpFields';
 import authRoute from '../../navigation/route/authRoute';
 
-
-
-export default VerifyOtp = ({ route, navigation }) => {
-  const { user, login } = useContext(AuthContext);
+export default VerifyOtp = ({route, navigation}) => {
+  const {user, login} = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState('');
 
   const [otp, setOtp] = useState('');
 
-  const [showModal, setShowModal] = useState(false)
-  const canProceed =
-    otp.length == 4
+  const [showModal, setShowModal] = useState(false);
+  const canProceed = otp.length == 4;
   const resendOtp = async () => {
     setLoading(true);
     const response = await fetch(endpoints.baseUrl + endpoints.resendOtp, {
       method: 'POST',
       body: JSON.stringify({
-        "email": user.email
+        email: user.email,
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -79,8 +76,8 @@ export default VerifyOtp = ({ route, navigation }) => {
     const response = await fetch(endpoints.baseUrl + endpoints.verifyOtp, {
       method: 'POST',
       body: JSON.stringify({
-        "otp": otp,
-        "email": user.email
+        otp: otp,
+        email: user.email,
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -97,8 +94,8 @@ export default VerifyOtp = ({ route, navigation }) => {
             text1: 'Verification Successful',
             text2: data.message,
           });
-          setData(data)
-          setShowModal(true)
+          setData(data);
+          setShowModal(true);
         } else {
           Toast.show({
             type: 'error',
@@ -120,7 +117,6 @@ export default VerifyOtp = ({ route, navigation }) => {
   };
 
   return (
-
     <ScrollView
       vertical
       showsHorizontalScrollIndicator={false}
@@ -133,53 +129,59 @@ export default VerifyOtp = ({ route, navigation }) => {
         transparent
         visible={showModal}
         animationType={'fade'}
-        onDismiss={() => { setShowModal(false) }}
-        onRequestClose={() => setShowModal(false)}
-      >
-        <View
+        onDismiss={() => {
+          setShowModal(false);
+        }}
+        onRequestClose={() => setShowModal(false)}>
+        <TouchableOpacity
           style={{
-            width: 292,
-            elevation: 5,
-            borderRadius: 8,
-            backgroundColor: colors.white,
-            transform: [{ translateY: 200 }, { translateX: 50 }],
+            flex: 1,
             justifyContent: 'center',
+            alignItems: 'center',
           }}>
-          <Image
-            source={require('../../../assets/images/checked.png')}
-            style={{ alignSelf: 'center', marginTop: 36 }}
-          />
-          <Image
-            source={require('../../../assets/images/Verified.png')}
-            style={{ marginTop: 20, alignSelf: 'center' }}
-          />
-          <Text
+          <View
             style={{
-              textAlign: 'center',
-              alignSelf: 'center',
-              color: 'rgba(42, 83, 76, 0.7)',
-              fontSize: 16,
-              fontFamily: 'Outfit-Regular',
-              marginTop: 5,
+              width: 292,
+              elevation: 5,
+              borderRadius: 8,
+              backgroundColor: colors.white,
+              justifyContent: 'center',
             }}>
-            You have succesfully Verified {'\n'}
-            Your account.
-          </Text>
-
-          <View style={styles.ButtonWrapper2}>
-            <Button
-              enabled={true}
-              title={'Proceed'}
-              onPress={() =>
-                // navigation.navigate(authRoute.setUpAccount2, { token: token })
-                login(data.token, data.user)
-              }
-              buttonStyle={styles.Button2}
-              textColor={colors.white}
+            <Image
+              source={require('../../../assets/images/checked.png')}
+              style={{alignSelf: 'center', marginTop: 36}}
             />
+            <Image
+              source={require('../../../assets/images/Verified.png')}
+              style={{marginTop: 20, alignSelf: 'center'}}
+            />
+            <Text
+              style={{
+                textAlign: 'center',
+                alignSelf: 'center',
+                color: 'rgba(42, 83, 76, 0.7)',
+                fontSize: 16,
+                fontFamily: 'Outfit-Regular',
+                marginTop: 5,
+              }}>
+              You have succesfully Verified {'\n'}
+              Your account.
+            </Text>
 
+            <View style={styles.ButtonWrapper2}>
+              <Button
+                enabled={true}
+                title={'Proceed'}
+                onPress={() =>
+                  // navigation.navigate(authRoute.setUpAccount2, { token: token })
+                  login(data.token, data.user)
+                }
+                buttonStyle={styles.Button2}
+                textColor={colors.white}
+              />
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </Modal>
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -203,10 +205,8 @@ export default VerifyOtp = ({ route, navigation }) => {
             value={otp}
             onChangeText={text => {
               setOtp(text);
-
             }}
           />
-
         </KeyboardAvoidingView>
         <TouchableOpacity onPress={() => resendOtp()}>
           <Image
@@ -219,7 +219,9 @@ export default VerifyOtp = ({ route, navigation }) => {
           <Button
             enabled={canProceed && !loading}
             title={'Confirm'}
-            onPress={() => { verify() }}
+            onPress={() => {
+              verify();
+            }}
             buttonStyle={styles.Button}
             textColor={colors.white}
             processing={loading}
@@ -230,7 +232,6 @@ export default VerifyOtp = ({ route, navigation }) => {
               style={styles.changeemail}
             />
           </TouchableOpacity> */}
-
         </View>
       </View>
     </ScrollView>
@@ -254,16 +255,15 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   verifyimg: {
-    marginTop: 32
+    marginTop: 32,
   },
 
   resendimage: {
-    alignSelf: 'center'
-
+    alignSelf: 'center',
   },
   changeemail: {
     alignSelf: 'center',
-    marginTop: 5
+    marginTop: 5,
   },
   Button: {
     width: '100%',
