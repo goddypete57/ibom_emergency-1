@@ -32,7 +32,7 @@ export default GetHelp = ({ navigation }) => {
     });
     response.then(res => res.json())
       .then((data) => {
-        console.log(data);
+        console.log('this user', data);
         if (response._j.ok) {
           // console.log(data);
           saveUser(data);
@@ -42,11 +42,17 @@ export default GetHelp = ({ navigation }) => {
   }, []);
 
   const subscribeLoccation = () => {
-    watchID = Geolocation.watchPosition(
-      (position) => {
-        //Will give you the location on location change
-
-        console.log('You are Here', position);
+    
+  }
+  watchID = Geolocation.watchPosition(
+    (position) => {
+      //Will give you the location on location change
+      console.log('You are Here', position);
+      // getHelp(JSON.stringify(position.coords.latitude), JSON.stringify(position.coords.longitude));
+      if (parseFloat(JSON.stringify(position.coords.latitude)).toFixed(2) != 37.421998333333335.toFixed(2)) {
+        getHelp(JSON.stringify(position.coords.latitude), JSON.stringify(position.coords.longitude));
+        Geolocation.clearWatch(watchID);
+      }
         if (socket.connected) {
           socket.emit("updateLocation", {
             latitude: JSON.stringify(position.coords.latitude),
@@ -69,9 +75,7 @@ export default GetHelp = ({ navigation }) => {
         enableHighAccuracy: false,
         maximumAge: 1000
       },
-    );
-  }
-
+  );
   const getHelp = async (latitude, longitude) => {
     console.log(latitude, longitude);
     const response = await fetch(endpoints.baseUrl + endpoints.requestHelp, {
@@ -91,7 +95,7 @@ export default GetHelp = ({ navigation }) => {
       .then(data => {
         console.log(data);
         if (response.ok) {
-          // navigation.navigate(mainRoute.patrolResult)
+          // navigation.replace(mainRoute.patrolResult)
         } else {
           setShowModal(true)
           Toast.show({
@@ -131,11 +135,11 @@ export default GetHelp = ({ navigation }) => {
     };
   });
   socket.onAny((eventName, ...args) => {
-    console.log(eventName, args);
+    // console.log(eventName, args);
   });
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
-      getOneTimeLocation();
+      // getOneTimeLocation();
       subscribeLoccation();
     } else {
       try {
@@ -148,7 +152,7 @@ export default GetHelp = ({ navigation }) => {
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           //To Check, If Permission is granted
-          getOneTimeLocation();
+          // getOneTimeLocation();
           subscribeLoccation();
         } else {
           console.log('Permission Denied');
@@ -161,10 +165,8 @@ export default GetHelp = ({ navigation }) => {
 
   useEffect(() => {
     requestLocationPermission();
-    return () => {
-      Geolocation.clearWatch(watchID);
-    };
-  }, []);
+ 
+  });
 
   const getOneTimeLocation = () => {
     console.log('Getting Location ...');
@@ -179,7 +181,6 @@ export default GetHelp = ({ navigation }) => {
 
         //Setting Longitude state
         // setCurrentLatitude(JSON.stringify(position.coords.latitude));
-        getHelp(JSON.stringify(position.coords.latitude), JSON.stringify(position.coords.longitude));
       },
       (error) => {
         console.log(error.message);
