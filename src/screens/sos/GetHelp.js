@@ -24,47 +24,61 @@ export default GetHelp = ({ navigation }) => {
   );
   spinValue = new Animated.Value(0);
   let visible = false;
-  const [
-    locationStatus,
-    setLocationStatus
-  ] = useState('');
-
-  const watchID = Geolocation.watchPosition(
-    (position) => {
-      //Will give you the location on location change
-
-      setLocationStatus('You are Here');
-      console.log(position);
-      if (socket.connected) {
-        socket.emit("updateLocation", {
-          latitude: JSON.stringify(position.coords.latitude),
-          longitude: JSON.stringify(position.coords.longitude)
-        });
-        console.log('sent', [JSON.stringify(position.coords.longitude), JSON.stringify(position.coords.latitude)]);
+  useEffect(() => {
+    const response = fetch(endpoints.baseUrl + endpoints.user, {
+      headers: {
+        'Authorization': 'Bearer ' + token
       }
-      //getting the Longitude from the location json
-      //Setting Longitude state
-      // setCurrentLongitude(JSON.stringify(position.coords.longitude));
+    });
+    response.then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        if (response._j.ok) {
+          // console.log(data);
+          saveUser(data);
+        }
+      })
 
-      //getting the Latitude from the location json
-      //Setting Latitude state
-      // setCurrentLatitude(JSON.stringify(position.coords.latitude));
-    },
-    (error) => {
-      setLocationStatus(error.message);
-    },
-    {
-      enableHighAccuracy: false,
-      maximumAge: 1000
-    },
-  );
+  }, []);
 
-  const getHelp = async ({ latitude, longitude }) => {
+  const subscribeLoccation = () => {
+    watchID = Geolocation.watchPosition(
+      (position) => {
+        //Will give you the location on location change
+
+        console.log('You are Here', position);
+        if (socket.connected) {
+          socket.emit("updateLocation", {
+            latitude: JSON.stringify(position.coords.latitude),
+            longitude: JSON.stringify(position.coords.longitude)
+          });
+          console.log('sent', [JSON.stringify(position.coords.longitude), JSON.stringify(position.coords.latitude)]);
+        }
+        //getting the Longitude from the location json
+        //Setting Longitude state
+        // setCurrentLongitude(JSON.stringify(position.coords.longitude));
+
+        //getting the Latitude from the location json
+        //Setting Latitude state
+        // setCurrentLatitude(JSON.stringify(position.coords.latitude));
+      },
+      (error) => {
+        console.log(error.message);
+      },
+      {
+        enableHighAccuracy: false,
+        maximumAge: 1000
+      },
+    );
+  }
+
+  const getHelp = async (latitude, longitude) => {
+    console.log(latitude, longitude);
     const response = await fetch(endpoints.baseUrl + endpoints.requestHelp, {
       method: 'POST',
       body: JSON.stringify({
-        "latitude": latitude,
-        "longitude": longitude
+        "latitude": parseFloat(latitude),
+        "longitude": parseFloat(longitude)
         // "location": "string",
       }),
       headers: {
@@ -77,7 +91,7 @@ export default GetHelp = ({ navigation }) => {
       .then(data => {
         console.log(data);
         if (response.ok) {
-          navigation.navigate(mainRoute.patrolResult)
+          // navigation.navigate(mainRoute.patrolResult)
         } else {
           setShowModal(true)
           Toast.show({
@@ -86,7 +100,6 @@ export default GetHelp = ({ navigation }) => {
             text2: data.message,
           });
         }
-        // navigation.navigate(authRouts.otp, data)
       })
       .catch(err => {
         setShowModal(true)
@@ -123,7 +136,7 @@ export default GetHelp = ({ navigation }) => {
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
       getOneTimeLocation();
-      watchID
+      subscribeLoccation();
     } else {
       try {
         const granted = await PermissionsAndroid.request(
@@ -136,9 +149,9 @@ export default GetHelp = ({ navigation }) => {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
           //To Check, If Permission is granted
           getOneTimeLocation();
-          watchID
+          subscribeLoccation();
         } else {
-          setLocationStatus('Permission Denied');
+          console.log('Permission Denied');
         }
       } catch (err) {
         console.warn(err);
@@ -154,11 +167,11 @@ export default GetHelp = ({ navigation }) => {
   }, []);
 
   const getOneTimeLocation = () => {
-    setLocationStatus('Getting Location ...');
+    console.log('Getting Location ...');
     Geolocation.getCurrentPosition(
       //Will give you the current location
       (position) => {
-        setLocationStatus('You are Here');
+        // console.log('You are Here', position);
 
         //getting the Longitude from the location json
         //Setting Longitude state
@@ -169,7 +182,7 @@ export default GetHelp = ({ navigation }) => {
         getHelp(JSON.stringify(position.coords.latitude), JSON.stringify(position.coords.longitude));
       },
       (error) => {
-        setLocationStatus(error.message);
+        console.log(error.message);
       },
       {
         enableHighAccuracy: false,
@@ -221,22 +234,7 @@ export default GetHelp = ({ navigation }) => {
     outputRange: ['0deg', '360deg']
   })
 
-  useEffect(() => {
-    const response = fetch(endpoints.baseUrl + endpoints.user, {
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
-    });
-    response.then(res => res.json())
-      .then((data) => {
-        console.log(data);
-        if (response._j.ok) {
-          // console.log(data);
-          saveUser(data);
-        }
-      })
 
-  }, []);
   return (
     <View style={styles.container}>
       <Modal
