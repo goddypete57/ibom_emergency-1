@@ -7,6 +7,7 @@ import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
 import { AuthContext } from '../../../context/AuthContext';
 import endpoints from '../../../assets/EndPoint/Endpoint';
+import mainRoute from '../../navigation/route/mainRoute';
 
 export default GetHelp = ({ navigation }) => {
   const { user, token, saveUser } = useContext(AuthContext);
@@ -72,7 +73,7 @@ export default GetHelp = ({ navigation }) => {
       .then(data => {
         console.log(data);
         if (response.ok) {
-
+          navigation.navigate(mainRoute.patrolResult)
         } else {
           setShowModal(true)
           Toast.show({
@@ -254,15 +255,15 @@ export default GetHelp = ({ navigation }) => {
               fontFamily: 'Outfit-Regular',
               marginTop: 16,
             }}>Call this Emergency number</Text>
-            <Text 
-            onPress={() => Linking.openURL(`tel:${+2347025568546}`)}
-            style={{
-              color: colors.orange3,
-              fontSize: 16,
-              fontFamily: 'Outfit-Regular',
-              marginTop: 15,
-              textDecorationLine: 'underline'
-            }}>+234 7025 5685 46</Text>
+            <Text
+              onPress={() => Linking.openURL(`tel:${+2347025568546}`)}
+              style={{
+                color: colors.orange3,
+                fontSize: 16,
+                fontFamily: 'Outfit-Regular',
+                marginTop: 15,
+                textDecorationLine: 'underline'
+              }}>+234 7025 5685 46</Text>
           </View>
 
         </TouchableOpacity>

@@ -142,8 +142,8 @@ export default VerifyOtp = ({ route, navigation }) => {
             elevation: 5,
             borderRadius: 8,
             backgroundColor: colors.white,
-            transform: [{ translateY: 200 }, { translateX: 50 }],
             justifyContent: 'center',
+            alignItems: 'center',
           }}>
           <Image
             source={require('../../../assets/images/checked.png')}
