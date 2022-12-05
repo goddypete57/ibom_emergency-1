@@ -94,9 +94,9 @@ export default Login = ({ navigation }) => {
         }}>
         <View style={styles.container}>
           <View style={styles.headerWrapper}>
-            <Image
-              source={require('../../../assets/images/LogintoYourAccount.png')}
-            />
+          <Text style={styles.header}>
+          Login to Your Account
+          </Text>
             <Text style={styles.subtext}>Enter a valid email and password</Text>
           </View>
 
@@ -167,7 +167,12 @@ export default Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.white,
+  },
+  header:{
+    color: colors.green3,
+    fontSize: 24,
+    fontFamily: 'Outfit-Medium',
   },
   headerWrapper: {
     marginStart: 24,

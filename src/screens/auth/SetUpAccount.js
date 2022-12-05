@@ -87,9 +87,9 @@ export default SetUpAccount = ({ navigation }) => {
       }}>
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
-          <Image
-            source={require('../../../assets/images/SetUpYourAccount.png')}
-          />
+         <Text style={styles.header}>
+         Set Up Your Account
+         </Text>
           <Text style={styles.subtext}>Enter a valid email and password</Text>
         </View>
         <KeyboardAvoidingView
@@ -156,6 +156,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+  },
+  header:{
+    color: colors.green3,
+    fontSize: 24,
+    fontFamily: 'Outfit-Medium',
   },
   headerWrapper: {
     marginStart: 24,
