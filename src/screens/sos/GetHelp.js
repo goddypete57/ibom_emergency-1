@@ -41,41 +41,40 @@ export default GetHelp = ({ navigation }) => {
 
   }, []);
 
-  const subscribeLoccation = () => {
-    
-  }
-  watchID = Geolocation.watchPosition(
-    (position) => {
-      //Will give you the location on location change
-      console.log('You are Here', position);
-      // getHelp(JSON.stringify(position.coords.latitude), JSON.stringify(position.coords.longitude));
-      if (parseFloat(JSON.stringify(position.coords.latitude)).toFixed(2) != 37.421998333333335.toFixed(2)) {
-        getHelp(JSON.stringify(position.coords.latitude), JSON.stringify(position.coords.longitude));
-        Geolocation.clearWatch(watchID);
-      }
-        if (socket.connected) {
-          socket.emit("updateLocation", {
-            latitude: JSON.stringify(position.coords.latitude),
-            longitude: JSON.stringify(position.coords.longitude)
-          });
-          console.log('sent', [JSON.stringify(position.coords.longitude), JSON.stringify(position.coords.latitude)]);
-        }
-        //getting the Longitude from the location json
-        //Setting Longitude state
-        // setCurrentLongitude(JSON.stringify(position.coords.longitude));
 
-        //getting the Latitude from the location json
-        //Setting Latitude state
-        // setCurrentLatitude(JSON.stringify(position.coords.latitude));
+
+  useEffect(() => {
+    getCurrentPosition((callback) => {
+      console.log('callback', callback);
+      getHelp(JSON.stringify(callback.position.coords.latitude), JSON.stringify(callback.position.coords.longitude));
+
+      if (socket.connected) {
+        socket.emit("updateLocation", {
+          latitude: JSON.stringify(callback.position.coords.latitude),
+          longitude: JSON.stringify(callback.position.coords.longitude)
+        });
+        console.log('sent', [JSON.stringify(callback.position.coords.longitude), JSON.stringify(callback.position.coords.latitude)]);
+      }
+    })
+  })
+  const subscribeLoccation = () => {
+    watchID = Geolocation.watchPosition(
+      (position) => {
+        //Will give you the location on location change
+        console.log('You are Here', position);
+        // getHelp(JSON.stringify(position.coords.latitude), JSON.stringify(position.coords.longitude));
+
       },
       (error) => {
         console.log(error.message);
       },
-      {
-        enableHighAccuracy: false,
-        maximumAge: 1000
-      },
-  );
+      { enableHighAccuracy: true, distanceFilter: 1, interval: 5000, fastestInterval: 2000 }
+
+    );
+  }
+
+
+
   const getHelp = async (latitude, longitude) => {
     console.log(latitude, longitude);
     const response = await fetch(endpoints.baseUrl + endpoints.requestHelp, {
@@ -137,61 +136,6 @@ export default GetHelp = ({ navigation }) => {
   socket.onAny((eventName, ...args) => {
     // console.log(eventName, args);
   });
-  const requestLocationPermission = async () => {
-    if (Platform.OS === 'ios') {
-      // getOneTimeLocation();
-      subscribeLoccation();
-    } else {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-          {
-            title: 'Location Access Required',
-            message: 'This App needs to Access your location',
-          },
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          //To Check, If Permission is granted
-          // getOneTimeLocation();
-          subscribeLoccation();
-        } else {
-          console.log('Permission Denied');
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    }
-  };
-
-  useEffect(() => {
-    requestLocationPermission();
- 
-  });
-
-  const getOneTimeLocation = () => {
-    console.log('Getting Location ...');
-    Geolocation.getCurrentPosition(
-      //Will give you the current location
-      (position) => {
-        // console.log('You are Here', position);
-
-        //getting the Longitude from the location json
-        //Setting Longitude state
-        // setCurrentLongitude(JSON.stringify(position.coords.longitude));
-
-        //Setting Longitude state
-        // setCurrentLatitude(JSON.stringify(position.coords.latitude));
-      },
-      (error) => {
-        console.log(error.message);
-      },
-      {
-        enableHighAccuracy: false,
-        timeout: 30000,
-        maximumAge: 1000
-      },
-    );
-  };
 
 
   // First set up animation 
@@ -399,6 +343,71 @@ export default GetHelp = ({ navigation }) => {
     </View>
   );
 };
+
+
+async function requestLocationPermission() {
+  if (Platform.OS === 'ios') {
+    Geolocation.setRNConfiguration({
+      authorizationLevel: 'whenInUse'
+    })
+
+    Geolocation.requestAuthorization()
+    // IOS permission request does not offer a callback :/
+    return null
+  } else if (Platform.OS === 'android') {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        return true
+      } else {
+        return false
+      }
+    } catch (err) {
+      console.warn(err.message)
+      return false
+    }
+  }
+}
+
+
+async function getCurrentPosition(callback) {
+  const hasLocationPermission = await requestLocationPermission()
+  /* This will only be fired on Android. On Apple we can not detect when/if a
+   * location permission has been granted or denied. For that reason after a
+   * predefined period we just timeout.
+   */
+
+  if (hasLocationPermission === false) {
+    callback({
+      locationAvailable: false,
+      error: 'Can not obtain location permission'
+    })
+    return
+  }
+
+  Geolocation.getCurrentPosition(
+    position => {
+      callback({
+        locationAvailable: true,
+        position
+      })
+    },
+    error => {
+      callback({
+        locationAvailable: false,
+        error: error.message,
+        errorCode: error.code
+      })
+    },
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 }
+  )
+}
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {
