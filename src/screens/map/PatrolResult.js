@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "rea
 import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import MapViewDirections from 'react-native-maps-directions';
+import io from 'socket.io-client';
 
 import colors from '../../../assets/colors/colors';
 import { AuthContext } from '../../../context/AuthContext';
@@ -16,6 +17,13 @@ export default PatrolResult = ({ navigation }) => {
     const [distance, setDistance] = useState(0);
     const [duration, setDuration] = useState(0);
     this.mapView = null;
+    const socket = io(endpoints.ws,
+        {
+            extraHeaders: {
+                'authorization': `Bearer ${token}`
+            }
+        }
+    );
     onMapPress = (e) => {
         this.mapView.animateToRegion({
             latitude: e.nativeEvent.coordinate.latitude,
