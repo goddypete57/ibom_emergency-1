@@ -16,6 +16,9 @@ export default PatrolResult = ({ navigation }) => {
     const { user, token } = useContext(AuthContext);
     const [distance, setDistance] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [lastPong, setLastPong] = useState(null);
+    console.log('pong', lastPong);
+    const [isConnected, setIsConnected] = useState(false)
     this.mapView = null;
     const socket = io(endpoints.ws,
         {
@@ -55,6 +58,39 @@ export default PatrolResult = ({ navigation }) => {
         locationStatus,
         setLocationStatus
     ] = useState('');
+
+    useEffect(() => {
+        socket.on('connect', (e) => {
+            setIsConnected(true);
+            console.log('connected', coordinates[0].longitude);
+        });
+
+        socket.on('disconnect', (e) => {
+            setIsConnected(false);
+            console.log('disconnected', e);
+        });
+
+        socket.on('pong', () => {
+            setLastPong(new Date().toISOString());
+        });
+        socket.onAny((eventName, ...args) => {
+            console.log(eventName, args);
+        });
+        return () => {
+            socket.off('connect');
+            socket.off('disconnect');
+            socket.off('pong');
+        };
+    }, []);
+
+    useEffect(() => {
+        socket.emit("updateLocation", {
+            latitude: coordinates[0].latitude,
+            longitude: coordinates[0].longitude
+        });
+        console.log('sent', [coordinates[0].longitude, coordinates[0].latitude,]);
+    }, [isConnected, coordinates])
+
     useEffect(() => {
         Geolocation.watchPosition(
             (position) => {
