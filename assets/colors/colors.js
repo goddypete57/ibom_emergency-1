@@ -33,6 +33,7 @@ textGreen:'#02382E',
 popUp:'#FFF9F4',
 green2:'rgba(42, 83, 77, 0.8)',
 background5:'#FE8C8C',
+green3:'#02382E',
 };
 
 export default colors;

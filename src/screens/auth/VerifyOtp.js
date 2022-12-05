@@ -151,10 +151,9 @@ export default VerifyOtp = ({route, navigation}) => {
               source={require('../../../assets/images/checked.png')}
               style={{alignSelf: 'center', marginTop: 36}}
             />
-            <Image
-              source={require('../../../assets/images/Verified.png')}
-              style={{marginTop: 20, alignSelf: 'center'}}
-            />
+          <Text style={styles.header}>
+          Verified!
+          </Text>
             <Text
               style={{
                 textAlign: 'center',
@@ -186,10 +185,9 @@ export default VerifyOtp = ({route, navigation}) => {
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
           <Image source={require('../../../assets/images/emails2.png')} />
-          <Image
-            source={require('../../../assets/images/Verifyyouremail.png')}
-            style={styles.verifyimg}
-          />
+     <Text style={styles.verifyemailtext}>
+     Verify your email
+     </Text>
           <Text style={styles.subtext}>
             Please enter the 4 digit code sent to{'\n'}
             yourmail@example.com
@@ -209,10 +207,9 @@ export default VerifyOtp = ({route, navigation}) => {
           />
         </KeyboardAvoidingView>
         <TouchableOpacity onPress={() => resendOtp()}>
-          <Image
-            source={require('../../../assets/images/Resendcode.png')}
-            style={styles.resendimage}
-          />
+         <Text style={styles.resendCode}>
+         Resend code 
+         </Text>
         </TouchableOpacity>
 
         <View style={styles.ButtonWrapper}>
@@ -243,6 +240,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
     justifyContent: 'center',
+  },
+  header:{
+    color: colors.green3,
+    fontSize: 24,
+    fontFamily: 'Outfit-Medium',
   },
   headerWrapper: {
     alignSelf: 'center',
@@ -285,4 +287,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 38,
     marginVertical: 44,
   },
+  verifyemailtext:{
+    color: colors.green3,
+    fontSize: 20,
+    fontFamily: 'Outfit-Medium',
+  },
+resendCode:{
+  color: colors.green3,
+  fontSize: 20,
+  fontFamily: 'Outfit-Medium',
+},
 });

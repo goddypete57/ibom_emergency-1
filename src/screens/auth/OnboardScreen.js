@@ -9,7 +9,9 @@ export default OnboardingScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerWrapper}>
-        <Image source={require('../../../assets/images/rename.png')} />
+       <Text style={styles.header}>
+       Welcome to DSP!
+       </Text>
         <Text style={styles.subtext}>
           Our mission is to provide help to{'\n'} endangered persons
         </Text>
@@ -44,6 +46,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.white,
+  },
+  header:{
+    color: colors.green3,
+    fontSize: 32,
+    fontFamily: 'Outfit-Medium',
   },
   headerWrapper: {
     marginStart: 24,
