@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, Animated, Easing, PermissionsAndroid, Platform, Modal, Linking } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Toast from 'react-native-toast-message';
+import io from 'socket.io-client';
 
 import colors from '../../../assets/colors/colors';
 import Menu from '../../../assets/icons/menu.svg';
@@ -14,10 +15,19 @@ export default GetHelp = ({ navigation }) => {
   const width = useWindowDimensions().width;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [showModal, setShowModal] = useState(false)
-
+  const socket = io(endpoints.ws,
+    {
+      extraHeaders: {
+        'authorization': `Bearer ${token}`
+      }
+    }
+  );
   spinValue = new Animated.Value(0);
   let visible = false;
-
+  const [
+    locationStatus,
+    setLocationStatus
+  ] = useState('');
 
   const watchID = Geolocation.watchPosition(
     (position) => {
@@ -25,14 +35,20 @@ export default GetHelp = ({ navigation }) => {
 
       setLocationStatus('You are Here');
       console.log(position);
-
+      if (socket.connected) {
+        socket.emit("updateLocation", {
+          latitude: JSON.stringify(position.coords.latitude),
+          longitude: JSON.stringify(position.coords.longitude)
+        });
+        console.log('sent', [JSON.stringify(position.coords.longitude), JSON.stringify(position.coords.latitude)]);
+      }
       //getting the Longitude from the location json
       //Setting Longitude state
-      setCurrentLongitude(JSON.stringify(position.coords.longitude));
+      // setCurrentLongitude(JSON.stringify(position.coords.longitude));
 
       //getting the Latitude from the location json
       //Setting Latitude state
-      setCurrentLatitude(JSON.stringify(position.coords.latitude));
+      // setCurrentLatitude(JSON.stringify(position.coords.latitude));
     },
     (error) => {
       setLocationStatus(error.message);
@@ -42,25 +58,13 @@ export default GetHelp = ({ navigation }) => {
       maximumAge: 1000
     },
   );
-  const [
-    currentLongitude,
-    setCurrentLongitude
-  ] = useState('0');
-  const [
-    currentLatitude,
-    setCurrentLatitude
-  ] = useState('0');
-  const [
-    locationStatus,
-    setLocationStatus
-  ] = useState('');
 
-  const getHelp = async () => {
+  const getHelp = async ({ latitude, longitude }) => {
     const response = await fetch(endpoints.baseUrl + endpoints.requestHelp, {
       method: 'POST',
       body: JSON.stringify({
-        "latitude": currentLatitude,
-        "longitude": currentLongitude
+        "latitude": latitude,
+        "longitude": longitude
         // "location": "string",
       }),
       headers: {
@@ -95,6 +99,27 @@ export default GetHelp = ({ navigation }) => {
       });
   };
 
+  useEffect(() => {
+    socket.on('connect', (e) => {
+      setIsConnected(true);
+      console.log('connected', socket.connected);
+    });
+
+    socket.on('disconnect', (e) => {
+      setIsConnected(false);
+      console.log('disconnected', socket.connected);
+    });
+
+
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('receiveAlerts');
+    };
+  });
+  socket.onAny((eventName, ...args) => {
+    console.log(eventName, args);
+  });
   const requestLocationPermission = async () => {
     if (Platform.OS === 'ios') {
       getOneTimeLocation();
@@ -137,11 +162,11 @@ export default GetHelp = ({ navigation }) => {
 
         //getting the Longitude from the location json
         //Setting Longitude state
-        setCurrentLongitude(JSON.stringify(position.coords.longitude));
+        // setCurrentLongitude(JSON.stringify(position.coords.longitude));
 
         //Setting Longitude state
-        setCurrentLatitude(JSON.stringify(position.coords.latitude));
-        getHelp();
+        // setCurrentLatitude(JSON.stringify(position.coords.latitude));
+        getHelp(JSON.stringify(position.coords.latitude), JSON.stringify(position.coords.longitude));
       },
       (error) => {
         setLocationStatus(error.message);
