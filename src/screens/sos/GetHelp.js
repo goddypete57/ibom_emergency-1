@@ -15,6 +15,7 @@ export default GetHelp = ({ navigation }) => {
   const width = useWindowDimensions().width;
   const [fadeAnim] = useState(new Animated.Value(0));
   const [showModal, setShowModal] = useState(false)
+  const [shouldRetry, setShouldRetry] = useState(false)
   const socket = io(endpoints.ws,
     {
       extraHeaders: {
@@ -46,8 +47,9 @@ export default GetHelp = ({ navigation }) => {
   useEffect(() => {
     getCurrentPosition((callback) => {
       console.log('callback', callback);
-      getHelp(JSON.stringify(callback.position.coords.latitude), JSON.stringify(callback.position.coords.longitude));
-
+      callback.position && getHelp(JSON.stringify(callback.position.coords.latitude), JSON.stringify(callback.position.coords.longitude));
+      setShouldRetry(callback.position ? false : true)
+      callback.position && setShowModal(true);
       if (socket.connected) {
         socket.emit("updateLocation", {
           latitude: JSON.stringify(callback.position.coords.latitude),
@@ -216,7 +218,31 @@ export default GetHelp = ({ navigation }) => {
               fontSize: 16,
               fontFamily: 'Outfit-Bold',
               textAlign: 'center',
-            }}>Sorry!{'\n'}No patrol team or checkpoint found.</Text>
+            }}>Sorry!{'\n'}{shouldRetry ? 'Can\'t find your current location' : 'No patrol team or checkpoint found.'}</Text>
+            <Button
+              title={'Retry'}
+              onPress={() => getCurrentPosition((callback) => {
+                console.log('callback', callback);
+                callback.position && getHelp(JSON.stringify(callback.position.coords.latitude), JSON.stringify(callback.position.coords.longitude));
+                setShouldRetry(callback.position ? false : true)
+                callback.position && setShowModal(true);
+                if (socket.connected) {
+                  socket.emit("updateLocation", {
+                    latitude: JSON.stringify(callback.position.coords.latitude),
+                    longitude: JSON.stringify(callback.position.coords.longitude)
+                  });
+                  console.log('sent', [JSON.stringify(callback.position.coords.longitude), JSON.stringify(callback.position.coords.latitude)]);
+                }
+              })}
+              buttonStyle={{
+                width: '70%',
+                height: 40,
+                alignSelf: 'center',
+                marginVertical: 10,
+              }}
+              textColor={colors.white}
+              enabled={true}
+            />
             <Text style={{
               color: colors.textColor1,
               fontSize: 16,
