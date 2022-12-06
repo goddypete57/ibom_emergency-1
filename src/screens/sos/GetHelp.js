@@ -49,7 +49,7 @@ export default GetHelp = ({ navigation }) => {
       console.log('callback', callback);
       callback.position && getHelp(JSON.stringify(callback.position.coords.latitude), JSON.stringify(callback.position.coords.longitude));
       setShouldRetry(callback.position ? false : true)
-      callback.position && setShowModal(true);
+      !callback.position && setShowModal(true);
       if (socket.connected) {
         socket.emit("updateLocation", {
           latitude: JSON.stringify(callback.position.coords.latitude),
@@ -79,42 +79,50 @@ export default GetHelp = ({ navigation }) => {
 
   const getHelp = async (latitude, longitude) => {
     console.log(latitude, longitude);
-    const response = await fetch(endpoints.baseUrl + endpoints.requestHelp, {
-      method: 'POST',
-      body: JSON.stringify({
-        "latitude": parseFloat(latitude),
-        "longitude": parseFloat(longitude)
-        // "location": "string",
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + token
-      },
-    });
-    response
-      .json()
-      .then(data => {
-        console.log(data);
-        if (response.ok) {
-          navigation.replace(mainRoute.patrolResult)
-        } else {
+    let location = null
+    await getAddressFromCoordinates(latitude, longitude, endpoints.gg, (callback) => {
+      console.log('callback', callback);
+      location = callback
+    })
+    if (location) {
+      const response = await fetch(endpoints.baseUrl + endpoints.requestHelp, {
+        method: 'POST',
+        body: JSON.stringify({
+          "latitude": parseFloat(latitude),
+          "longitude": parseFloat(longitude),
+          "location": location,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + token
+        },
+      });
+      response
+        .json()
+        .then(data => {
+          console.log(data);
+          if (response.ok) {
+            navigation.replace(mainRoute.patrolResult)
+          } else {
+            setShowModal(true)
+            Toast.show({
+              type: 'error',
+              text1: 'Request Failed',
+              text2: data.message,
+            });
+          }
+        })
+        .catch(err => {
           setShowModal(true)
           Toast.show({
             type: 'error',
             text1: 'Request Failed',
-            text2: data.message,
+            text2: err.message,
           });
-        }
-      })
-      .catch(err => {
-        setShowModal(true)
-        Toast.show({
-          type: 'error',
-          text1: 'Request Failed',
-          text2: err.message,
+          console.log(err.message);
         });
-        console.log(err.message);
-      });
+    }
+
   };
 
   useEffect(() => {
@@ -429,6 +437,19 @@ async function getCurrentPosition(callback) {
     },
     { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 }
   )
+}
+
+
+async function getAddressFromCoordinates(latitude, longitude, key, callback) {
+  try {
+    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${key}`);
+    const json = await response.json();
+    //   setRealAddress(json.results[0]?.formatted_address);
+    console.log(json.results[0]?.formatted_address)
+    callback(json?.results[0]?.formatted_address)
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 
