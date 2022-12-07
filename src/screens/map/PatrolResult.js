@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, PermissionsAndroid, Platform, } from "react-native";
 import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import MapViewDirections from 'react-native-maps-directions';
@@ -10,16 +10,12 @@ import { AuthContext } from '../../../context/AuthContext';
 import endpoints from '../../../assets/EndPoint/Endpoint';
 
 
-export default PatrolResult = ({ navigation }) => {
+export default PatrolResult = ({ route, navigation }) => {
+    const { request } = route.params;
+    console.log('request', request);
     const { width, height } = Dimensions.get('window');
     const GOOGLE_API_KEY = endpoints.gg;
     const { user, token } = useContext(AuthContext);
-    const [distance, setDistance] = useState(0);
-    const [duration, setDuration] = useState(0);
-    const [lastPong, setLastPong] = useState(null);
-    console.log('pong', lastPong);
-    const [isConnected, setIsConnected] = useState(false)
-    this.mapView = null;
     const socket = io(endpoints.ws,
         {
             extraHeaders: {
@@ -27,6 +23,21 @@ export default PatrolResult = ({ navigation }) => {
             }
         }
     );
+    const [distance, setDistance] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const [allowLocation, setAllowLocation] = useState(false);
+    this.watchID = null
+    const [coordinates, setCoordinate] = useState([
+        {
+            latitude: parseFloat(request.user.currentLatitude),
+            longitude: parseFloat(request.user.currentLongitude),
+        },
+        {
+            latitude: parseFloat(request.latitude),
+            longitude: parseFloat(request.longitude),
+        },
+    ]);
+
     onMapPress = (e) => {
         this.mapView.animateToRegion({
             latitude: e.nativeEvent.coordinate.latitude,
@@ -36,86 +47,50 @@ export default PatrolResult = ({ navigation }) => {
         });
     }
 
-    const [coordinates] = useState([
-        {
-            latitude: 48.8587741,
-            longitude: 2.2069771,
-        },
-        {
-            latitude: 48.8323785,
-            longitude: 2.3361663,
-        },
-    ]);
-    const [
-        currentLongitude,
-        setCurrentLongitude
-    ] = useState(0);
-    const [
-        currentLatitude,
-        setCurrentLatitude
-    ] = useState(0);
-    const [
-        locationStatus,
-        setLocationStatus
-    ] = useState('');
-
     useEffect(() => {
+
         socket.on('connect', (e) => {
-            setIsConnected(true);
-            console.log('connected', coordinates[0].longitude);
+            console.log('connected', socket.connected);
+            socket.emit("patrolTracking", { requestId: request.id });
+            setTimeout(() => {
+                socket.emit("updateLocation", {
+                    latitude: parseFloat(coordinates[0].latitude),
+                    longitude: parseFloat(coordinates[0].longitude),
+                });
+                console.log(' first sent', [coordinates[0].longitude, coordinates[0].latitude,]);
+            }, 500)
         });
 
         socket.on('disconnect', (e) => {
-            setIsConnected(false);
-            console.log('disconnected', e);
+            console.log('disconnected', socket.connected);
         });
 
-        socket.on('pong', () => {
-            setLastPong(new Date().toISOString());
-        });
-        socket.onAny((eventName, ...args) => {
-            console.log(eventName, args);
-        });
+        // socket.onAny((eventName, ...args) => {
+        //     console.log(eventName, args);
+        // });
         return () => {
             socket.off('connect');
             socket.off('disconnect');
-            socket.off('pong');
+            // socket.off('receiveAlerts');
         };
-    }, []);
+    },[]);
 
-    useEffect(() => {
-        socket.emit("updateLocation", {
-            latitude: coordinates[0].latitude,
-            longitude: coordinates[0].longitude
-        });
-        console.log('sent', [coordinates[0].longitude, coordinates[0].latitude,]);
-    }, [isConnected, coordinates])
+    socket.on("patrolTracking", (...args) => {
+        console.log('patrolTracking', args);
+        args.length > 0 &&
+            setCoordinate([
+                {
+                    latitude: coordinates[0].latitude,
+                    longitude: coordinates[0].longitude,
+                },
+                {
+                    latitude: parseFloat(args[0].currentLatitude),
+                    longitude: parseFloat(args[0].currentLongitude),
+                }
+            ])
 
-    useEffect(() => {
-        Geolocation.watchPosition(
-            (position) => {
-                //Will give you the location on location change
+    });
 
-                setLocationStatus('You are Here');
-                console.log(position);
-
-                //getting the Longitude from the location json
-                //Setting Longitude state
-                setCurrentLongitude(JSON.stringify(position.coords.longitude));
-
-                //getting the Latitude from the location json
-                //Setting Latitude state
-                setCurrentLatitude(JSON.stringify(position.coords.latitude));
-            },
-            (error) => {
-                setLocationStatus(error.message);
-            },
-            {
-                enableHighAccuracy: true,
-                maximumAge: 1000
-            },
-        );
-    })
     return (
         <View style={styles.container}>
             <View style={styles.headerWrapper}>
@@ -245,6 +220,74 @@ export default PatrolResult = ({ navigation }) => {
         </View>
     )
 }
+
+
+
+
+
+async function requestLocationPermission() {
+    if (Platform.OS === 'ios') {
+        Geolocation.setRNConfiguration({
+            authorizationLevel: 'whenInUse'
+        })
+
+        Geolocation.requestAuthorization()
+        // IOS permission request does not offer a callback :/
+        return null
+    } else if (Platform.OS === 'android') {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+            )
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                return true
+            } else {
+                return false
+            }
+        } catch (err) {
+            console.warn(err.message)
+            return false
+        }
+    }
+}
+
+
+async function getCurrentPosition(callback) {
+    const hasLocationPermission = await requestLocationPermission()
+    /* This will only be fired on Android. On Apple we can not detect when/if a
+     * location permission has been granted or denied. For that reason after a
+     * predefined period we just timeout.
+     */
+
+    if (hasLocationPermission === false) {
+        callback({
+            locationAvailable: false,
+            error: 'Can not obtain location permission'
+        })
+        return
+    }
+
+    Geolocation.getCurrentPosition(
+        position => {
+            callback({
+                locationAvailable: true,
+                position
+            })
+        },
+        error => {
+            callback({
+                locationAvailable: false,
+                error: error.message,
+                errorCode: error.code
+            })
+        },
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 10000 }
+    )
+}
+
+
+
+
 
 
 const styles = StyleSheet.create({
