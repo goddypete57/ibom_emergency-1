@@ -16,6 +16,7 @@ export default PatrolResult = ({ route, navigation }) => {
     const { width, height } = Dimensions.get('window');
     const GOOGLE_API_KEY = endpoints.gg;
     const { user, token } = useContext(AuthContext);
+    const [angle, setAngle] = useState(0);
     const socket = io(endpoints.ws,
         {
             extraHeaders: {
@@ -73,7 +74,7 @@ export default PatrolResult = ({ route, navigation }) => {
             socket.off('disconnect');
             // socket.off('receiveAlerts');
         };
-    },[]);
+    }, []);
 
     socket.on("patrolTracking", (...args) => {
         console.log('patrolTracking', args);
@@ -90,6 +91,67 @@ export default PatrolResult = ({ route, navigation }) => {
             ])
 
     });
+
+    allowLocation,
+        this.watchID = Geolocation.watchPosition(
+            (position) => {
+                //Will give you the location on location change
+
+                console.log(position);
+                position && setAngle(position.coords.heading);
+                position && setCoordinate([
+                    {
+                        latitude: parseFloat(JSON.stringify(position.coords.latitude)),
+                        longitude: parseFloat(JSON.stringify(position.coords.longitude)),
+                    },
+                    {
+                        latitude: coordinates[1].latitude,
+                        longitude: coordinates[1].longitude,
+                    },
+                ])
+
+                {
+                    socket.connected && socket.emit("updateLocation", {
+                        latitude: parseFloat(JSON.stringify(position.coords.latitude)),
+                        longitude: parseFloat(JSON.stringify(position.coords.longitude)),
+                    });
+                    console.log('sent', [coordinates[0].longitude, coordinates[0].latitude,]);
+                }
+            },
+            (error) => {
+                console.log(error.message);
+            },
+            { enableHighAccuracy: true, distanceFilter: 1, interval: 5000, fastestInterval: 2000 }
+        );
+
+
+
+    useEffect(() => {
+        getCurrentPosition((callback) => {
+            console.log('callback', callback)
+            callback.position && setAllowLocation(callback.locationAvailable)
+            setAngle(callback.position.coords.heading);
+            // getAddressFromCoordinates(
+            //     JSON.stringify(callback.position.coords.latitude),
+            //     JSON.stringify(callback.position.coords.longitude),
+            //     endpoints.gg
+            // )
+            callback.position && setCoordinate([
+                {
+                    latitude: parseFloat(JSON.stringify(callback.position.coords.latitude)),
+                    longitude: parseFloat(JSON.stringify(callback.position.coords.longitude)),
+                },
+                {
+                    latitude: coordinates[1].latitude,
+                    longitude: coordinates[1].longitude,
+                },
+            ])
+
+        })
+        return () => {
+            this.watchID && Geolocation.clearWatch(this.watchID)
+        };
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -179,9 +241,26 @@ export default PatrolResult = ({ route, navigation }) => {
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0922 * (width / height),
                     }}>
-                    {coordinates.map((coordinate, index) =>
-                        <Marker key={`coordinate_${index}`} coordinate={coordinate} pinColor={index == 0 ? "#495BF8" : undefined} />
-                    )}
+                    {(coordinates.length >= 2) &&
+                        <Marker
+                            coordinate={coordinates[0]}
+                        />
+                    }
+                    <Marker
+                        coordinate={coordinates[1]}
+                        pinColor={"#495BF8"}
+                        style={{
+                            transform: [{ rotate: `${180+angle}deg` }],
+                            width: 40,
+                        }}
+                    >
+                        <Image
+                            source={require('../../../assets/images/Car.png')}
+                            style={{ width: 30, height: 30 }}
+                            resizeMethod="resize"
+                            resizeMode="contain"
+                        />
+                    </Marker>
                     {(coordinates.length >= 2) && (
 
                         <MapViewDirections
