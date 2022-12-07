@@ -12,12 +12,11 @@ import mainRoute from '../../navigation/route/mainRoute';
 
 export default GetHelp = ({ navigation }) => {
   const { user, token, saveUser } = useContext(AuthContext);
-  const width = useWindowDimensions().width;
-  const [fadeAnim] = useState(new Animated.Value(0));
   const [showModal, setShowModal] = useState(false)
   const [shouldRetry, setShouldRetry] = useState(false)
-  const [request, setRequest] = useState(null)
   const [processing, setProcessing] = useState(false)
+  const [requesting, setRequesting] = useState(false)
+  const [request, setRequest] = useState(null)
   const socket = io(endpoints.ws,
     {
       extraHeaders: {
@@ -38,11 +37,15 @@ export default GetHelp = ({ navigation }) => {
     return () => {
       socket.off('connect');
       socket.off('disconnect');
-      socket.off('receiveAlerts');
+      socket.off('alertAccepted');
     };
   });
+  // socket.onAny((eventName, ...args) => {
+  //   console.log(eventName, args);
+  // });
   socket.on("alertAccepted", (...args) => {
     console.log('alertAccepted', args);
+    navigation.replace(mainRoute.patrolResult, { request: args[0] })
     // playPause()
     // setAlert(args[0]);
     // args.length > 0 &&
@@ -59,8 +62,7 @@ export default GetHelp = ({ navigation }) => {
 
   });
 
-  spinValue = new Animated.Value(0);
-  let visible = false;
+
   useEffect(() => {
     const response = fetch(endpoints.baseUrl + endpoints.user, {
       headers: {
@@ -81,54 +83,44 @@ export default GetHelp = ({ navigation }) => {
   const cancelRequest = async () => {
     setProcessing(true)
     const response = await fetch(endpoints.baseUrl + endpoints.requestHelp + `/${request.id}/cancel`, {
-        method: 'PUT',
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-            'Authorization': 'Bearer ' + token
-        },
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' + token
+      },
     });
     response
-        .json()
-        .then(data => {
-            setProcessing(false)
-            setRequest(data)
-            console.log(data);
-            if (response.ok) {
-                Toast.show({
-                    type: 'success',
-                    text1: 'Request Declined',
-                    text2: data.message,
-                });
-                setAlert(null)
-                ding.pause();
-                setAccepted(false)
-                setCoordinate([
-                    {
-                        latitude: coordinates[0].latitude,
-                        longitude: coordinates[0].longitude,
-                    },
-
-                ])
-                console.log('alert', alert)
-                // navigation.replace(mainRoute.patrolResult)
-            } else {
-                Toast.show({
-                    type: 'error',
-                    text1: 'Decline Request Failed',
-                    text2: data.message,
-                });
-            }
-        })
-        .catch(err => {
-            setProcessing(false)
-            Toast.show({
-                type: 'error',
-                text1: 'Decline request Failed',
-                text2: err.message,
-            });
-            console.log(err.message);
+      .json()
+      .then(data => {
+        setProcessing(false)
+        console.log(data);
+        if (response.ok) {
+          Toast.show({
+            type: 'success',
+            text1: 'Request Cancelled',
+            text2: data.message,
+          });
+          setRequest(null)
+          navigation.goBack()
+          // navigation.replace(mainRoute.patrolResult)
+        } else {
+          Toast.show({
+            type: 'error',
+            text1: 'Cancel Request Failed',
+            text2: data.message,
+          });
+        }
+      })
+      .catch(err => {
+        setProcessing(false)
+        Toast.show({
+          type: 'error',
+          text1: 'Cancel request Failed',
+          text2: err.message,
         });
-}
+        console.log(err.message);
+      });
+  }
 
   useEffect(() => {
     getCurrentPosition((callback) => {
@@ -144,15 +136,15 @@ export default GetHelp = ({ navigation }) => {
         console.log('sent', [JSON.stringify(callback.position.coords.longitude), JSON.stringify(callback.position.coords.latitude)]);
       }
     })
-  })
+  }, [])
 
 
   const getHelp = async (latitude, longitude) => {
-    setProcessing(true)
+    setRequesting(true)
     console.log(latitude, longitude);
     let location = null
     await getAddressFromCoordinates(latitude, longitude, endpoints.gg, (callback) => {
-      console.log('callback', callback);
+      console.log('location', callback);
       location = callback
     })
     if (location) {
@@ -171,9 +163,10 @@ export default GetHelp = ({ navigation }) => {
       response
         .json()
         .then(data => {
-          setProcessing(false)
+          setRequesting(false)
           console.log(data);
           if (response.ok) {
+            setRequest(data)
             // navigation.replace(mainRoute.patrolResult)
           } else {
             setShowModal(true)
@@ -185,7 +178,7 @@ export default GetHelp = ({ navigation }) => {
           }
         })
         .catch(err => {
-          setProcessing(false)
+          setRequesting(false)
           setShowModal(true)
           Toast.show({
             type: 'error',
@@ -197,50 +190,6 @@ export default GetHelp = ({ navigation }) => {
     }
 
   };
-
-
-
-  // First set up animation 
-  Animated.loop(
-    Animated.timing(
-      this.spinValue,
-      {
-        toValue: 1,
-        duration: 3000,
-        easing: Easing.linear, // Easing is an additional import from react-native
-        useNativeDriver: true  // To make use of native driver for performance
-      }
-    )
-  ).start()
-
-  useEffect(() => {
-    setInterval(() => {
-      visible = !visible;
-      // setTimeout(() => {
-      if (visible) {
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true // <-- Add this
-        }).start();
-      } else {
-        Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 1000,
-          useNativeDriver: true // <-- Add this
-        }).start();
-      }
-      // console.log(fadeAnim)
-      // }, 800)
-    }, 3000);
-
-  });
-
-  const spin = this.spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg']
-  })
-
 
   return (
     <View style={styles.container}>
@@ -369,61 +318,16 @@ export default GetHelp = ({ navigation }) => {
             </Text>
           </View>
 
-          <View style={{
-            alignSelf: 'center',
-            marginTop: 35,
-            width: 250 / 360 * width,
-            height: 250 / 360 * width,
-          }}>
-            <Image
-              source={require('../../../assets/images/radar-bg.png')}
-              style={{
-                resizeMode: 'contain',
-                width: '100%',
-                height: '100%',
-                alignSelf: 'center',
-                position: 'absolute',
-                transform: [{ translateX: 3 }, { translateY: -1 }],
-              }}
-            />
-            <Animated.Image
-              source={require('../../../assets/images/radar-scan.png')}
-              style={{
-                resizeMode: 'contain',
-                width: '99%',
-                height: '99%',
-                alignSelf: 'center',
-                transform: [{ rotate: spin }],
-              }}
-            />
-            <Animated.View style={{
-              position: 'absolute',
-              backgroundColor: colors.lightGreen2,
-              width: 14 / 360 * width,
-              height: 14 / 360 * width,
-              borderRadius: 10 / 360 * width,
-              alignSelf: 'center',
-              opacity: fadeAnim,
-              transform: [{ translateX: 50 }, { translateY: 50 }],
-            }} />
-            <Animated.View style={{
-              position: 'absolute',
-              backgroundColor: colors.lightGreen2,
-              width: 14 / 360 * width,
-              height: 14 / 360 * width,
-              borderRadius: 10 / 360 * width,
-              alignSelf: 'center',
-              opacity: fadeAnim,
-              transform: [{ translateX: -50 }, { translateY: 100 }],
-            }} />
-          </View>
+          <Radar />
+
         </View>
         <Button
           title={'Cancel'}
-          onPress={() => navigation.goBack()}
+          onPress={() => cancelRequest()}
           buttonStyle={styles.button}
           textColor={colors.white}
-          enabled={true}
+          enabled={!requesting && !processing}
+          processing={processing}
         />
       </View>
     </View>
@@ -581,3 +485,103 @@ const styles = StyleSheet.create({
   },
 
 });
+
+
+
+const Radar = () => {
+  const width = useWindowDimensions().width;
+  const [fadeAnim] = useState(new Animated.Value(0));
+  spinValue = new Animated.Value(0);
+  let visible = false;
+  // First set up animation 
+  Animated.loop(
+    Animated.timing(
+      this.spinValue,
+      {
+        toValue: 1,
+        duration: 3000,
+        easing: Easing.linear, // Easing is an additional import from react-native
+        useNativeDriver: true  // To make use of native driver for performance
+      }
+    )
+  ).start()
+
+  useEffect(() => {
+    setInterval(() => {
+      visible = !visible;
+      // setTimeout(() => {
+      if (visible) {
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true // <-- Add this
+        }).start();
+      } else {
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true // <-- Add this
+        }).start();
+      }
+      // console.log(fadeAnim)
+      // }, 800)
+    }, 3000);
+
+  });
+
+  const spin = this.spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
+  })
+
+  return (
+    <View style={{
+      alignSelf: 'center',
+      marginTop: 35,
+      width: 250 / 360 * width,
+      height: 250 / 360 * width,
+    }}>
+      <Image
+        source={require('../../../assets/images/radar-bg.png')}
+        style={{
+          resizeMode: 'contain',
+          width: '100%',
+          height: '100%',
+          alignSelf: 'center',
+          position: 'absolute',
+          transform: [{ translateX: 3 }, { translateY: -1 }],
+        }}
+      />
+      <Animated.Image
+        source={require('../../../assets/images/radar-scan.png')}
+        style={{
+          resizeMode: 'contain',
+          width: '99%',
+          height: '99%',
+          alignSelf: 'center',
+          transform: [{ rotate: spin }],
+        }}
+      />
+      <Animated.View style={{
+        position: 'absolute',
+        backgroundColor: colors.lightGreen2,
+        width: 14 / 360 * width,
+        height: 14 / 360 * width,
+        borderRadius: 10 / 360 * width,
+        alignSelf: 'center',
+        opacity: fadeAnim,
+        transform: [{ translateX: 50 }, { translateY: 50 }],
+      }} />
+      <Animated.View style={{
+        position: 'absolute',
+        backgroundColor: colors.lightGreen2,
+        width: 14 / 360 * width,
+        height: 14 / 360 * width,
+        borderRadius: 10 / 360 * width,
+        alignSelf: 'center',
+        opacity: fadeAnim,
+        transform: [{ translateX: -50 }, { translateY: 100 }],
+      }} />
+    </View>
+  )
+}
