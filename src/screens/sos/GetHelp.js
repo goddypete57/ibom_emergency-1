@@ -16,6 +16,8 @@ export default GetHelp = ({ navigation }) => {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [showModal, setShowModal] = useState(false)
   const [shouldRetry, setShouldRetry] = useState(false)
+  const [request, setRequest] = useState(null)
+  const [processing, setProcessing] = useState(false)
   const socket = io(endpoints.ws,
     {
       extraHeaders: {
@@ -23,6 +25,40 @@ export default GetHelp = ({ navigation }) => {
       }
     }
   );
+  useEffect(() => {
+    socket.on('connect', (e) => {
+      console.log('connected', socket.connected);
+    });
+
+    socket.on('disconnect', (e) => {
+      console.log('disconnected', socket.connected);
+    });
+
+
+    return () => {
+      socket.off('connect');
+      socket.off('disconnect');
+      socket.off('receiveAlerts');
+    };
+  });
+  socket.on("alertAccepted", (...args) => {
+    console.log('alertAccepted', args);
+    // playPause()
+    // setAlert(args[0]);
+    // args.length > 0 &&
+    //     setCoordinate([
+    //         {
+    //             latitude: coordinates[0].latitude,
+    //             longitude: coordinates[0].longitude,
+    //         },
+    //         {
+    //             latitude: parseFloat(args[0].latitude),
+    //             longitude: parseFloat(args[0].longitude),
+    //         }
+    //     ])
+
+  });
+
   spinValue = new Animated.Value(0);
   let visible = false;
   useEffect(() => {
@@ -42,7 +78,57 @@ export default GetHelp = ({ navigation }) => {
 
   }, []);
 
+  const cancelRequest = async () => {
+    setProcessing(true)
+    const response = await fetch(endpoints.baseUrl + endpoints.requestHelp + `/${request.id}/cancel`, {
+        method: 'PUT',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ' + token
+        },
+    });
+    response
+        .json()
+        .then(data => {
+            setProcessing(false)
+            setRequest(data)
+            console.log(data);
+            if (response.ok) {
+                Toast.show({
+                    type: 'success',
+                    text1: 'Request Declined',
+                    text2: data.message,
+                });
+                setAlert(null)
+                ding.pause();
+                setAccepted(false)
+                setCoordinate([
+                    {
+                        latitude: coordinates[0].latitude,
+                        longitude: coordinates[0].longitude,
+                    },
 
+                ])
+                console.log('alert', alert)
+                // navigation.replace(mainRoute.patrolResult)
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Decline Request Failed',
+                    text2: data.message,
+                });
+            }
+        })
+        .catch(err => {
+            setProcessing(false)
+            Toast.show({
+                type: 'error',
+                text1: 'Decline request Failed',
+                text2: err.message,
+            });
+            console.log(err.message);
+        });
+}
 
   useEffect(() => {
     getCurrentPosition((callback) => {
@@ -59,25 +145,10 @@ export default GetHelp = ({ navigation }) => {
       }
     })
   })
-  const subscribeLoccation = () => {
-    watchID = Geolocation.watchPosition(
-      (position) => {
-        //Will give you the location on location change
-        console.log('You are Here', position);
-        // getHelp(JSON.stringify(position.coords.latitude), JSON.stringify(position.coords.longitude));
-
-      },
-      (error) => {
-        console.log(error.message);
-      },
-      { enableHighAccuracy: true, distanceFilter: 1, interval: 5000, fastestInterval: 2000 }
-
-    );
-  }
-
 
 
   const getHelp = async (latitude, longitude) => {
+    setProcessing(true)
     console.log(latitude, longitude);
     let location = null
     await getAddressFromCoordinates(latitude, longitude, endpoints.gg, (callback) => {
@@ -100,9 +171,10 @@ export default GetHelp = ({ navigation }) => {
       response
         .json()
         .then(data => {
+          setProcessing(false)
           console.log(data);
           if (response.ok) {
-            navigation.replace(mainRoute.patrolResult)
+            // navigation.replace(mainRoute.patrolResult)
           } else {
             setShowModal(true)
             Toast.show({
@@ -113,6 +185,7 @@ export default GetHelp = ({ navigation }) => {
           }
         })
         .catch(err => {
+          setProcessing(false)
           setShowModal(true)
           Toast.show({
             type: 'error',
@@ -125,27 +198,6 @@ export default GetHelp = ({ navigation }) => {
 
   };
 
-  useEffect(() => {
-    socket.on('connect', (e) => {
-      setIsConnected(true);
-      console.log('connected', socket.connected);
-    });
-
-    socket.on('disconnect', (e) => {
-      setIsConnected(false);
-      console.log('disconnected', socket.connected);
-    });
-
-
-    return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('receiveAlerts');
-    };
-  });
-  socket.onAny((eventName, ...args) => {
-    // console.log(eventName, args);
-  });
 
 
   // First set up animation 
