@@ -135,6 +135,10 @@ export default VerifyOtp = ({route, navigation}) => {
         onRequestClose={() => setShowModal(false)}>
         <TouchableOpacity
           style={{
+            width: 292,
+            elevation: 5,
+            borderRadius: 8,
+            backgroundColor: colors.white,
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
