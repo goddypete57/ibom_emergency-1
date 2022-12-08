@@ -108,6 +108,8 @@ export default Login = ({ navigation }) => {
               <TextInput
                 style={styles.email}
                 value={email}
+                autoFocus={true}
+               
                 onChangeText={text => setEmail(text)}
                 selectionColor={'rgba(42, 83, 76, 0.7)'}
                 placeholderTextColor={colors.inactiveColor}
