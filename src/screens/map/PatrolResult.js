@@ -8,7 +8,7 @@ import io from 'socket.io-client';
 import colors from '../../../assets/colors/colors';
 import { AuthContext } from '../../../context/AuthContext';
 import endpoints from '../../../assets/EndPoint/Endpoint';
-
+import Bottomsheet from 'react-native-simple-bottom-sheet';
 
 export default PatrolResult = ({ route, navigation }) => {
     const { request } = route.params;
@@ -155,6 +155,69 @@ export default PatrolResult = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
+         <Bottomsheet
+          height={715}
+          keyboardAvoidingViewEnabled={false}
+          animationType="slide"
+          ref={bottomSheetRef2}
+          closeOnDragDown={true}
+          closeOnPressMask={false}
+          customStyles={{
+            wrapper: {
+              backgroundColor: 'transparent',
+            },
+            draggableIcon: {
+              backgroundColor: colors.grey3,
+              width: 75,
+              height: 4,
+            },
+            container: {
+              backgroundColor: colors.blue6,
+              borderTopEndRadius: 30,
+              borderTopLeftRadius: 30,
+            },
+          }}>
+          <View style={styles.buttomsheetContainer}>
+            <View style={styles.header}>
+              <TouchableOpacity  onPress={()=> { bottomSheetRef2.current.close();}}>
+                <Arrow_left fill={colors.textDark} />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.choosecurrency}>Choose Currency</Text>
+
+            <View style={styles.searchCurrencyWrapper}>
+              <TextInput
+                style={styles.searchinput}
+                value={amount2}
+                placeholder={'Search for a currency...'}
+                placeholderTextColor={colors.inactiveColor}
+                onChangeText={text => setAmount2(text)}
+                selectionColor={colors.inactiveColor}
+              />
+              <Search fill={colors.drk} style={style.searchicon} />
+            </View>
+            <FlatList
+              data={data}
+              keyExtractor={item => item.id.toString}
+              renderItem={({item}) => (
+                <View style={[style.currencyContainer ,StyleSheet.create({
+                  backgroundColor: item.id==currency ? colors.white : colors.blue6
+              })]}>
+                  <TouchableOpacity onPress={() => setCurrency(item.id)}>
+                    <View style={style.titleContainer}>
+                    <Image source={item.image} style={style.image}/>
+                      <Text style={style.title}>{item.title}</Text>
+                      <View style={style.checkWrapper}>
+                      {item.id==currency?< Correct/>:null}
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                
+                </View>
+              )}
+            />
+          </View>
+        </Bottomsheet>
             <View style={styles.headerWrapper}>
                 <View style={styles.header}>
                     <TouchableOpacity>
