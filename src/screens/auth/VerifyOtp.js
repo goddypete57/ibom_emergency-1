@@ -133,23 +133,23 @@ export default VerifyOtp = ({route, navigation}) => {
           setShowModal(false);
         }}
         onRequestClose={() => setShowModal(false)}>
-        <TouchableOpacity
-          style={{
-            width: 292,
-            elevation: 5,
-            borderRadius: 8,
-            backgroundColor: colors.white,
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <View
+       <View
+        style={{
+          justifyContent: 'center',
+     
+          flex:1
+        }}
+       >
+       <View
             style={{
               width: 292,
+              height:344,
               elevation: 5,
               borderRadius: 8,
               backgroundColor: colors.white,
               justifyContent: 'center',
+              alignSelf:'center',
+             
             }}>
             <Image
               source={require('../../../assets/images/checked.png')}
@@ -184,7 +184,8 @@ export default VerifyOtp = ({route, navigation}) => {
               />
             </View>
           </View>
-        </TouchableOpacity>
+       </View>
+        
       </Modal>
       <View style={styles.container}>
         <View style={styles.headerWrapper}>
@@ -249,6 +250,7 @@ const styles = StyleSheet.create({
     color: colors.green3,
     fontSize: 24,
     fontFamily: 'Outfit-Medium',
+    textAlign:'center'
   },
   headerWrapper: {
     alignSelf: 'center',
@@ -300,5 +302,6 @@ resendCode:{
   color: colors.green3,
   fontSize: 20,
   fontFamily: 'Outfit-Medium',
+  alignSelf:'center'
 },
 });
